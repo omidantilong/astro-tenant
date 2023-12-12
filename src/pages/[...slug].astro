@@ -1,0 +1,32 @@
+---
+export const prerender = false
+
+import Layout from "../layouts/Layout.astro"
+import { getPage } from "../lib/contentful"
+
+const { slug } = Astro.params
+
+if (!slug) {
+  return new Response("404", {
+    status: 404,
+    statusText: "Not Found",
+  })
+}
+
+const { data } = await getPage({ slug })
+
+if (!data.pageCollection.items.length) {
+  return new Response("404", {
+    status: 404,
+    statusText: "Not Found",
+  })
+}
+
+const page = data.pageCollection.items[0]
+---
+
+<Layout title="Welcome to Astro.">
+  <h1>{page.title}</h1>
+  <time>date</time>
+  <article set:html={"plop"} />
+</Layout>
