@@ -4,18 +4,20 @@ export const prerender = false
 import Layout from "../layouts/Layout.astro"
 import { getPage } from "../lib/contentful"
 
-const { slug } = Astro.params
+const { slug: rawSlug } = Astro.params
 
-if (!slug) {
+if (!rawSlug) {
   return new Response("404", {
     status: 404,
     statusText: "Not Found",
   })
 }
 
+const slug = rawSlug.split("/").at(-1)!
+
 const { data } = await getPage({ slug })
 
-if (!data.pageCollection.items.length) {
+if (!data?.pageCollection?.items.length) {
   return new Response("404", {
     status: 404,
     statusText: "Not Found",
@@ -23,6 +25,11 @@ if (!data.pageCollection.items.length) {
 }
 
 const page = data.pageCollection.items[0]
+
+// if (page.parent && page.parent.slug && !Astro.request.url.includes(page.parent.slug)) {
+//   //console.log(Astro.request)
+//   return Astro.redirect(`/${page.parent.slug}/${slug}`)
+// }
 ---
 
 <Layout title="Welcome to Astro.">
