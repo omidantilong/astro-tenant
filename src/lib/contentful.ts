@@ -1,3 +1,6 @@
+// https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
+// https://github.com/graphql/graphql-spec/issues/929
+
 export async function getPage({ slug }: { slug: string }) {
   const query = `
     fragment parentPage on Page {
@@ -7,13 +10,32 @@ export async function getPage({ slug }: { slug: string }) {
       title
       slug
     }
+    fragment parentLookup on Page {
+      parent {
+        ...parentPage
+        ...on Page {
+          parent {
+            ...parentPage
+            ...on Page {
+              parent {
+                ...parentPage
+                ...on Page {
+                  parent {
+                    ...parentPage
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     query { 
       pageCollection(where: {slug: "${slug}"}, limit: 1) { 
         items { 
           title,
-          parent {
-            ...parentPage
-          }
+          ...parentPage
+          ...parentLookup
         } 
       } 
     }
@@ -34,5 +56,7 @@ export async function getPage({ slug }: { slug: string }) {
       body: JSON.stringify({ query }),
     }
   ).then((res) => res.json())
+
+  console.log(JSON.stringify(data, null, 2))
   return data
 }
