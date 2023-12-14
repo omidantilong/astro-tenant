@@ -60,3 +60,13 @@ export async function getPage({ slug }: { slug: string }) {
   console.log(JSON.stringify(data, null, 2))
   return data
 }
+
+export function getFullPath({ page }: { page: ContentfulPage }) {
+  const path = [page.slug]
+
+  if (page.parent) {
+    path.push(getFullPath({ page: page.parent }))
+  }
+
+  return path.reverse().join("/")
+}

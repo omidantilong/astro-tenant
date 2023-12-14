@@ -2,34 +2,27 @@
 export const prerender = false
 
 import Layout from "../layouts/Layout.astro"
-import { getPage } from "../lib/contentful"
+import { pageNotFound } from "../util/responses"
+import { getPage, getFullPath } from "../lib/contentful"
 
 const { slug: rawSlug } = Astro.params
 
-if (!rawSlug) {
-  return new Response("404", {
-    status: 404,
-    statusText: "Not Found",
-  })
-}
+// Return 404 if no slug provided
+if (!rawSlug) return pageNotFound()
 
 const slug = rawSlug.split("/").at(-1)!
 
 const { data } = await getPage({ slug })
 
-if (!data?.pageCollection?.items.length) {
-  return new Response("404", {
-    status: 404,
-    statusText: "Not Found",
-  })
-}
+// Return 404 if there is no page with that slug
+if (!data?.pageCollection?.items.length) return pageNotFound()
 
 const page = data.pageCollection.items[0]
+const path = getFullPath({ page })
 
-// if (page.parent && page.parent.slug && !Astro.request.url.includes(page.parent.slug)) {
-//   //console.log(Astro.request)
-//   return Astro.redirect(`/${page.parent.slug}/${slug}`)
-// }
+// At this point we have looked up the page
+// but if the full path is incorrect return a 404
+if (path !== rawSlug) return pageNotFound()
 ---
 
 <Layout title="Welcome to Astro.">
