@@ -18,7 +18,6 @@ declare interface Section {
 
 declare interface EditorialCard {
   type: "EditorialCard"
-  title: string
   cardHeading: string
   cardLabel: string
 }
