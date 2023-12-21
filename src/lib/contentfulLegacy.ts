@@ -16,6 +16,7 @@ export async function getPage({ slug }: { slug: string }) {
           }
           modulesCollection(limit: 10) {
             items {
+              type: __typename
               ...on Text {
                 title
                 text
@@ -24,6 +25,7 @@ export async function getPage({ slug }: { slug: string }) {
                 title
                 contentCollection(limit: 20) {
                   items {
+                    type: __typename
                     ...on EditorialCard {
                       cardHeading,
                       cardLabel,
