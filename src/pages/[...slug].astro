@@ -26,7 +26,11 @@ if (path !== rawSlug) return pageNotFound()
 ---
 
 <Layout title="Welcome to Astro.">
-  <h1>{page.title}</h1>
-  <time>date</time>
-  <article set:html={"plop"} />
+  <main>
+    <div class="wrap">
+      <h1>{page.title}</h1>
+      <time>date</time>
+      <article set:html={"plop"} />
+    </div>
+  </main>
 </Layout>
