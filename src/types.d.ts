@@ -9,3 +9,18 @@ declare interface ContentfulLegacyPage {
   title: string
   parentPage: ContentfulLegacyPage
 }
+
+declare interface Section {
+  type: "Section"
+  title: string
+  contentCollection: any[]
+}
+
+declare interface EditorialCard {
+  type: "EditorialCard"
+  title: string
+  cardHeading: string
+  cardLabel: string
+}
+
+declare type ContentComponent = Section | EditorialCard
