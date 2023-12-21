@@ -3,3 +3,9 @@ declare interface ContentfulPage {
   title: string
   parent: ContentfulPage
 }
+
+declare interface ContentfulLegacyPage {
+  url: string
+  title: string
+  parentPage: ContentfulLegacyPage
+}

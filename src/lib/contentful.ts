@@ -43,7 +43,14 @@ export async function getPage({ slug }: { slug: string }) {
 
   //parentPagequery { blogPostCollection { items { ...blogFields } } } fragment blogFields on BlogPost { title date author { name gitHubUsername } }
 
-  const data = await fetch(
+  const data = await fetchData(query)
+
+  //console.log(JSON.stringify(data, null, 2))
+  return data
+}
+
+export async function fetchData(query: string) {
+  return await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${
       import.meta.env.CONTENTFUL_SPACE_ID
     }/environments/${import.meta.env.CONTENTFUL_ENV}`,
@@ -56,9 +63,6 @@ export async function getPage({ slug }: { slug: string }) {
       body: JSON.stringify({ query }),
     }
   ).then((res) => res.json())
-
-  console.log(JSON.stringify(data, null, 2))
-  return data
 }
 
 export function getFullPath({ page }: { page: ContentfulPage }) {

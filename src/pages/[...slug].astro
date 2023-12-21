@@ -5,6 +5,8 @@ import Layout from "../layouts/Layout.astro"
 import { pageNotFound } from "../util/responses"
 import { getPage, getFullPath } from "../lib/contentful"
 
+//import { getPageLegacy, getFullPathLegacy } from "../lib/contentfulLegacy"
+
 const { slug: rawSlug } = Astro.params
 
 // Return 404 if no slug provided
@@ -19,7 +21,7 @@ if (!data?.pageCollection?.items.length) return pageNotFound()
 
 const page = data.pageCollection.items[0]
 const path = getFullPath({ page })
-
+//console.log(path)
 // At this point we have looked up the page
 // but if the full path is incorrect return a 404
 if (path !== rawSlug) return pageNotFound()
