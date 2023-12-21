@@ -1,7 +1,7 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
-export async function getPageLegacy({ slug }: { slug: string }) {
+export async function getPage({ slug }: { slug: string }) {
   const query = `
     query { 
       pageCollection(where: {url: "${slug}"}, limit: 1) { 
@@ -64,11 +64,11 @@ export async function fetchData(query: string) {
   ).then((res) => res.json())
 }
 
-export function getFullPathLegacy({ page }: { page: ContentfulLegacyPage }) {
+export function getFullPath({ page }: { page: ContentfulLegacyPage }) {
   const path = [page.url]
 
   if (page.parentPage) {
-    path.push(getFullPathLegacy({ page: page.parentPage }))
+    path.push(getFullPath({ page: page.parentPage }))
   }
 
   return path.reverse().join("/")
