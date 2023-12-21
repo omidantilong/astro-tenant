@@ -63,7 +63,10 @@ export async function fetchData(query: string) {
       },
       body: JSON.stringify({ query }),
     }
-  ).then((res) => res.json())
+  ).then((res) => {
+    //console.log(`Query complexity: ${res.headers.get("X-Contentful-Graphql-Query-Cost")} / 11000`)
+    return res.json()
+  })
 }
 
 export function getFullPath({ page }: { page: ContentfulLegacyPage }) {
