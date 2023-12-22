@@ -9,9 +9,13 @@ export async function getPage({ pathname }: { pathname: string }) {
   const slug = getSlugFromPath(pathname)
 
   const query = `
-    query {
+    query PageQuery {
       pageCollection(where: {url: "${slug}"}, limit: 1) { 
         items { 
+          type: __typename
+          sys {
+            id
+          }
           title,
           url,
           parentPage {
@@ -23,6 +27,11 @@ export async function getPage({ pathname }: { pathname: string }) {
           modulesCollection(limit: 10) {
             items {
               type: __typename
+              ...on Entry {
+                sys {
+                  id
+                }
+              }
               ...on Text {
                 title
                 text
@@ -50,8 +59,8 @@ export async function getPage({ pathname }: { pathname: string }) {
       } 
     }`
 
-  // const data = await fetchData(pageQuery)
-  //console.log(JSON.stringify(data, null, 2))
+  // const data = await fetchData({ query })
+  // console.log(JSON.stringify(data, null, 2))
   return await fetchData({ query })
 }
 
@@ -61,7 +70,7 @@ export function getSlugFromPath(pathname: string) {
 
 export async function getRedirect(pathname: string) {
   const query = `
-    query {
+    query RedirectQuery {
       redirectCollection(limit: 3000) {
         items {
           from,
