@@ -8,7 +8,7 @@ export async function getPage({ pathname }: { pathname: string }) {
 
   const slug = getSlugFromPath(pathname)
 
-  const pageQuery = `
+  const query = `
     query {
       pageCollection(where: {url: "${slug}"}, limit: 1) { 
         items { 
@@ -52,7 +52,7 @@ export async function getPage({ pathname }: { pathname: string }) {
 
   // const data = await fetchData(pageQuery)
   //console.log(JSON.stringify(data, null, 2))
-  return await fetchData(pageQuery)
+  return await fetchData({ query })
 }
 
 export function getSlugFromPath(pathname: string) {
@@ -60,7 +60,7 @@ export function getSlugFromPath(pathname: string) {
 }
 
 export async function getRedirect(pathname: string) {
-  const redirectsQuery = `
+  const query = `
     query {
       redirectCollection(limit: 3000) {
         items {
@@ -71,7 +71,7 @@ export async function getRedirect(pathname: string) {
     }
   `
 
-  const { data } = await fetchData(redirectsQuery)
+  const { data } = await fetchData({ query })
 
   for (let redirect of data.redirectCollection.items) {
     const exp = `^${redirect.from}`
@@ -82,16 +82,21 @@ export async function getRedirect(pathname: string) {
   }
 }
 
-export async function fetchData(query: string) {
+export async function fetchData({ query, preview = false }: { query: string; preview?: boolean }) {
+  const token = preview
+    ? import.meta.env.CONTENTFUL_PREVIEW_API
+    : import.meta.env.CONTENTFUL_DELIVERY_API
+
+  const spaceId = import.meta.env.CONTENTFUL_SPACE_ID
+  const spaceEnv = import.meta.env.CONTENTFUL_ENV
+
   return await fetch(
-    `https://graphql.contentful.com/content/v1/spaces/${
-      import.meta.env.CONTENTFUL_SPACE_ID
-    }/environments/${import.meta.env.CONTENTFUL_ENV}`,
+    `https://graphql.contentful.com/content/v1/spaces/${spaceId}/environments/${spaceEnv}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.CONTENTFUL_DELIVERY_API}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ query }),
     }
