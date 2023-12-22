@@ -9,24 +9,26 @@ import { pageNotFound } from "../util/responses"
 
 import { getPage, getFullPath } from "../lib/contentfulLegacy"
 
-const { slug: rawSlug } = Astro.params
+const pathname = Astro.url.pathname
 
 // Return 404 if no slug provided
-if (!rawSlug) return pageNotFound()
+if (!Astro.params.slug) return pageNotFound()
 
-const slug = rawSlug.split("/").at(-1)!
+const { data } = await getPage({ pathname })
 
-const { data } = await getPage({ slug })
+// Redirect if data.redirect is true
+if (data.redirect) return Astro.redirect(data.to)
 
 // Return 404 if there is no page with that slug
 if (!data?.pageCollection?.items.length) return pageNotFound()
 
 const page = data.pageCollection.items[0]
-const path = getFullPath({ page })
-//console.log(path)
+const path = getFullPath(page)
+
 // At this point we have looked up the page
 // but if the full path is incorrect return a 404
-if (path !== rawSlug) return pageNotFound()
+// Is there a better way to handle this... probably
+if (path !== pathname) return pageNotFound()
 
 const modules: ContentComponent[] = page.modulesCollection.items
 ---
