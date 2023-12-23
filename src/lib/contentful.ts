@@ -1,7 +1,8 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
-export async function getPage({ slug }: { slug: string }) {
+export async function getPage({ pathname }: { pathname: string }) {
+  const slug = getSlugFromPath(pathname)
   const query = `
     fragment parentPage on Page {
       sys {
@@ -49,6 +50,10 @@ export async function getPage({ slug }: { slug: string }) {
   return data
 }
 
+export function getSlugFromPath(pathname: string) {
+  return pathname.split("/").at(-1)
+}
+
 export async function fetchData(query: string) {
   return await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${
@@ -65,12 +70,16 @@ export async function fetchData(query: string) {
   ).then((res) => res.json())
 }
 
-export function getFullPath({ page }: { page: ContentfulPage }) {
+export function getPathSegments(page: ContentfulPage) {
   const path = [page.slug]
 
   if (page.parent) {
-    path.push(getFullPath({ page: page.parent }))
+    path.push(getPathSegments(page.parent))
   }
 
   return path.reverse().join("/")
+}
+
+export function getFullPath(page: ContentfulPage) {
+  return `/${getPathSegments(page)}`
 }
