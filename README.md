@@ -2,7 +2,7 @@
 
 A very (very) dumb Astro site with Contentful integration.
 
-Currently wired up to a free tier Contentful site. You'll need a `.env` file ([of any flavour](https://vitejs.dev/guide/env-and-mode)) with the following:
+Currently wired up to a free tier Contentful site. You'll need a `.env.development` file with the following:
 
 ```
 CONTENTFUL_DELIVERY_API=
@@ -20,6 +20,15 @@ CONTENTFUL_ENV=
 #### Run it
 
 ```
+nvm use
 npm install
 npm run dev
+```
+
+#### Build it
+
+This demo is currently set up to use the [Astro Node adapter](https://docs.astro.build/en/guides/integrations-guide/node/) with very little extra config. It just needs a `.env.production` with the same values as above. Eventually this should be turned into a Docker container, probably following [this guide](https://docs.astro.build/en/recipes/docker/).
+
+```
+npm run build
 ```
