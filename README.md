@@ -32,3 +32,11 @@ This demo is currently set up to use the [Astro Node adapter](https://docs.astro
 ```
 npm run build
 ```
+
+#### Issues
+
+Astro has some quirks. These are things I've encountered so far:
+
+1. Importing css into a component using `import` and then cmd+clicking it resolves the type definitions instead. It seems the preferred way is to use a `<style>` tag with an import instead (see [RFC discussion](https://github.com/withastro/roadmap/blob/main/proposals/0001-style-unification.md))
+2. Returning a function in a `.astro` files causes `astro check` to report the function as unused (see [open issue](https://github.com/withastro/language-tools/issues/476))
+3. Currently Astro does not ship a test renderer, so there is no clean way to unit test `.astro` components in isolation. In practice this might mean writing components as React-y tsx/jsx. Astro will still render them on the server. For interactivity, we'd probably use React anyway. See [open discussion](https://github.com/withastro/roadmap/issues/533)
