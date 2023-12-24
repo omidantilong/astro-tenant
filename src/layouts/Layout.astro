@@ -3,8 +3,6 @@ interface Props {
   title: string
 }
 
-import "../styles/global.scss"
-
 const { title } = Astro.props
 ---
 
@@ -23,6 +21,8 @@ const { title } = Astro.props
   </body>
 </html>
 <style is:global>
+  @import "../styles/global.scss";
+
   html {
     font-family: system-ui, sans-serif;
   }
