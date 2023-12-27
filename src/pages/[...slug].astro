@@ -3,11 +3,13 @@ import Layout from "../layouts/Layout.astro"
 import Section from "../components/Section/Section"
 
 import { pageNotFound } from "../util/responses"
+import { sanitizePath } from "../util/common"
+
 //import { getPage, getFullPath } from "../lib/contentful"
 
 import { getPage, getFullPath } from "../lib/contentfulLegacy"
 
-const pathname = Astro.url.pathname
+const pathname = sanitizePath(Astro.url.pathname)
 
 // Return 404 if no slug provided
 if (!Astro.params.slug) return pageNotFound()
@@ -21,7 +23,7 @@ if (data.redirect) return Astro.redirect(data.to)
 if (!data?.pageCollection?.items.length) return pageNotFound()
 
 const page = data.pageCollection.items[0]
-const path = getFullPath(page)
+const path = sanitizePath(getFullPath(page))
 
 // At this point we have looked up the page
 // but if the full path is incorrect return a 404
