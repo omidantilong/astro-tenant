@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import Section from "../components/Section/Section"
+import Text from "../components/Text/Text"
 
 import { pageNotFound } from "../util/responses"
 import { sanitizePath } from "../util/common"
@@ -39,9 +40,11 @@ const modules: ContentComponent[] = page.modulesCollection.items
       <h1>{page.title}</h1>
       <time>date</time>
       {
-        modules.map((module) => {
-          if (module.type === "Section") return <Section data={module} />
-        })
+        modules &&
+          modules.map((module) => {
+            if (module.type === "Section") return <Section data={module} />
+            if (module.type === "Text") return <Text data={module} />
+          })
       }
     </div>
   </main>
