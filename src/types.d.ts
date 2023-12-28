@@ -13,7 +13,9 @@ declare interface ContentfulLegacyPage {
 declare interface Section {
   type: "Section"
   title: string
-  contentCollection: any[]
+  contentCollection: {
+    items: ContentComponent[]
+  }
 }
 
 declare interface EditorialCard {
