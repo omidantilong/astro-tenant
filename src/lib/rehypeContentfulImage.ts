@@ -19,6 +19,12 @@ import { getAsset } from "./contentfulLegacy"
 // picture with nested sources, using the h function exposed by hast.
 // This would be an improvement over the current implementation.
 //
+// UNTIL RSCs LAND IN A STABLE REACT RELEASE!!
+//
+// Currently on Next.js "fully" supports async RSC. Remix plan to widen
+// support in v3: https://remix.run/blog/remix-v2#what-about-rsc -
+// presumably Astro and other frameworks will follow suit.
+//
 // Useful for reference:
 // https://github.com/remarkjs/remark-unwrap-images/blob/main/lib/index.js
 // https://github.com/JS-DevTools/rehype-inline-svg/tree/master/src
