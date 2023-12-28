@@ -19,8 +19,6 @@ import { getAsset } from "./contentfulLegacy"
 // picture with nested sources, using the h function exposed by hast.
 // This would be an improvement over the current implementation.
 //
-// As it stands, all this plugin does is append the quality parameter
-// and return the amended url
 
 export function rehypeContentfulImageSync() {
   // return async function transformer(tree: Node) {
@@ -38,9 +36,8 @@ export function rehypeContentfulImageSync() {
 }
 
 export function rehypeContentfulImage() {
-  // return async function transformer(tree: Node) {
-  //   let imgNodes = findImgNodes(tree)
-  // }
+  // Useful reading on async visit() calls:
+  // https://github.com/syntax-tree/unist-util-visit-parents/issues/8
 
   return async function (tree: Node) {
     const images: hast.Element[] = collectNodes(tree)
