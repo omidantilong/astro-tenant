@@ -1,0 +1,31 @@
+---
+interface Props {
+  data: Text
+}
+//import { micromark } from "micromark"
+import { unified } from "unified"
+import remarkParse from "remark-parse"
+import remarkRehype from "remark-rehype"
+import remarkUnwrapImages from "remark-unwrap-images"
+import rehypeStringify from "rehype-stringify"
+import { rehypeContentfulImage } from "../../lib/rehypeContentfulImage"
+
+async function processMarkdown(text: string) {
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkUnwrapImages)
+    .use(remarkRehype)
+    .use(rehypeContentfulImage)
+    .use(rehypeStringify)
+  const parsed = await processor.process(text)
+  return parsed.toString()
+}
+const { title, text } = Astro.props.data
+//const parsed = micromark(text)
+
+const parsed = await processMarkdown(text)
+//console.log(parsed)
+//return <div>{parsed}</div>
+---
+
+<Fragment set:html={parsed} />
