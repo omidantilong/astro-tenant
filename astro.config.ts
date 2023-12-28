@@ -7,6 +7,7 @@ import react from "@astrojs/react"
 export default defineConfig({
   output: "server",
   trailingSlash: "ignore",
+  devToolbar: { enabled: false },
   adapter: node({
     mode: "standalone",
   }),
