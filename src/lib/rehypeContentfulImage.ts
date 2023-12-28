@@ -31,7 +31,7 @@ import { getAsset } from "./contentfulLegacy"
 // https://www.contentful.com/blog/rendering-linked-assets-entries-in-contentful/
 
 export function rehypeContentfulImageSync() {
-  return async function (tree: Node) {
+  return function (tree: Node) {
     const images: hast.Element[] = collectNodes(tree)
 
     for (const image of images) {
