@@ -1,6 +1,7 @@
 import { visit } from "unist-util-visit"
 import type { Node } from "unist"
 import type hast from "hast"
+import { getAsset } from "./contentfulLegacy"
 
 //import { h } from "hastscript"
 //import { getAsset } from "../lib/contentfulLegacy"
@@ -21,28 +22,64 @@ import type hast from "hast"
 // As it stands, all this plugin does is append the quality parameter
 // and return the amended url
 
-export default function rehypeContentfulImage() {
-  return function (tree: Node) {
-    visit(tree, { tagName: "img" }, (node: hast.Element) => {
-      // visit() can also take:
-      // index: number
-      // parent: hast.Element
+export function rehypeContentfulImageSync() {
+  // return async function transformer(tree: Node) {
+  //   let imgNodes = findImgNodes(tree)
+  // }
 
-      // Sample img srcsets taken from existing image jinja component
-      // <img
-      // src="{{ asset.fields.file.url }}?w={{width}}&amp;q=80"
-      // alt="{{ asset.fields.description }}"
-      // width="{{ width }}"
-      // height="{{ height }}"
-      // srcset="{{ asset.fields.file.url }}?w={{divide2}}&amp;q=80 {{divide2}}w, {{ asset.fields.file.url }}?w={{width}}&amp;q=80 {{width}}w" />
+  return async function (tree: Node) {
+    const images: hast.Element[] = collectNodes(tree)
 
-      const src = node.properties.src as string
-      if (src && src.includes("images.ctfassets")) {
-        //const id = src.split("/").at(-3)
-        //const {data} = await getAsset(id)
-        node.properties.src = src + "?q=80"
-        //node.properties.height = data.asset.height
-      }
-    })
+    for (const image of images) {
+      const src = image.properties.src as string
+      image.properties.src = src + "?q=80"
+    }
   }
+}
+
+export function rehypeContentfulImage() {
+  // return async function transformer(tree: Node) {
+  //   let imgNodes = findImgNodes(tree)
+  // }
+
+  return async function (tree: Node) {
+    const images: hast.Element[] = collectNodes(tree)
+
+    for (const image of images) {
+      const src = String(image.properties.src)
+      const id = src.split("/").at(-3)
+
+      image.properties.src = src + "?q=80"
+
+      if (id) {
+        const { data } = await getAsset(id)
+        image.properties.height = data.asset.height
+        image.properties.width = data.asset.width
+      }
+    }
+  }
+}
+
+function collectNodes(tree: Node) {
+  const images: hast.Element[] = []
+  visit(tree, { tagName: "img" }, (node: hast.Element) => {
+    // visit() can also take:
+    // index: number
+    // parent: hast.Element
+
+    // Sample img srcsets taken from existing image jinja component
+    // <img
+    // src="{{ asset.fields.file.url }}?w={{width}}&amp;q=80"
+    // alt="{{ asset.fields.description }}"
+    // width="{{ width }}"
+    // height="{{ height }}"
+    // srcset="{{ asset.fields.file.url }}?w={{divide2}}&amp;q=80 {{divide2}}w, {{ asset.fields.file.url }}?w={{width}}&amp;q=80 {{width}}w" />
+
+    const src = String(node.properties.src)
+    if (src && src.includes("images.ctfassets")) {
+      images.push(node)
+    }
+  })
+
+  return images
 }
