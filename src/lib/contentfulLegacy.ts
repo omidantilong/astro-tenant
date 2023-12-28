@@ -64,8 +64,20 @@ export async function getPage({ pathname }: { pathname: string }) {
   return await fetchData({ query })
 }
 
-export function getSlugFromPath(pathname: string) {
-  return pathname.split("/").at(-1)
+export async function getAsset(id: string) {
+  const query = `
+    query AssetQuery { 
+      asset(id:"${id}") {
+        title
+        contentType
+        width
+        height
+        sys {
+          id
+        }
+      }
+    }`
+  return await fetchData({ query })
 }
 
 export async function getRedirect(pathname: string) {
@@ -113,6 +125,10 @@ export async function fetchData({ query, preview = false }: { query: string; pre
     console.log(`Query complexity: ${res.headers.get("X-Contentful-Graphql-Query-Cost")} / 11000`)
     return res.json()
   })
+}
+
+export function getSlugFromPath(pathname: string) {
+  return pathname.split("/").at(-1)
 }
 
 export function getPathSegments(page: ContentfulLegacyPage) {
