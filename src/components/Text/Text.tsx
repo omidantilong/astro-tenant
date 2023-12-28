@@ -2,10 +2,15 @@
 import { unified } from "unified"
 import remarkParse from "remark-parse"
 import remarkRehype from "remark-rehype"
+import remarkUnwrapImages from "remark-unwrap-images"
 import rehypeStringify from "rehype-stringify"
 
 function processMarkdown(text: string) {
-  const processor = unified().use(remarkParse).use(remarkRehype).use(rehypeStringify)
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkUnwrapImages)
+    .use(remarkRehype)
+    .use(rehypeStringify)
   const parsed = processor.processSync(text).toString()
   return parsed
 }
