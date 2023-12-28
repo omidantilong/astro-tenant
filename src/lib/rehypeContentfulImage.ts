@@ -19,6 +19,16 @@ import { getAsset } from "./contentfulLegacy"
 // picture with nested sources, using the h function exposed by hast.
 // This would be an improvement over the current implementation.
 //
+// Useful for reference:
+// https://github.com/remarkjs/remark-unwrap-images/blob/main/lib/index.js
+// https://github.com/JS-DevTools/rehype-inline-svg/tree/master/src
+// https://github.com/omidantilong/remark-unwrap-tags
+// https://github.com/syntax-tree/hast
+// https://github.com/withastro/astro/issues/1097
+
+// https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/assets
+// https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/assets
+// https://www.contentful.com/blog/rendering-linked-assets-entries-in-contentful/
 
 export function rehypeContentfulImageSync() {
   return async function (tree: Node) {
