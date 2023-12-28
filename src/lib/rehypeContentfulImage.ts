@@ -21,15 +21,11 @@ import { getAsset } from "./contentfulLegacy"
 //
 
 export function rehypeContentfulImageSync() {
-  // return async function transformer(tree: Node) {
-  //   let imgNodes = findImgNodes(tree)
-  // }
-
   return async function (tree: Node) {
     const images: hast.Element[] = collectNodes(tree)
 
     for (const image of images) {
-      const src = image.properties.src as string
+      const src = String(image.properties.src)
       image.properties.src = src + "?q=80"
     }
   }
