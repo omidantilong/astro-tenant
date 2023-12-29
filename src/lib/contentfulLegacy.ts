@@ -86,6 +86,11 @@ export async function getPage({ pathname }: { pathname: string }) {
                 contentCollection(limit: 20) {
                   items {
                     type: __typename
+                    ...on Entry {
+                      sys {
+                        id
+                      }
+                    }
                     ...on EditorialCard {
                       cardHeading,
                       cardLabel,
