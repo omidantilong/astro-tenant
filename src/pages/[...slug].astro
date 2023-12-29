@@ -41,10 +41,12 @@ const modules: ContentComponent[] = page.modulesCollection.items
       <time>date</time>
       {
         modules &&
-          modules.map((module) => {
-            if (module.type === "Section") return <Section data={module} />
-            if (module.type === "Text") return <Text data={module} />
-          })
+          modules
+            .filter((module) => module)
+            .map((module) => {
+              if (module.type === "Section") return <Section data={module} />
+              if (module.type === "Text") return <Text data={module} />
+            })
       }
     </div>
   </main>
