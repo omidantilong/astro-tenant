@@ -3,6 +3,8 @@ interface Props {
   data: Section
 }
 
+import EditorialCard from "../EditorialCard/EditorialCard.astro"
+
 const { type, title, contentCollection } = Astro.props.data
 //console.log(contentCollection)
 ---
@@ -11,6 +13,6 @@ const { type, title, contentCollection } = Astro.props.data
 {
   contentCollection.items.length &&
     contentCollection.items.map((content: ContentComponent) => {
-      if (content.type === "EditorialCard") return <h3>{content.cardHeading}</h3>
+      if (content.type === "EditorialCard") return <EditorialCard data={content} />
     })
 }
