@@ -2,30 +2,21 @@
 interface Props {
   data: EditorialCard
 }
+
+import LinkWrapper from "../LinkWrapper/LinkWrapper.astro"
+
 import { parse } from "../../util/content"
-import { getInternalLink, getFullPath } from "../../lib/contentfulLegacy"
 
 const { cardHeading, cardBody, link } = Astro.props.data
 
 const parsed = await parse(cardBody)
-
-let Wrapper = Fragment
-let wrapperProps: LinkWrapperProps = {}
-
-if (link) {
-  Wrapper = "a"
-  if (link.type === "InternalLink") {
-    const { data: linkData } = await getInternalLink({ id: link.sys.id })
-    wrapperProps.href = getFullPath(linkData.internalLink.page)
-  }
-}
 ---
 
 <article
   style={{ border: "1px solid #ccc", borderRadius: "4px", padding: "0 1rem", marginBottom: "1rem" }}
 >
-  <Wrapper {...wrapperProps}>
+  <LinkWrapper data={link}>
     <h3>{cardHeading}</h3>
     <p set:html={parsed} />
-  </Wrapper>
+  </LinkWrapper>
 </article>

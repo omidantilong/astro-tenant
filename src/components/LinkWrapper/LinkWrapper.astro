@@ -1,0 +1,24 @@
+---
+interface Props {
+  data: Link
+}
+
+import { getFullPath, getInternalLink } from "../../lib/contentfulLegacy"
+
+let Wrapper = "div"
+let wrapperProps: LinkWrapperProps = {}
+
+const link = Astro.props.data
+
+if (link) {
+  Wrapper = "a"
+  if (link.type === "InternalLink") {
+    const { data: linkData } = await getInternalLink({ id: link.sys.id })
+    wrapperProps.href = getFullPath(linkData.internalLink.page)
+  }
+}
+---
+
+<Wrapper {...wrapperProps}>
+  <slot />
+</Wrapper>
