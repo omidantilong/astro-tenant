@@ -1,27 +1,11 @@
 //import { micromark } from "micromark"
-import { unified } from "unified"
-import remarkParse from "remark-parse"
-import remarkRehype from "remark-rehype"
-import remarkUnwrapImages from "remark-unwrap-images"
-import rehypeStringify from "rehype-stringify"
-import { rehypeContentfulImageSync } from "../../lib/rehypeContentfulImage"
-
-function processMarkdown(text: string) {
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkUnwrapImages)
-    .use(remarkRehype)
-    .use(rehypeContentfulImageSync)
-    .use(rehypeStringify)
-  const parsed = processor.processSync(text).toString()
-  return parsed
-}
+import { parse } from "../../util/content.ts"
 
 export default function ({ data }: { data: Text }) {
   const { title, text } = data
   //const parsed = micromark(text)
 
-  const parsed = processMarkdown(text)
+  const parsed = parse(text)
 
   //return <div>{parsed}</div>
 
