@@ -1,6 +1,32 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
+export async function getInternalLink({ id }: { id: string }) {
+  const query = `
+    query LinkQuery {
+      internalLink(id: "${id}") {
+        type: __typename
+        ...on InternalLink {
+          page {
+            ...on Page {
+              title
+              url
+              parentPage {
+                ...on Page {
+                  title
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `
+
+  return await fetchData({ query })
+}
+
 export async function getPage({ pathname }: { pathname: string }) {
   const redirect = await getRedirect(pathname)
 
@@ -48,6 +74,14 @@ export async function getPage({ pathname }: { pathname: string }) {
                       image {
                         url,
                         title
+                      }
+                      link {
+                        type: __typename
+                        ...on Entry {
+                          sys { 
+                            id
+                          }
+                        }
                       }
                     }
                   }
