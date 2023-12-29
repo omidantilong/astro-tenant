@@ -1,6 +1,25 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
+export function parentLookup(depth: number) {
+  const parentQuery = []
+
+  for (let x = 1; x < depth; x++) {
+    parentQuery.unshift("parentPage { ... on Page { title url ")
+    parentQuery.push("} }")
+  }
+
+  const query = `
+    ...on Page {
+      title
+      url
+      ${parentQuery.join("")}
+    }
+  `
+
+  return query
+}
+
 export async function getPagePath({ id }: { id: string }) {
   const query = `
     query PagePathQuery {
@@ -27,16 +46,7 @@ export async function getInternalLink({ id }: { id: string }) {
         type: __typename
         ...on InternalLink {
           page {
-            ...on Page {
-              title
-              url
-              parentPage {
-                ...on Page {
-                  title
-                  url
-                }
-              }
-            }
+            ${parentLookup(3)}
           }
         }
       }
