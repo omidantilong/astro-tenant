@@ -233,7 +233,7 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
-export async function resolveLinks(items: ContentComponent[]) {
+export async function resolveLinks(entries: Entry[]) {
   // This function can be used to collect all InternalLink entries that
   // are direct children of a Section, reducing the number of HTTP requests
   // that are made behind the scenes. It could be further extended to
@@ -251,10 +251,10 @@ export async function resolveLinks(items: ContentComponent[]) {
 
   const links: { [key: string]: InternalLink } = {}
 
-  if (items.length) {
+  if (entries.length) {
     const linkMap: { [key: string]: string } = {}
 
-    items.forEach((entry) => {
+    entries.forEach((entry) => {
       if ("link" in entry && entry?.link?.type === "InternalLink") {
         linkMap[entry.link.sys.id] = entry.sys.id
       }

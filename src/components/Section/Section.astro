@@ -13,7 +13,7 @@ const links = await resolveLinks(contentCollection.items)
 <h2>{title}</h2>
 {
   contentCollection.items.length &&
-    contentCollection.items.map((entry: ContentComponent) => {
+    contentCollection.items.map((entry: Entry) => {
       if ("link" in entry) entry.link = links[entry.sys.id]
       if (entry.type === "EditorialCard") return <EditorialCard data={entry} />
     })

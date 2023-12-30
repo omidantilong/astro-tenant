@@ -17,10 +17,10 @@ export default function (props: Props) {
     <>
       <h2>{title}</h2>
       {contentCollection.items.length &&
-        contentCollection.items.map((content: ContentComponent) => {
+        contentCollection.items.map((entry: Entry) => {
           //console.log(content)
-          if (content.type === "EditorialCard") return <h3>{content.cardHeading}</h3>
-          if (content.type === "Text") return <Text data={content} />
+          if (entry.type === "EditorialCard") return <h3>{entry.cardHeading}</h3>
+          if (entry.type === "Text") return <Text data={entry} />
         })}
     </>
   )

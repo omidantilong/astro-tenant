@@ -20,7 +20,7 @@ declare interface Section extends Sys {
   type: "Section"
   title: string
   contentCollection: {
-    items: ContentComponent[]
+    items: Entry[]
   }
 }
 
@@ -54,4 +54,4 @@ declare interface ExternalLink extends Sys {
 
 declare type Link = InternalLink | ExternalLink
 
-declare type ContentComponent = Section | EditorialCard | Text
+declare type Entry = Section | EditorialCard | Text
