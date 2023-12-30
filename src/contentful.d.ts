@@ -10,7 +10,13 @@ declare interface ContentfulLegacyPage {
   parentPage: ContentfulLegacyPage
 }
 
-declare interface Section {
+declare interface Entry {
+  sys: {
+    id: string
+  }
+}
+
+declare interface Section extends Entry {
   type: "Section"
   title: string
   contentCollection: {
@@ -18,7 +24,7 @@ declare interface Section {
   }
 }
 
-declare interface EditorialCard {
+declare interface EditorialCard extends Entry {
   type: "EditorialCard"
   cardHeading: string
   cardLabel: string
@@ -26,23 +32,20 @@ declare interface EditorialCard {
   link: Link
 }
 
-declare interface Text {
+declare interface Text extends Entry {
   type: "Text"
   title: string
   text: string
 }
 
-declare interface InternalLink {
-  sys: {
-    id: string
-  }
+declare interface InternalLink extends Entry {
   type: "InternalLink"
   page: ContentfulLegacyPage
   title: string
   linkStyle: string
 }
 
-declare interface ExternalLink {
+declare interface ExternalLink extends Entry {
   type: "ExternalLink"
   url: string
   title: string
