@@ -69,6 +69,31 @@ export async function getInternalLink({ id }: { id: string }) {
   return await fetchData({ query })
 }
 
+export async function getInternalLinkCollection({ links }: { links: string[] }) {
+  const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
+
+  const query = `
+  ${parentPageFragment}
+  query LinkCollectionQuery {
+    internalLinkCollection(where: { ${condition} } ) {
+      items {
+        type: __typename
+        ...on InternalLink {
+          sys {
+            id
+          }
+          page {
+            ${parentLookup(2)}
+          }
+        }
+      }
+    }
+  }
+  `
+
+  return await fetchData({ query })
+}
+
 export async function getPage({ pathname }: { pathname: string }) {
   const redirect = await getRedirect(pathname)
 
