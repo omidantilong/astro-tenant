@@ -14,6 +14,8 @@ const parentPageFragment = `
 export function parentLookup(depth: number) {
   const parentQuery = []
 
+  if (depth < 2) return ""
+
   for (let x = 1; x < depth; x++) {
     parentQuery.unshift("parentPage { ... on Page { ...parent ")
     parentQuery.push("} }")
