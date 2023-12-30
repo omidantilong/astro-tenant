@@ -11,7 +11,7 @@ const parentPageFragment = `
   }
 `
 
-export function parentLookup(depth: number) {
+function parentLookup(depth: number) {
   const parentQuery = []
 
   if (depth < 2) return ""
