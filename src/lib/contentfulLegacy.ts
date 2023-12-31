@@ -32,7 +32,7 @@ function parentLookup(depth: number) {
   return query
 }
 
-export async function getPagePath({ id }: { id: string }) {
+export async function getPagePath(id: string) {
   const query = `
     query PagePathQuery {
       page(id: "${id}") {
@@ -51,7 +51,7 @@ export async function getPagePath({ id }: { id: string }) {
   return await fetchData({ query })
 }
 
-export async function getInternalLink({ id }: { id: string }) {
+export async function getInternalLink(id: string) {
   const query = `
     ${parentPageFragment} 
     query LinkQuery {
@@ -69,7 +69,7 @@ export async function getInternalLink({ id }: { id: string }) {
   return await fetchData({ query })
 }
 
-export async function getInternalLinkCollection({ links }: { links: string[] }) {
+export async function getInternalLinkCollection(links: string[]) {
   const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
 
   const query = `
@@ -94,7 +94,7 @@ export async function getInternalLinkCollection({ links }: { links: string[] }) 
   return await fetchData({ query })
 }
 
-export async function getPage({ pathname }: { pathname: string }) {
+export async function getPage(pathname: string) {
   const redirect = await getRedirect(pathname)
 
   if (redirect) return { data: { redirect: true, ...redirect } }
@@ -263,7 +263,7 @@ export async function resolveLinks(entries: Entry[]) {
     const linkIds = Object.keys(linkMap)
 
     if (linkIds.length) {
-      const { data } = await getInternalLinkCollection({ links: linkIds })
+      const { data } = await getInternalLinkCollection(linkIds)
 
       data.internalLinkCollection.items.forEach((link: InternalLink) => {
         links[linkMap[link.sys.id]] = link

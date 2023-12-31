@@ -15,7 +15,7 @@ const pathname = sanitizePath(Astro.url.pathname)
 // Return 404 if no slug provided
 if (!Astro.params.slug) return pageNotFound()
 
-const { data } = await getPage({ pathname })
+const { data } = await getPage(pathname)
 
 // Redirect if data.redirect is true
 if (data.redirect) return Astro.redirect(data.to)
