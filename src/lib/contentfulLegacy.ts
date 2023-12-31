@@ -1,8 +1,9 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
-const parentPageFragment = `
-  fragment parent on Page {
+const pageDataFragment = `
+  fragment pageData on Page {
+    type: __typename
     sys {
       id
     }
@@ -17,14 +18,13 @@ function parentLookup(depth: number) {
   if (depth < 2) return ""
 
   for (let x = 1; x < depth; x++) {
-    parentQuery.unshift("parentPage { ... on Page { ...parent ")
+    parentQuery.unshift("parentPage { ... on Page { ...pageData ")
     parentQuery.push("} }")
   }
 
   const query = `
     ...on Page {
-      title
-      url
+      ...pageData
       ${parentQuery.join("")}
     }
   `
@@ -34,15 +34,12 @@ function parentLookup(depth: number) {
 
 export async function getPagePath(id: string) {
   const query = `
+    ${pageDataFragment}
     query PagePathQuery {
       page(id: "${id}") {
-        title
-        url
+        ...pageData
         parentPage {
-          ...on Page {
-            title,
-            url
-          }
+          ${parentLookup(3)}
         }
       }
     }
@@ -53,7 +50,7 @@ export async function getPagePath(id: string) {
 
 export async function getInternalLink(id: string) {
   const query = `
-    ${parentPageFragment} 
+    ${pageDataFragment} 
     query LinkQuery {
       internalLink(id: "${id}") {
         type: __typename
@@ -73,7 +70,7 @@ export async function getInternalLinkCollection(links: string[]) {
   const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
 
   const query = `
-  ${parentPageFragment}
+  ${pageDataFragment}
   query LinkCollectionQuery {
     internalLinkCollection(where: { ${condition} } ) {
       items {
@@ -102,20 +99,13 @@ export async function getPage(pathname: string) {
   const slug = getSlugFromPath(pathname)
 
   const query = `
+    ${pageDataFragment}
     query PageQuery {
       pageCollection(where: {url: "${slug}"}, limit: 1) { 
         items { 
-          type: __typename
-          sys {
-            id
-          }
-          title,
-          url,
+          ...pageData
           parentPage {
-            ...on Page {
-              title,
-              url
-            }
+            ${parentLookup(3)}
           }
           modulesCollection(limit: 10) {
             items {
