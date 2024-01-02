@@ -1,7 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import Section from "../components/Section/Section.astro"
-import Text from "../components/Text/Text.astro"
 
 import { pageNotFound } from "../util/responses"
 import { sanitizePath } from "../util/common"
@@ -32,6 +30,9 @@ const path = sanitizePath(getFullPath(page))
 if (path !== pathname) return pageNotFound()
 
 const entries: Entry[] = page.modulesCollection.items || []
+const components: { [key: string]: { default: Function } } = {}
+
+//const Layout = await import(`../layouts/${page.type}.astro`)
 ---
 
 <Layout title="Welcome to Astro.">
@@ -42,9 +43,16 @@ const entries: Entry[] = page.modulesCollection.items || []
       {
         entries
           .filter((entry) => entry)
-          .map((entry) => {
-            if (entry.type === "Section") return <Section data={entry} />
-            if (entry.type === "Text") return <Text data={entry} />
+          .map(async (entry) => {
+            if (!components[entry.type]) {
+              components[entry.type] = await import(
+                `../components/${entry.type}/${entry.type}.astro`
+              )
+            }
+            const Component = components[entry.type].default
+            return <Component data={entry} />
+            //if (entry.type === "Section") return <Components.Section data={entry} />
+            //if (entry.type === "Text") return <Components.Text data={entry} />
           })
       }
     </div>
