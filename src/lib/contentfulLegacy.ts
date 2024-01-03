@@ -265,7 +265,10 @@ export async function resolveLinks(entries: Entry[]) {
 }
 
 export function getSlugFromPath(pathname: string) {
-  return pathname.split("/").at(-1)
+  // If the pathname is a slash, return it
+  // Otherwise extract the last segment
+
+  return pathname === "/" ? pathname : pathname.split("/").at(-1)
 }
 
 export function getPathSegments(page: ContentfulLegacyPage) {

@@ -10,9 +10,6 @@ import { getPage, getFullPath } from "../lib/contentfulLegacy"
 
 const pathname = sanitizePath(Astro.url.pathname)
 
-// Return 404 if no slug provided
-if (!Astro.params.slug) return pageNotFound()
-
 const { data } = await getPage(pathname)
 
 // Redirect if data.redirect is true
@@ -31,7 +28,7 @@ if (path !== pathname) return pageNotFound()
 
 const entries: Entry[] = page.modulesCollection.items || []
 const components: { [key: string]: { default: Function } } = {}
-
+//console.log(page)
 //const Layout = await import(`../layouts/${page.type}.astro`)
 ---
 
