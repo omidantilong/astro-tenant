@@ -32,7 +32,7 @@ const components: { [key: string]: { default: Function } } = {}
 //const Layout = await import(`../layouts/${page.type}.astro`)
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title={page.title}>
   <main>
     <div class="wrap">
       <h1>{page.title}</h1>
