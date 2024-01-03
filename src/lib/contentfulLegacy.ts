@@ -6,6 +6,7 @@ const pageDataFragment = `
     type: __typename
     sys {
       id
+      publishedAt
     }
     title
     url
