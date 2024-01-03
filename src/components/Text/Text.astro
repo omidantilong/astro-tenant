@@ -2,14 +2,11 @@
 interface Props {
   data: Text
 }
-import { parse } from "../../util/content"
+import { parse } from "../../util/markdown"
 
 const { title, text } = Astro.props.data
-//const parsed = micromark(text)
 
 const parsed = await parse(text)
-//console.log(parsed)
-//return <div>{parsed}</div>
 ---
 
 <Fragment set:html={parsed} />
