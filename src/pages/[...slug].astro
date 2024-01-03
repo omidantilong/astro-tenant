@@ -42,12 +42,18 @@ const components: { [key: string]: { default: Function } } = {}
           .filter((entry) => entry)
           .map(async (entry) => {
             if (!components[entry.type]) {
-              components[entry.type] = await import(
-                `../components/${entry.type}/${entry.type}.astro`
-              )
+              try {
+                components[entry.type] = await import(
+                  `../components/${entry.type}/${entry.type}.astro`
+                )
+                const Component = components[entry.type].default
+                return <Component data={entry} />
+              } catch (e) {
+                console.log(`No component for ${entry.type}`)
+                return null
+              }
             }
-            const Component = components[entry.type].default
-            return <Component data={entry} />
+
             //if (entry.type === "Section") return <Components.Section data={entry} />
             //if (entry.type === "Text") return <Components.Text data={entry} />
           })
