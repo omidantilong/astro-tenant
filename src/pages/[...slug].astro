@@ -35,7 +35,7 @@ const components = await collectComponents({ entries })
 //const Layout = await import(`../layouts/${page.type}.astro`)
 ---
 
-<Layout title={page.title}>
+<Layout title={page.metaTitle || page.title}>
   <main>
     <div class="wrap">
       <h1>{page.title}</h1>

@@ -160,6 +160,8 @@ export async function getPage(pathname: string) {
       pageCollection(where: {url: "${slug}"}, limit: 1) { 
         items { 
           ...pageData
+          metaTitle
+          metaDescription
           parentPage {
             ${parentLookup(3)}
           }
