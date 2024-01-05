@@ -6,7 +6,7 @@ import { sanitizePath } from "../util/common"
 import { collectComponents } from "../util/components"
 //import { getPage, getFullPath } from "../lib/contentful"
 
-import { getPage, getFullPath } from "../lib/contentfulLegacy"
+import { getPage, getFullPath, resolveLinks } from "../lib/contentfulLegacy"
 
 const pathname = sanitizePath(Astro.url.pathname)
 
@@ -27,6 +27,7 @@ const path = sanitizePath(getFullPath(page))
 if (path !== pathname) return pageNotFound()
 
 const entries: Entry[] = page.modulesCollection.items || []
+const links = await resolveLinks(entries)
 const components = await collectComponents({ entries })
 //console.log(page)
 //const Layout = await import(`../layouts/${page.type}.astro`)
@@ -40,6 +41,7 @@ const components = await collectComponents({ entries })
       {
         entries.map(async (entry) => {
           if (components[entry.type]) {
+            if ("link" in entry) entry.link = links[entry.sys.id]
             const Component = components[entry.type].default
             return <Component data={entry} />
           }
