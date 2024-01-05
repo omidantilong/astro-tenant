@@ -1,0 +1,51 @@
+---
+interface Props {
+  data: Image
+}
+
+import { reduceRatio } from "../../util/reduceRatio"
+
+const { image, title } = Astro.props.data
+
+const imageWidthLarge = 720
+const imageWidthSmall = 390
+
+const aspectRatio = reduceRatio(image.width, image.height)
+const aspectRatioValue = `${aspectRatio[0]} / ${aspectRatio[1]}`
+
+const imageProps = {
+  alt: image.description || image.title || "",
+  style: "display:block;width:100%",
+}
+---
+
+<figure class="coop-c-image" style=`padding:0; margin:0; aspect-ratio:${aspectRatioValue}`>
+  <picture class="coop-c-image__media" style="display:block">
+    <!-- if browser supports webp image format, serve the webp format-->
+    <source
+      media="(min-width: 1024px)"
+      srcset=`${image.url}?fm=webp&q=60&w=${imageWidthLarge} 1x,
+              ${image.url}?fm=webp&q=60&w=${imageWidthLarge * 2} 2x`
+      type="image/webp"
+    />
+    <source
+      srcset=`${image.url}?fm=webp&q=60&w=${imageWidthSmall} 1x,
+              ${image.url}?fm=webp&q=60&w=${imageWidthSmall * 2} 2x`
+      type="image/webp"
+    />
+    <!-- if no webp supported then default to serve progressive jpeg -->
+    <source
+      media="(min-width: 1024px)"
+      srcset=`${image.url}?fm=jpg&q=60&w=${imageWidthLarge} 1x,
+              ${image.url}?fm=jpg&q=60&w=${imageWidthLarge * 2} 2x`
+      type="image/jpeg"
+    />
+    <source
+      srcset=`${image.url}?fm=jpg&q=60&w=${imageWidthSmall} 1x,
+              ${image.url}?fm=jpg&q=60&w=${imageWidthSmall *2} 2x`
+      type="image/jpeg"
+    />
+    <!-- fallback -->
+    <img src=`${image.url}?fm=jpg&q=60&w=${imageWidthLarge}` {...imageProps} />
+  </picture>
+</figure>

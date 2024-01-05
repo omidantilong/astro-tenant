@@ -59,6 +59,18 @@ declare interface Video extends sys {
   transcript: string
 }
 
+declare interface Image extends sys {
+  type: "Image"
+  title: string
+  image: {
+    url: string
+    title: string
+    description: string
+    height: number
+    width: number
+  }
+}
+
 declare type Link = InternalLink | ExternalLink
 
-declare type Entry = Section | EditorialCard | Text
+declare type Entry = Section | EditorialCard | Text | Video | Image

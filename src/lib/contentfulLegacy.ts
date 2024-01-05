@@ -121,6 +121,16 @@ export async function getPage(pathname: string) {
                 videoUrl
                 transcript
               }
+              ...on Image {
+                title
+                image {
+                  url
+                  title
+                  description
+                  height
+                  width
+                }
+              }
               ...on Text {
                 title
                 text
