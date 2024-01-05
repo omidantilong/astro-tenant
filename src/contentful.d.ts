@@ -52,6 +52,13 @@ declare interface ExternalLink extends Sys {
   linkStyle: string
 }
 
+declare interface Video extends sys {
+  type: "Video"
+  title: string
+  videoUrl: string
+  transcript: string
+}
+
 declare type Link = InternalLink | ExternalLink
 
 declare type Entry = Section | EditorialCard | Text

@@ -116,6 +116,11 @@ export async function getPage(pathname: string) {
                   id
                 }
               }
+              ...on Video {
+                title
+                videoUrl
+                transcript
+              }
               ...on Text {
                 title
                 text
