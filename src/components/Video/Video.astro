@@ -1,0 +1,21 @@
+---
+interface Props {
+  data: Video
+}
+
+import { parse } from "../../util/markdown"
+
+const { videoUrl, transcript, title } = Astro.props.data
+
+const videoId = videoUrl.split("v=")[1]
+
+const parsedText = await parse(transcript)
+---
+
+<iframe
+  class="coop-c-video__frame"
+  src=`https://www.youtube.com/embed/${videoId}`
+  allow="autoplay; encrypted-media"
+  allowfullscreen></iframe>
+
+<p set:html={parsedText} />
