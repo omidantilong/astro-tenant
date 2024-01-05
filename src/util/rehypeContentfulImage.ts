@@ -53,7 +53,6 @@ export function rehypeContentfulImage() {
 
   return async function (tree: Node) {
     const images: hast.Element[] = collectNodes(tree)
-
     for (const image of images) {
       const src = String(image.properties.src)
       const id = src.split("/").at(-3)
@@ -62,8 +61,10 @@ export function rehypeContentfulImage() {
 
       if (id) {
         const { data } = await getAsset(id)
-        image.properties.height = data.asset.height
-        image.properties.width = data.asset.width
+        if (data.asset) {
+          image.properties.height = data.asset.height
+          image.properties.width = data.asset.width
+        }
       }
     }
   }
