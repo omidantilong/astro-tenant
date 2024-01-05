@@ -47,7 +47,10 @@ const fragments = {
       cardBody,
       image {
         url,
-        title
+        title,
+        description
+        height
+        width
       }
       link {
         type: __typename

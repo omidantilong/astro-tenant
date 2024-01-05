@@ -30,6 +30,7 @@ declare interface EditorialCard extends Sys {
   cardLabel: string
   cardBody: string
   link: Link
+  image: ImageProps
 }
 
 declare interface Text extends Sys {
@@ -62,13 +63,15 @@ declare interface Video extends sys {
 declare interface Image extends sys {
   type: "Image"
   title: string
-  image: {
-    url: string
-    title: string
-    description: string
-    height: number
-    width: number
-  }
+  image: ImageProps
+}
+
+declare type ImageProps = {
+  url: string
+  title: string
+  description: string
+  height: number
+  width: number
 }
 
 declare type Link = InternalLink | ExternalLink
