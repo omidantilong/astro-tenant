@@ -163,6 +163,33 @@ export async function getPage(pathname: string) {
           parentPage {
             ${parentLookup(3)}
           }
+          heroCollection(limit: 5) {
+            items {
+              sys {
+                id
+              }
+              type: __typename
+              title
+              heroHeading
+              heroBody
+              image {
+                url
+                title
+                description
+                width
+                height
+              }
+              imageCaption
+              link: heroLink {
+                type: __typename
+                ...on Entry {
+                  sys { 
+                    id
+                  }
+                }
+              }
+            }
+          }
           modulesCollection(limit: 10) {
             items {
               type: __typename

@@ -1,0 +1,12 @@
+---
+interface Props {
+  data: Hero
+}
+
+const { title, heroBody } = Astro.props.data
+---
+
+<div>
+  <h1>{title}</h1>
+  <p set:html={heroBody} />
+</div>

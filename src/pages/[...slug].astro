@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import Hero from "../components/Hero/Hero.astro"
 
 import { pageNotFound } from "../util/responses"
 import { sanitizePath } from "../util/common"
@@ -26,6 +27,7 @@ const path = sanitizePath(getFullPath(page))
 // Is there a better way to handle this... probably
 if (path !== pathname) return pageNotFound()
 
+const heroes: Hero[] = page.heroCollection.items || []
 const entries: Entry[] = page.modulesCollection.items || []
 const links = await resolveLinks(entries)
 const components = await collectComponents({ entries })
@@ -38,6 +40,11 @@ const components = await collectComponents({ entries })
     <div class="wrap">
       <h1>{page.title}</h1>
       <time>{page.sys.publishedAt}</time>
+      {
+        heroes.map(async (hero) => {
+          return <Hero data={hero} />
+        })
+      }
       {
         entries.map(async (entry) => {
           if (components[entry.type]) {

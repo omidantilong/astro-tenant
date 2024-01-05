@@ -16,6 +16,16 @@ declare interface Sys {
   }
 }
 
+declare interface Hero extends Sys {
+  type: "Hero"
+  title: string
+  heroHeading: string
+  heroBody: string
+  image: ImageProps
+  imageCaption: string
+  link: Link
+}
+
 declare interface Section extends Sys {
   type: "Section"
   title: string
