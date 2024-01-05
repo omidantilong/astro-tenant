@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro"
 
 import { pageNotFound } from "../util/responses"
 import { sanitizePath } from "../util/common"
-
+import { collectComponents } from "../util/components"
 //import { getPage, getFullPath } from "../lib/contentful"
 
 import { getPage, getFullPath } from "../lib/contentfulLegacy"
@@ -27,7 +27,7 @@ const path = sanitizePath(getFullPath(page))
 if (path !== pathname) return pageNotFound()
 
 const entries: Entry[] = page.modulesCollection.items || []
-const components: { [key: string]: { default: Function } } = {}
+const components = await collectComponents({ entries })
 //console.log(page)
 //const Layout = await import(`../layouts/${page.type}.astro`)
 ---
@@ -38,25 +38,15 @@ const components: { [key: string]: { default: Function } } = {}
       <h1>{page.title}</h1>
       <time>{page.sys.publishedAt}</time>
       {
-        entries
-          .filter((entry) => entry)
-          .map(async (entry) => {
-            if (!components[entry.type]) {
-              try {
-                components[entry.type] = await import(
-                  `../components/${entry.type}/${entry.type}.astro`
-                )
-                const Component = components[entry.type].default
-                return <Component data={entry} />
-              } catch (e) {
-                console.log(`No component for ${entry.type}`)
-                return null
-              }
-            }
+        entries.map(async (entry) => {
+          if (components[entry.type]) {
+            const Component = components[entry.type].default
+            return <Component data={entry} />
+          }
 
-            //if (entry.type === "Section") return <Components.Section data={entry} />
-            //if (entry.type === "Text") return <Components.Text data={entry} />
-          })
+          //if (entry.type === "Section") return <Components.Section data={entry} />
+          //if (entry.type === "Text") return <Components.Text data={entry} />
+        })
       }
     </div>
   </main>
