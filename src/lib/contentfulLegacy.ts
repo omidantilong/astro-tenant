@@ -1,17 +1,64 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
-const pageDataFragment = `
-  fragment pageData on Page {
-    type: __typename
-    sys {
-      id
-      publishedAt
-    }
-    title
-    url
-  }
-`
+const fragments = {
+  pageData: `
+    fragment pageData on Page {
+      type: __typename
+      sys {
+        id
+        publishedAt
+      }
+      title
+      url
+    }`,
+  sys: `
+    fragment sysFields on Entry {
+      sys {
+        id
+      }
+    }`,
+  video: `
+    fragment videoFields on Video {
+      title
+      videoUrl
+      transcript
+    }`,
+  image: `
+    fragment imageFields on Image {
+      title
+      image {
+        url
+        title
+        description
+        height
+        width
+      }
+    }`,
+  text: `
+    fragment textFields on Text {
+      title
+      text
+    }`,
+  editorialCard: `
+    fragment editorialCardFields on EditorialCard {
+      cardHeading,
+      cardLabel,
+      cardBody,
+      image {
+        url,
+        title
+      }
+      link {
+        type: __typename
+        ...on Entry {
+          sys { 
+            id
+          }
+        }
+      }
+    }`,
+}
 
 function parentLookup(depth: number) {
   const parentQuery = []
@@ -35,7 +82,7 @@ function parentLookup(depth: number) {
 
 export async function getPagePath(id: string) {
   const query = `
-    ${pageDataFragment}
+    ${fragments.pageData}
     query PagePathQuery {
       page(id: "${id}") {
         ...pageData
@@ -51,7 +98,7 @@ export async function getPagePath(id: string) {
 
 export async function getInternalLink(id: string) {
   const query = `
-    ${pageDataFragment} 
+    ${fragments.pageData} 
     query LinkQuery {
       internalLink(id: "${id}") {
         type: __typename
@@ -71,7 +118,7 @@ export async function getInternalLinkCollection(links: string[]) {
   const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
 
   const query = `
-  ${pageDataFragment}
+  ${fragments.pageData}
   query LinkCollectionQuery {
     internalLinkCollection(where: { ${condition} } ) {
       items {
@@ -100,7 +147,12 @@ export async function getPage(pathname: string) {
   const slug = getSlugFromPath(pathname)
 
   const query = `
-    ${pageDataFragment}
+    ${fragments.pageData}
+    ${fragments.sys}
+    ${fragments.video}
+    ${fragments.image}
+    ${fragments.text}
+    ${fragments.editorialCard}
     query PageQuery {
       pageCollection(where: {url: "${slug}"}, limit: 1) { 
         items { 
@@ -111,57 +163,20 @@ export async function getPage(pathname: string) {
           modulesCollection(limit: 10) {
             items {
               type: __typename
-              ...on Entry {
-                sys {
-                  id
-                }
-              }
-              ...on Video {
-                title
-                videoUrl
-                transcript
-              }
-              ...on Image {
-                title
-                image {
-                  url
-                  title
-                  description
-                  height
-                  width
-                }
-              }
-              ...on Text {
-                title
-                text
-              }
+              ...sysFields
+              ...videoFields
+              ...imageFields
+              ...textFields
               ...on Section {
                 title
                 contentCollection(limit: 20) {
                   items {
                     type: __typename
-                    ...on Entry {
-                      sys {
-                        id
-                      }
-                    }
-                    ...on EditorialCard {
-                      cardHeading,
-                      cardLabel,
-                      cardBody,
-                      image {
-                        url,
-                        title
-                      }
-                      link {
-                        type: __typename
-                        ...on Entry {
-                          sys { 
-                            id
-                          }
-                        }
-                      }
-                    }
+                    ...sysFields
+                    ...videoFields
+                    ...imageFields
+                    ...textFields
+                    ...editorialCardFields
                   }
                 }
               }
