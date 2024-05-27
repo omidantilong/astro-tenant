@@ -4,7 +4,7 @@ interface Props {
 }
 import { parse } from "../../util/markdown"
 
-const { title, text } = Astro.props.data
+const { text } = Astro.props.data
 
 const parsed = await parse(text)
 ---
