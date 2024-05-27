@@ -12,26 +12,26 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/node": "^8.0.0",
-    "@astrojs/react": "^3.0.9",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "astro": "^4.2.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/node": "^8.2.5",
+    "@astrojs/react": "^3.4.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "astro": "^4.9.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rehype-stringify": "^10.0.0",
     "remark": "^15.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
     "remark-unwrap-images": "^4.0.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.5",
     "unified": "^11.0.4"
   },
   "devDependencies": {
-    "prettier": "^3.2.4",
-    "prettier-plugin-astro": "^0.13.0",
-    "sass": "^1.70.0",
-    "vitest": "^1.2.1"
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.14.0",
+    "sass": "^1.77.2",
+    "vitest": "^1.6.0"
   }
 }
