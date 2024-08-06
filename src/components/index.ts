@@ -1,13 +1,12 @@
-//import TestCard from "@astrojs/TestCard/TestCard.astro"
+//import Dummy from "@omidantilong/astro/Dummy"
+//import Foo from "@omidantilong/astro/Foo"
 
-//export default { TestCard }
+import Dummy from "@omidantilong/astro/Dummy"
+import Foo from "@omidantilong/astro/Foo"
 
-// import { add } from "@coopdigital/util.ts"
+//import { Foo } from "@omidantilong/astro"
 
-//import Dummy from "coop-dummy-package-v2"
-
-//@ts-ignore
-import Dummy from "@omidantilong/dummy-astro-package/Dummy.astro"
+//import { DummyPackage } from "@omidantilong/dummy-astro-package"
 
 import EditorialCard from "@/components/EditorialCard/EditorialCard.astro"
 import Section from "@/components/Section/Section.astro"
@@ -15,4 +14,4 @@ import Text from "@/components/Text/Text.astro"
 import Image from "@/components/Image/Image.astro"
 import Video from "@/components/Video/Video.astro"
 
-export default { Dummy, EditorialCard, Section, Text, Image, Video }
+export default { Dummy, Foo, EditorialCard, Section, Text, Image, Video }
