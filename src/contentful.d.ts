@@ -84,6 +84,12 @@ declare type ImageProps = {
   width: number
 }
 
+// declare interface Dummy extends sys {
+//   type: "Dummy"
+//   title: string
+// }
+
 declare type Link = InternalLink | ExternalLink
 
 declare type Entry = Section | EditorialCard | Text | Video | Image
+//declare type Entry = Section | EditorialCard | Text | Video | Image | Dummy

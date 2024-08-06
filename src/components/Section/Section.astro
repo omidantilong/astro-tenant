@@ -4,7 +4,9 @@ interface Props {
 }
 
 import { resolveLinks } from "../../lib/contentfulLegacy"
-import EditorialCard from "../EditorialCard/EditorialCard.astro"
+//import EditorialCard from "@/components/EditorialCard/EditorialCard.astro"
+
+import components from "@/components"
 
 const { title, contentCollection } = Astro.props.data
 const links = await resolveLinks(contentCollection.items)
@@ -17,8 +19,12 @@ const entries: Entry[] = contentCollection.items || []
   <div class="cws-grid">
     {
       entries.map((entry) => {
-        if ("link" in entry) entry.link = links[entry.sys.id]
-        if (entry.type === "EditorialCard") return <EditorialCard data={entry} />
+        if (components[entry.type]) {
+          if ("link" in entry) entry.link = links[entry.sys.id]
+          //const Component = components[entry.type]
+          const Component = components[entry.type] as any
+          return <Component data={entry} />
+        }
       })
     }
   </div>

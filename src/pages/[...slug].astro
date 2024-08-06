@@ -4,10 +4,11 @@ import Hero from "../components/Hero/Hero.astro"
 
 import { pageNotFound } from "../util/responses"
 import { sanitizePath } from "../util/common"
-import { collectComponents } from "../util/components"
-//import { getPage, getFullPath } from "../lib/contentful"
+//import { collectComponents } from "../util/components"
 
 import { getPage, getFullPath, resolveLinks } from "../lib/contentfulLegacy"
+
+import components from "@/components"
 
 const pathname = sanitizePath(Astro.url.pathname)
 
@@ -30,7 +31,12 @@ if (path !== pathname) return pageNotFound()
 const heroes: Hero[] = page.heroCollection.items || []
 const entries: Entry[] = page.modulesCollection.items || []
 const links = await resolveLinks(entries)
-const components = await collectComponents({ entries })
+
+//entries[0].type = "Dummy"
+
+//const components = await collectComponents({ entries })
+//console.log(Components)
+//console.log(add(1, 2))
 //console.log(page)
 //const Layout = await import(`../layouts/${page.type}.astro`)
 ---
@@ -41,6 +47,7 @@ const components = await collectComponents({ entries })
       <h1>{page.title}</h1>
       <time>{page.sys.publishedAt}</time>
     </div>
+    <!-- <TestCard data={{ title: "plop" }} /> -->
     {
       heroes.map(async (hero) => {
         return <Hero data={hero} />
@@ -50,9 +57,15 @@ const components = await collectComponents({ entries })
       entries.map(async (entry) => {
         if (components[entry.type]) {
           if ("link" in entry) entry.link = links[entry.sys.id]
-          const Component = components[entry.type].default
+          const Component = components[entry.type] as any
           return <Component data={entry} />
         }
+
+        // entries.map((entry) => {
+        //   if ("link" in entry) entry.link = links[entry.sys.id]
+        //   //if (entry.type === "Section") return <Section data={entry} />
+        //   //if (entry.type === "EditorialCard") return <Components.EditorialCard data={entry} />
+        // })
 
         //if (entry.type === "Section") return <Components.Section data={entry} />
         //if (entry.type === "Text") return <Components.Text data={entry} />
