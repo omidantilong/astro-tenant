@@ -1,0 +1,15 @@
+.wrap {
+  max-width: 79rem;
+  margin: 0 1rem;
+
+  @media (min-width: map-get($breakpoints, "ml")) {
+    margin: 0 1.5rem;
+  }
+  @media (min-width: map-get($breakpoints, "xl")) {
+    margin: 0 auto;
+  }
+}
+
+.wrap .wrap {
+  margin: 0 auto;
+}
