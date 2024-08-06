@@ -1,67 +1,7 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
-const fragments = {
-  pageData: `
-    fragment pageData on Page {
-      type: __typename
-      sys {
-        id
-        publishedAt
-      }
-      title
-      url
-    }`,
-  sys: `
-    fragment sysFields on Entry {
-      sys {
-        id
-      }
-    }`,
-  video: `
-    fragment videoFields on Video {
-      title
-      videoUrl
-      transcript
-    }`,
-  image: `
-    fragment imageFields on Image {
-      title
-      image {
-        url
-        title
-        description
-        height
-        width
-      }
-    }`,
-  text: `
-    fragment textFields on Text {
-      title
-      text
-    }`,
-  editorialCard: `
-    fragment editorialCardFields on EditorialCard {
-      cardHeading,
-      cardLabel,
-      cardBody,
-      image {
-        url,
-        title,
-        description
-        height
-        width
-      }
-      link {
-        type: __typename
-        ...on Entry {
-          sys { 
-            id
-          }
-        }
-      }
-    }`,
-}
+import * as fragments from "./fragments"
 
 function parentLookup(depth: number) {
   const parentQuery = []
