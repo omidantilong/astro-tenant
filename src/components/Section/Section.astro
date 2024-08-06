@@ -12,10 +12,14 @@ const links = await resolveLinks(contentCollection.items)
 const entries: Entry[] = contentCollection.items || []
 ---
 
-<h2>{title}</h2>
-{
-  entries.map((entry) => {
-    if ("link" in entry) entry.link = links[entry.sys.id]
-    if (entry.type === "EditorialCard") return <EditorialCard data={entry} />
-  })
-}
+<section class="wrap">
+  <h2>{title}</h2>
+  <div class="cws-grid">
+    {
+      entries.map((entry) => {
+        if ("link" in entry) entry.link = links[entry.sys.id]
+        if (entry.type === "EditorialCard") return <EditorialCard data={entry} />
+      })
+    }
+  </div>
+</section>

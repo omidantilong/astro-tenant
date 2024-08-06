@@ -40,23 +40,23 @@ const components = await collectComponents({ entries })
     <div class="wrap">
       <h1>{page.title}</h1>
       <time>{page.sys.publishedAt}</time>
-      {
-        heroes.map(async (hero) => {
-          return <Hero data={hero} />
-        })
-      }
-      {
-        entries.map(async (entry) => {
-          if (components[entry.type]) {
-            if ("link" in entry) entry.link = links[entry.sys.id]
-            const Component = components[entry.type].default
-            return <Component data={entry} />
-          }
-
-          //if (entry.type === "Section") return <Components.Section data={entry} />
-          //if (entry.type === "Text") return <Components.Text data={entry} />
-        })
-      }
     </div>
+    {
+      heroes.map(async (hero) => {
+        return <Hero data={hero} />
+      })
+    }
+    {
+      entries.map(async (entry) => {
+        if (components[entry.type]) {
+          if ("link" in entry) entry.link = links[entry.sys.id]
+          const Component = components[entry.type].default
+          return <Component data={entry} />
+        }
+
+        //if (entry.type === "Section") return <Components.Section data={entry} />
+        //if (entry.type === "Text") return <Components.Text data={entry} />
+      })
+    }
   </main>
 </Layout>

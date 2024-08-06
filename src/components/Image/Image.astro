@@ -14,36 +14,38 @@ const imageProps = {
 }
 ---
 
-<figure
-  class="coop-c-image"
-  style=`padding:0; margin:0; aspect-ratio:${image.width / image.height}`
->
-  <picture class="coop-c-image__media" style="display:block">
-    <!-- if browser supports webp image format, serve the webp format-->
-    <source
-      media="(min-width: 1024px)"
-      srcset=`${image.url}?fm=webp&q=60&w=${imageWidthLarge} 1x,
+<div class="wrap">
+  <figure
+    class="coop-c-image"
+    style=`padding:0; margin:0; aspect-ratio:${image.width / image.height}`
+  >
+    <picture class="coop-c-image__media" style="display:block">
+      <!-- if browser supports webp image format, serve the webp format-->
+      <source
+        media="(min-width: 1024px)"
+        srcset=`${image.url}?fm=webp&q=60&w=${imageWidthLarge} 1x,
               ${image.url}?fm=webp&q=60&w=${imageWidthLarge * 2} 2x`
-      type="image/webp"
-    />
-    <source
-      srcset=`${image.url}?fm=webp&q=60&w=${imageWidthSmall} 1x,
+        type="image/webp"
+      />
+      <source
+        srcset=`${image.url}?fm=webp&q=60&w=${imageWidthSmall} 1x,
               ${image.url}?fm=webp&q=60&w=${imageWidthSmall * 2} 2x`
-      type="image/webp"
-    />
-    <!-- if no webp supported then default to serve progressive jpeg -->
-    <source
-      media="(min-width: 1024px)"
-      srcset=`${image.url}?fm=jpg&q=60&w=${imageWidthLarge} 1x,
+        type="image/webp"
+      />
+      <!-- if no webp supported then default to serve progressive jpeg -->
+      <source
+        media="(min-width: 1024px)"
+        srcset=`${image.url}?fm=jpg&q=60&w=${imageWidthLarge} 1x,
               ${image.url}?fm=jpg&q=60&w=${imageWidthLarge * 2} 2x`
-      type="image/jpeg"
-    />
-    <source
-      srcset=`${image.url}?fm=jpg&q=60&w=${imageWidthSmall} 1x,
+        type="image/jpeg"
+      />
+      <source
+        srcset=`${image.url}?fm=jpg&q=60&w=${imageWidthSmall} 1x,
               ${image.url}?fm=jpg&q=60&w=${imageWidthSmall *2} 2x`
-      type="image/jpeg"
-    />
-    <!-- fallback -->
-    <img src=`${image.url}?fm=jpg&q=60&w=${imageWidthLarge}` {...imageProps} />
-  </picture>
-</figure>
+        type="image/jpeg"
+      />
+      <!-- fallback -->
+      <img src=`${image.url}?fm=jpg&q=60&w=${imageWidthLarge}` {...imageProps} />
+    </picture>
+  </figure>
+</div>

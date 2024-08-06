@@ -9,4 +9,6 @@ const { text } = Astro.props.data
 const parsed = await parse(text)
 ---
 
-<Fragment set:html={parsed} />
+<div class="wrap">
+  <Fragment set:html={parsed} />
+</div>

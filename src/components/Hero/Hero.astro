@@ -6,7 +6,7 @@ interface Props {
 const { title, heroBody } = Astro.props.data
 ---
 
-<div>
+<div class="wrap">
   <h1>{title}</h1>
   <p set:html={heroBody} />
 </div>
