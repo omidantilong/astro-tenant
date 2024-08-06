@@ -12,11 +12,13 @@ const { cardHeading, cardBody, link } = Astro.props.data
 const parsed = await parse(cardBody)
 ---
 
-<article
-  style={{ border: "1px solid #ccc", borderRadius: "4px", padding: "0 1rem", marginBottom: "1rem" }}
->
+<article class="cws-editorial-card">
   <LinkWrapper data={link}>
     <h3>{cardHeading}</h3>
     <p set:html={parsed} />
   </LinkWrapper>
 </article>
+
+<!-- <style>
+  @import "./EditorialCard.scss";
+</style> -->

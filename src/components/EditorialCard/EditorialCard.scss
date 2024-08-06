@@ -1,0 +1,10 @@
+.cws-editorial-card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0 1rem;
+  grid-column: span 12;
+
+  @media (min-width: map-get($breakpoints, "md")) {
+    grid-column: span 6;
+  }
+}
