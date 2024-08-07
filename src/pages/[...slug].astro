@@ -9,7 +9,7 @@ import { sanitizePath } from "../util/common"
 
 import { getPage, getFullPath, resolveLinks } from "../lib/contentfulLegacy"
 
-import components from "@/components"
+import * as components from "@/components"
 
 const pathname = sanitizePath(Astro.url.pathname)
 
@@ -36,8 +36,7 @@ const links = await resolveLinks(entries)
 //entries[0].type = "Dummy"
 
 //const components = await collectComponents({ entries })
-//console.log(Components)
-//console.log(add(1, 2))
+//console.log(components)
 //console.log(page)
 //const Layout = await import(`../layouts/${page.type}.astro`)
 ---
