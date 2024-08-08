@@ -16,7 +16,7 @@
     "@astrojs/node": "^8.3.2",
     "@astrojs/react": "^3.6.1",
     "@carbon/react": "^1.63.1",
-    "@omidantilong/astro": "^0.0.13",
+    "@omidantilong/astro": "^0.0.14",
     "@omidantilong/react": "^0.0.16",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
