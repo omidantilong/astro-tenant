@@ -5,11 +5,9 @@
 // import Foo from "@omidantilong/astro/Foo"
 
 export { Dummy, Foo } from "@omidantilong/astro"
+
 export { Alert } from "@omidantilong/react"
-
-//import { Foo } from "@omidantilong/astro"
-
-//import { DummyPackage } from "@omidantilong/dummy-astro-package"
+//import { Button } from "@carbon/react"
 
 export { default as EditorialCard } from "@/components/EditorialCard/EditorialCard.astro"
 export { default as Section } from "@/components/Section/Section.astro"
