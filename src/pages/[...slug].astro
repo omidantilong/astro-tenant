@@ -71,9 +71,9 @@ const links = await resolveLinks(entries)
         //if (entry.type === "Text") return <Components.Text data={entry} />
       })
     }
-    <components.Foo data={{ title: "foo" }} />
-    <components.Alert text="alert test" />
-    <components.Dummy data={{ title: "foo" }} />
+    <components.Foo data={{ title: "simple astro component test" }} />
+    <components.Alert text="react component rendered on the server" />
+    <components.Dummy data={{ title: "another simple astro component bringing its own styles" }} />
     <!-- <Button>Example</Button> -->
   </main>
 </Layout>
