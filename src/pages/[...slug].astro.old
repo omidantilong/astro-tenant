@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro"
+import Hero from "../components/Hero/Hero.astro"
+
+import { pageNotFound } from "../util/responses"
+import { sanitizePath } from "../util/common"
+//import { collectComponents } from "../util/components"
+// import { Button } from "@carbon/react"
+
+import { getPage, getFullPath, resolveLinks } from "../lib/contentfulLegacy"
+
+import * as components from "@/components"
+
+const pathname = sanitizePath(Astro.url.pathname)
+
+const { data } = await getPage(pathname)
+
+// Redirect if data.redirect is true
+if (data.redirect) return Astro.redirect(data.to)
+
+// Return 404 if there is no page with that slug
+if (!data?.pageCollection?.items.length) return pageNotFound()
+
+const page = data.pageCollection.items[0]
+const path = sanitizePath(getFullPath(page))
+
+// At this point we have looked up the page
+// but if the full path is incorrect return a 404
+// Is there a better way to handle this... probably
+if (path !== pathname) return pageNotFound()
+
+const heroes: Hero[] = page.heroCollection.items || []
+const entries: Entry[] = page.modulesCollection.items || []
+const links = await resolveLinks(entries)
+
+//entries[0].type = "Dummy"
+
+//const components = await collectComponents({ entries })
+//console.log(components)
+//console.log(page)
+//const Layout = await import(`../layouts/${page.type}.astro`)
+---
+
+<Layout title={page.metaTitle || page.title}>
+  <main>
+    <div class="wrap">
+      <h1>{page.title}</h1>
+      <time>{page.sys.publishedAt}</time>
+    </div>
+    <!-- <TestCard data={{ title: "plop" }} /> -->
+    {
+      heroes.map(async (hero) => {
+        return <Hero data={hero} />
+      })
+    }
+    {
+      entries.map(async (entry) => {
+        if (components[entry.type]) {
+          if ("link" in entry) entry.link = links[entry.sys.id]
+          const Component = components[entry.type] as any
+          return <Component data={entry} />
+        }
+
+        // entries.map((entry) => {
+        //   if ("link" in entry) entry.link = links[entry.sys.id]
+        //   //if (entry.type === "Section") return <Section data={entry} />
+        //   //if (entry.type === "EditorialCard") return <Components.EditorialCard data={entry} />
+        // })
+
+        //if (entry.type === "Section") return <Components.Section data={entry} />
+        //if (entry.type === "Text") return <Components.Text data={entry} />
+      })
+    }
+    <components.Foo data={{ title: "simple astro component test" }} />
+    <components.Alert text="react component rendered on the server" />
+    <components.Dummy data={{ title: "another simple astro component bringing its own styles" }} />
+    <!-- <Button>Example</Button> -->
+  </main>
+</Layout>
