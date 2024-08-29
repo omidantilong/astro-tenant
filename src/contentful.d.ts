@@ -4,16 +4,17 @@ declare interface ContentfulPage {
   parent: ContentfulPage
 }
 
-declare interface ContentfulLegacyPage {
-  url: string
-  title: string
-  parentPage: ContentfulLegacyPage
-}
-
 declare interface Sys {
   sys: {
     id: string
+    publishedAt: string
   }
+}
+
+declare interface ContentfulLegacyPage extends Sys {
+  url: string
+  title: string
+  parentPage: ContentfulLegacyPage
 }
 
 declare interface Hero extends Sys {
@@ -63,14 +64,14 @@ declare interface ExternalLink extends Sys {
   linkStyle: string
 }
 
-declare interface Video extends sys {
+declare interface Video extends Sys {
   type: "Video"
   title: string
   videoUrl: string
   transcript: string
 }
 
-declare interface Image extends sys {
+declare interface Image extends Sys {
   type: "Image"
   title: string
   image: ImageProps
