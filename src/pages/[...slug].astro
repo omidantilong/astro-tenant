@@ -15,6 +15,8 @@ const pathname = sanitizePath(Astro.url.pathname)
 
 const { data } = await getPage(pathname)
 
+if (data.error) return pageNotFound()
+
 // Redirect if data.redirect is true
 if (data.redirect) return Astro.redirect(data.to)
 
@@ -22,12 +24,12 @@ if (data.redirect) return Astro.redirect(data.to)
 if (!data?.pageCollection?.items.length) return pageNotFound()
 
 const page = data.pageCollection.items[0]
-const path = sanitizePath(getFullPath(page))
 
+//const path = sanitizePath(getFullPath(page))
 // At this point we have looked up the page
 // but if the full path is incorrect return a 404
 // Is there a better way to handle this... probably
-if (path !== pathname) return pageNotFound()
+// if (path !== pathname) return pageNotFound()
 
 const heroes: Hero[] = page.heroCollection.items || []
 const entries: Entry[] = page.modulesCollection.items || []

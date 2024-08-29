@@ -3,7 +3,7 @@
 
 import * as fragments from "./fragments"
 
-function parentLookup(depth: number) {
+export function parentLookup(depth: number) {
   const parentQuery = []
 
   if (depth < 2) return ""
@@ -87,7 +87,14 @@ export async function getPage(pathname: string) {
 
   if (redirect) return { data: { redirect: true, ...redirect } }
 
-  const slug = getSlugFromPath(pathname)
+  // const slug = getSlugFromPath(pathname)
+  // pageCollection(where: {url: "${slug}"}, limit: 1) {
+
+  const page = await getPageData(pathname)
+
+  if (!page) return { data: { error: { code: 404 } } }
+
+  //console.log(id)
 
   const query = `
     ${fragments.pageData}
@@ -97,7 +104,7 @@ export async function getPage(pathname: string) {
     ${fragments.text}
     ${fragments.editorialCard}
     query PageQuery {
-      pageCollection(where: {url: "${slug}"}, limit: 1) { 
+      pageCollection(where: {sys: { id: "${page.sys.id}"} } , limit: 1) { 
         items { 
           ...pageData
           metaTitle
@@ -285,5 +292,11 @@ export function getPathSegments(page: ContentfulLegacyPage) {
 }
 
 export function getFullPath(page: ContentfulLegacyPage) {
-  return `/${getPathSegments(page)}`
+  return page.url === "/" ? page.url : `/${getPathSegments(page)}`
+}
+
+export async function getPageData(pathname: string) {
+  const pages = (await import("../../map.json")).default as any
+
+  return pages[pathname] ? pages[pathname] : false
 }
