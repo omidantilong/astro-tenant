@@ -253,9 +253,8 @@ export async function resolveLinks(entries: Entry[]) {
 
   if (entries.length) {
     const linkMap: { [key: string]: string } = {}
-
     entries.forEach((entry) => {
-      if ("link" in entry && entry?.link?.type === "InternalLink") {
+      if (entry && "link" in entry && entry?.link?.type === "InternalLink") {
         linkMap[entry.link.sys.id] = entry.sys.id
       }
     })
