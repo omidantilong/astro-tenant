@@ -1,5 +1,5 @@
-@import "@/styles/_vars.scss";
-@import "@/styles/global";
-@import "@/styles/grid";
+@use "@/styles/_vars.scss";
+@use "@/styles/global";
+@use "@/styles/grid";
 
-@import "@/components/EditorialCard/EditorialCard.scss";
+@use "@/components/EditorialCard/EditorialCard.scss";
