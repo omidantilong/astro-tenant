@@ -41,6 +41,18 @@ const defaultRoute = () => {
     entrypoint: "./engine/pages/[...slug].astro",
   }
 }
+
+interface DefaultRoutes {
+  [key: string]: Function
+}
+
+const defaultRoutes: DefaultRoutes = {
+  "./src/pages/[...slug]": () => ({
+    pattern: "[...slug]",
+    entrypoint: "./engine/pages/[...slug].astro",
+  }),
+}
+
 function engine({ ...opts }): AstroIntegration {
   return {
     name: "engine",
@@ -49,11 +61,17 @@ function engine({ ...opts }): AstroIntegration {
         if (!opts.customIndex) {
           injectRoute(defaultRoute())
         }
-
         // Another way of doing this, without using the customIndex option
         // Manually test for existence of local template
         // Could be turned into an array of default template paths to check
         // if (!fs.existsSync("./src/pages/[...slug].astro")) injectRoute(defaultRoute())
+        //
+        //
+        // And another way, using a defaultRoutes object
+        // for (const route in defaultRoutes) {
+        //   const templatePath = route + ".astro"
+        //   if (!fs.existsSync(templatePath)) injectRoute(defaultRoutes[route]())
+        // }
       },
     },
   }
