@@ -5,10 +5,10 @@ A very (very) dumb Astro site with Contentful integration.
 Currently wired up to a free tier Contentful site. You'll need a `.env.development` file with the following:
 
 ```
-CONTENTFUL_DELIVERY_API=
-CONTENTFUL_PREVIEW_API=
-CONTENTFUL_SPACE_ID=
-CONTENTFUL_ENV=
+PUBLIC_CONTENTFUL_DELIVERY_API=
+PUBLIC_CONTENTFUL_PREVIEW_API=
+PUBLIC_CONTENTFUL_SPACE_ID=
+PUBLIC_CONTENTFUL_ENV=
 ```
 
 #### Editor setup
