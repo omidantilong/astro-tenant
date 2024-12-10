@@ -211,11 +211,11 @@ export async function getRedirect(pathname: string) {
 
 export async function fetchData({ query, preview = false }: { query: string; preview?: boolean }) {
   const token = preview
-    ? import.meta.env.CONTENTFUL_PREVIEW_API
-    : import.meta.env.CONTENTFUL_DELIVERY_API
+    ? import.meta.env.PUBLIC_CONTENTFUL_PREVIEW_API
+    : import.meta.env.PUBLIC_CONTENTFUL_DELIVERY_API
 
-  const spaceId = import.meta.env.CONTENTFUL_SPACE_ID
-  const spaceEnv = import.meta.env.CONTENTFUL_ENV
+  const spaceId = import.meta.env.PUBLIC_CONTENTFUL_SPACE_ID
+  const spaceEnv = import.meta.env.PUBLIC_CONTENTFUL_ENV
 
   return await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${spaceId}/environments/${spaceEnv}`,
