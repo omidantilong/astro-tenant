@@ -3,6 +3,7 @@ import { resolve } from "path"
 import node from "@astrojs/node"
 import react from "@astrojs/react"
 import type { AstroIntegration } from "astro"
+import fs from "fs-extra"
 
 /*
 This is a very simple example of an Astro integration injecting custom
@@ -48,6 +49,11 @@ function engine({ ...opts }): AstroIntegration {
         if (!opts.customIndex) {
           injectRoute(defaultRoute())
         }
+
+        // Another way of doing this, without using the customIndex option
+        // Manually test for existence of local template
+        // Could be turned into an array of default template paths to check
+        // if (!fs.existsSync("./src/pages/[...slug].astro")) injectRoute(defaultRoute())
       },
     },
   }
