@@ -2,8 +2,8 @@
 import Layout from "@/layouts/Layout.astro"
 import Hero from "@/components/Hero/Hero.astro"
 
-import { pageNotFound } from "@/util/responses"
-import { sanitizePath } from "@/util/common"
+import { pageNotFound } from "engine/util/responses"
+import { sanitizePath } from "engine/util/common"
 
 import { getPage, getFullPath, resolveLinks } from "engine/lib/contentfulLegacy"
 
