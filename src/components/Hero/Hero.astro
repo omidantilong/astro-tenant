@@ -3,10 +3,10 @@ interface Props {
   data: Hero
 }
 
-const { title, heroBody } = Astro.props.data
+const { heroHeading, heroBody } = Astro.props.data
 ---
 
 <div class="wrap">
-  <h1>{title}</h1>
+  <h1>{heroHeading}</h1>
   <p set:html={heroBody} />
 </div>
