@@ -18,9 +18,11 @@ import { pageData } from "@/lib/fragments"
 dotenv.config({ path: `.env.development` })
 
 export async function fetchData({ query, preview = false }: { query: string; preview?: boolean }) {
-  const token = preview ? process.env.CONTENTFUL_PREVIEW_API : process.env.CONTENTFUL_DELIVERY_API
-  const spaceId = process.env.CONTENTFUL_SPACE_ID
-  const spaceEnv = process.env.CONTENTFUL_ENV
+  const token = preview
+    ? process.env.PUBLIC_CONTENTFUL_PREVIEW_API
+    : process.env.PUBLIC_CONTENTFUL_DELIVERY_API
+  const spaceId = process.env.PUBLIC_CONTENTFUL_SPACE_ID
+  const spaceEnv = process.env.PUBLIC_CONTENTFUL_ENV
 
   return await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${spaceId}/environments/${spaceEnv}`,
