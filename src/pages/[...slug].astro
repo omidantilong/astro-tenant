@@ -1,15 +1,13 @@
 ---
-import Layout from "../layouts/Layout.astro"
-import Hero from "../components/Hero/Hero.astro"
+import Layout from "@/layouts/Layout.astro"
+import Hero from "@/components/Hero/Hero.astro"
 
-import { pageNotFound } from "../util/responses"
-import { sanitizePath } from "../util/common"
-//import { collectComponents } from "../util/components"
-// import { Button } from "@carbon/react"
+import { pageNotFound } from "@/util/responses"
+import { sanitizePath } from "@/util/common"
 
-import { getPage, getFullPath, resolveLinks } from "../lib/contentfulLegacy"
+import { getPage, getFullPath, resolveLinks } from "@/lib/contentfulLegacy"
 
-import * as components from "../components"
+import * as components from "@/components"
 
 const pathname = sanitizePath(Astro.url.pathname)
 

@@ -1,7 +1,7 @@
 import { visit } from "unist-util-visit"
 import type { Node } from "unist"
 import type hast from "hast"
-import { getAsset } from "../lib/contentfulLegacy"
+import { getAsset } from "@/lib/contentfulLegacy"
 
 //import { h } from "hastscript"
 //import { getAsset } from "../lib/contentfulLegacy"
