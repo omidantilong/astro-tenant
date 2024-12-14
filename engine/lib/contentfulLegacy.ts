@@ -103,6 +103,7 @@ export async function getPage(pathname: string) {
     ${fragments.image}
     ${fragments.text}
     ${fragments.editorialCard}
+    ${fragments.externalLink}
     query PageQuery {
       pageCollection(where: {sys: { id: "${page.sys.id}"} } , limit: 1) { 
         items { 
@@ -131,11 +132,7 @@ export async function getPage(pathname: string) {
               imageCaption
               link: heroLink {
                 type: __typename
-                ...on Entry {
-                  sys { 
-                    id
-                  }
-                }
+                ...externalLinkFields
               }
             }
           }

@@ -42,6 +42,13 @@ export const text = `
     text
   }`
 
+export const externalLink = `
+  fragment externalLinkFields on ExternalLink {
+    url
+    linkStyle
+    title
+  }`
+
 export const editorialCard = `
   fragment editorialCardFields on EditorialCard {
     cardHeading,
