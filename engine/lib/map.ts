@@ -12,8 +12,8 @@
 import dotenv from "dotenv"
 import fs from "fs-extra"
 
-import { getFullPath, parentLookup } from "@/lib/contentfulLegacy"
-import { pageData } from "@/lib/fragments"
+import { getFullPath, parentLookup } from "./contentfulLegacy"
+import { pageData } from "./fragments"
 
 dotenv.config({ path: `.env.development` })
 
