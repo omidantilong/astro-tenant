@@ -14,6 +14,9 @@ export default defineConfig({
     mode: "standalone",
   }),
   integrations: [engine({}), UnoCSS(), react()],
+  server: {
+    port: 8020,
+  },
   vite: {
     resolve: {
       alias: {
