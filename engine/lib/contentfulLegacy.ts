@@ -15,70 +15,6 @@ const contentTypes: EngineContentTypeConfig = {
   ...engineDefaults.contentTypes,
 }
 
-contentTypes.Page.contentQuery = ({ ref }) => `
-${fragments.pageData}
-${fragments.sys}
-${fragments.video}
-${fragments.image}
-${fragments.text}
-${fragments.editorialCard}
-${fragments.externalLink}
-query PageQuery {
-  content: page(id:"${ref.id}") { 
-    ...pageData
-    metaTitle
-    metaDescription
-    parent: parentPage {
-      ${parentLookup(3)}
-    }
-    heroCollection(limit: 5) {
-      items {
-        sys {
-          id
-        }
-        type: __typename
-        title
-        heroHeading
-        heroBody
-        image {
-          url
-          title
-          description
-          width
-          height
-        }
-        imageCaption
-        link: heroLink {
-          type: __typename
-          ...externalLinkFields
-        }
-      }
-    }
-    modulesCollection(limit: 10) {
-      items {
-        type: __typename
-        ...sysFields
-        ...videoFields
-        ...imageFields
-        ...textFields
-        ...on Section {
-          title
-          contentCollection(limit: 20) {
-            items {
-              type: __typename
-              ...sysFields
-              ...videoFields
-              ...imageFields
-              ...textFields
-              ...editorialCardFields
-            }
-          }
-        }
-      }
-    } 
-  } 
-}`
-
 export function parentLookup(depth: number) {
   const parentQuery = []
 
@@ -159,7 +95,11 @@ export async function getInternalLinkCollection(links: string[]) {
 }
 
 export async function getEntry(ref: EngineContentReference): Promise<EngineContentResponse> {
-  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].contentQuery({ ref })
+  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].contentQuery({
+    ref,
+    fragments,
+    parentLookup,
+  })
   const { data, errors } = await fetchData({ query })
   const { content } = data
   return { content, errors }

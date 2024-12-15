@@ -1,7 +1,7 @@
 export interface EngineContentTypeConfig {
   [key: Capitalize<string>]: {
     root?: string
-    contentQuery: ({ ref: EngineContentReference }) => string
+    contentQuery: ({ ref: EngineContentReference, fragments, parentLookup }) => string
     collectionQuery: ({ fragments, parentLookup }) => string
   }
 }
