@@ -20,7 +20,7 @@ export function engine({ ...opts }): AstroIntegration {
   return {
     name: "engine",
     hooks: {
-      "astro:config:setup": async ({ injectRoute }) => {
+      "astro:config:setup": async ({ injectRoute, addMiddleware }) => {
         // if (!opts.customIndex) {
         //   injectRoute(defaultRoute())
         // }
@@ -33,6 +33,11 @@ export function engine({ ...opts }): AstroIntegration {
         for (const route in defaultRoutes) {
           if (!fs.existsSync(route)) injectRoute(defaultRoutes[route]())
         }
+
+        addMiddleware({
+          entrypoint: "./engine/middleware/request.ts",
+          order: "pre",
+        })
       },
     },
   }

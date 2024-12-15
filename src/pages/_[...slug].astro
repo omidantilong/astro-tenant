@@ -1,4 +1,23 @@
 ---
+/* 
+README
+Most of this logic now lives inside the engine/middleware functions
+But middleware might not be the best way to do this... 
+
+Certain pages might need to make a different request, eg for other
+top-level content types that arent "pages" (such as press releases)
+
+Could either...
+- Hand off logic for page lookups to template files
+- Make integration middleware flexible and configurable
+- Use custom middleware at the app config level
+
+TODO: 
+Test these options with the press release content type
+
+May be some useful stuff in this contentful-astro repo:
+https://github.com/ajsummerfield/contentful-astro
+*/
 import Layout from "@/layouts/Layout.astro"
 import Hero from "@/components/Hero/Hero.astro"
 
