@@ -20,6 +20,8 @@ const contentTypes: EngineContentTypeConfig = {
 
 export { resolveLinks, parentLookup }
 
+export { parse } from "./markdown"
+
 export async function getInternalLink(id: string) {
   const query = `
     ${fragments.pageData} 
