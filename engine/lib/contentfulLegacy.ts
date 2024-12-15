@@ -1,7 +1,83 @@
 // https://hashinteractive.com/blog/graphql-recursive-query-with-fragments/
 // https://github.com/graphql/graphql-spec/issues/929
 
+import type {
+  EngineContentReference,
+  EngineContentResponse,
+  EngineContentTypeConfig,
+} from "engine/types/engine"
 import * as fragments from "./fragments"
+import { engineConfig } from "tenant.config"
+import { engineDefaults } from "engine/config/defaults.ts"
+
+const contentTypes: EngineContentTypeConfig = {
+  ...engineConfig.contentTypes,
+  ...engineDefaults.contentTypes,
+}
+
+contentTypes.Page.contentQuery = ({ ref }) => `
+${fragments.pageData}
+${fragments.sys}
+${fragments.video}
+${fragments.image}
+${fragments.text}
+${fragments.editorialCard}
+${fragments.externalLink}
+query PageQuery {
+  content: page(id:"${ref.id}") { 
+    ...pageData
+    metaTitle
+    metaDescription
+    parent: parentPage {
+      ${parentLookup(3)}
+    }
+    heroCollection(limit: 5) {
+      items {
+        sys {
+          id
+        }
+        type: __typename
+        title
+        heroHeading
+        heroBody
+        image {
+          url
+          title
+          description
+          width
+          height
+        }
+        imageCaption
+        link: heroLink {
+          type: __typename
+          ...externalLinkFields
+        }
+      }
+    }
+    modulesCollection(limit: 10) {
+      items {
+        type: __typename
+        ...sysFields
+        ...videoFields
+        ...imageFields
+        ...textFields
+        ...on Section {
+          title
+          contentCollection(limit: 20) {
+            items {
+              type: __typename
+              ...sysFields
+              ...videoFields
+              ...imageFields
+              ...textFields
+              ...editorialCardFields
+            }
+          }
+        }
+      }
+    } 
+  } 
+}`
 
 export function parentLookup(depth: number) {
   const parentQuery = []
@@ -9,7 +85,7 @@ export function parentLookup(depth: number) {
   if (depth < 2) return ""
 
   for (let x = 1; x < depth; x++) {
-    parentQuery.unshift("parentPage { ... on Page { ...pageData ")
+    parentQuery.unshift("parent: parentPage { ... on Page { ...pageData ")
     parentQuery.push("} }")
   }
 
@@ -23,21 +99,21 @@ export function parentLookup(depth: number) {
   return query
 }
 
-export async function getPagePath(id: string) {
-  const query = `
-    ${fragments.pageData}
-    query PagePathQuery {
-      page(id: "${id}") {
-        ...pageData
-        parentPage {
-          ${parentLookup(3)}
-        }
-      }
-    }
-  `
+// export async function getPagePath(id: string) {
+//   const query = `
+//     ${fragments.pageData}
+//     query PagePathQuery {
+//       page(id: "${id}") {
+//         ...pageData
+//         parent: parentPage {
+//           ${parentLookup(3)}
+//         }
+//       }
+//     }
+//   `
 
-  return await fetchData({ query })
-}
+//   return await fetchData({ query })
+// }
 
 export async function getInternalLink(id: string) {
   const query = `
@@ -82,91 +158,11 @@ export async function getInternalLinkCollection(links: string[]) {
   return await fetchData({ query })
 }
 
-export async function getPage(pathname: string) {
-  // const slug = getSlugFromPath(pathname)
-  // pageCollection(where: {url: "${slug}"}, limit: 1) {
-
-  const page = await getPageData(pathname)
-
-  if (!page) {
-    const redirect = await getRedirect(pathname)
-
-    if (redirect) return { data: { redirect: true, ...redirect } }
-
-    return { data: { error: { code: 404 } } }
-  }
-
-  //console.log(id)
-
-  const query = `
-    ${fragments.pageData}
-    ${fragments.sys}
-    ${fragments.video}
-    ${fragments.image}
-    ${fragments.text}
-    ${fragments.editorialCard}
-    ${fragments.externalLink}
-    query PageQuery {
-      pageCollection(where: {sys: { id: "${page.id}"} } , limit: 1) { 
-        items { 
-          ...pageData
-          metaTitle
-          metaDescription
-          parentPage {
-            ${parentLookup(3)}
-          }
-          heroCollection(limit: 5) {
-            items {
-              sys {
-                id
-              }
-              type: __typename
-              title
-              heroHeading
-              heroBody
-              image {
-                url
-                title
-                description
-                width
-                height
-              }
-              imageCaption
-              link: heroLink {
-                type: __typename
-                ...externalLinkFields
-              }
-            }
-          }
-          modulesCollection(limit: 10) {
-            items {
-              type: __typename
-              ...sysFields
-              ...videoFields
-              ...imageFields
-              ...textFields
-              ...on Section {
-                title
-                contentCollection(limit: 20) {
-                  items {
-                    type: __typename
-                    ...sysFields
-                    ...videoFields
-                    ...imageFields
-                    ...textFields
-                    ...editorialCardFields
-                  }
-                }
-              }
-            }
-          }
-        } 
-      } 
-    }`
-
-  // const data = await fetchData({ query })
-  // console.log(JSON.stringify(data, null, 2))
-  return await fetchData({ query })
+export async function getEntry(ref: EngineContentReference): Promise<EngineContentResponse> {
+  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].contentQuery({ ref })
+  const { data, errors } = await fetchData({ query })
+  const { content } = data
+  return { content, errors }
 }
 
 export async function getAsset(id: string) {
@@ -227,12 +223,13 @@ export async function fetchData({ query, preview = false }: { query: string; pre
       body: JSON.stringify({ query }),
     }
   ).then((res) => {
+    //console.log(res)
     console.log(`Query complexity: ${res.headers.get("X-Contentful-Graphql-Query-Cost")} / 11000`)
     return res.json()
   })
 }
 
-export async function resolveLinks(entries: Entry[]) {
+export async function resolveLinks(entries: Array<ContentModule>) {
   // This function can be used to collect all InternalLink entries that
   // are direct children of a Section, reducing the number of HTTP requests
   // that are made behind the scenes. It could be further extended to
@@ -249,7 +246,6 @@ export async function resolveLinks(entries: Entry[]) {
   // existing link property.
 
   const links: { [key: string]: InternalLink } = {}
-
   if (entries.length) {
     const linkMap: { [key: string]: string } = {}
     entries.forEach((entry) => {
@@ -269,7 +265,7 @@ export async function resolveLinks(entries: Entry[]) {
       // }
     })
     const linkIds = Object.keys(linkMap)
-    console.log(linkIds)
+    //console.log(linkIds)
 
     if (linkIds.length) {
       const { data } = await getInternalLinkCollection(linkIds)
@@ -290,22 +286,21 @@ export function getSlugFromPath(pathname: string) {
   return pathname === "/" ? pathname : pathname.split("/").at(-1)
 }
 
-export function getPathSegments(page: ContentfulLegacyPage) {
-  const path = [page.url]
+export function getPathSegments(entry: EngineContentEntry) {
+  const path = [entry.slug]
 
-  if (page.parentPage) {
-    path.push(getPathSegments(page.parentPage))
+  if ("parent" in entry && entry.parent) {
+    path.push(getPathSegments(entry.parent))
   }
 
   return path.reverse().join("/")
 }
 
-export function getFullPath(page: ContentfulLegacyPage) {
-  return page.url === "/" ? page.url : `/${getPathSegments(page)}`
+export function getFullPath(entry: EngineContentEntry, root: string = "") {
+  return entry.slug === "/" ? entry.slug : `${root}/${getPathSegments(entry)}`
 }
 
 export async function getPageData(pathname: string) {
   const pages = (await import("../../map.json")).default as any
-
   return pages[pathname] ? pages[pathname] : false
 }

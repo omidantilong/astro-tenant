@@ -3,7 +3,13 @@ import { defineMiddleware } from "astro:middleware"
 import { sanitizePath } from "engine/util/common"
 //import { pageNotFound } from "engine/util/responses"
 
-import { getPage, getFullPath, resolveLinks } from "engine/lib/contentfulLegacy"
+import {
+  getEntry,
+  getFullPath,
+  resolveLinks,
+  getPageData,
+  getRedirect,
+} from "engine/lib/contentfulLegacy"
 
 import type { MiddlewareHandler } from "astro"
 
@@ -21,28 +27,33 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (isDynamic) {
     const pathname = sanitizePath(context.url.pathname)
-    const { data } = await getPage(pathname)
-
+    //const { data } = await getPage(pathname)
+    //console.log(data)
     // Would be nice to just return an actual Response here. This does
     // work but seems to bypass Astro's custom 404 page unlike next()
     // context.rewrite doesn't seem to work either
 
     //if (data.error) return new Response(new Blob(), { status: 404 })
-    if (data.error) return next("/404")
+    //if (data.error) return next("/404")
 
     // Redirect if data.redirect is true
-    if (data.redirect) return context.redirect(data.to)
+    //if (data.redirect) return context.redirect(data.to)
 
     // Return 404 if there is no page with that slug
-    if (!data?.pageCollection?.items) return next("/404")
+    //if (!data?.pageCollection?.items) return next("/404")
 
-    const page = data.pageCollection.items[0]
+    const ref = await getPageData(pathname)
 
-    const heroes: Hero[] = page.heroCollection.items || []
-    const entries: Entry[] = page.modulesCollection.items || []
-    const links = await resolveLinks(entries)
+    if (!ref) {
+      const redirect = await getRedirect(pathname)
 
-    context.locals.engine = { page, heroes, entries, links }
+      if (redirect) return context.redirect(redirect.data.to)
+
+      return next("/404")
+      //return { data: { error: { code: 404 } } }
+    }
+    //console.log(entry)
+    context.locals.engine = { ref }
   }
 
   // if (context.url.pathname === "/some-test-path") {

@@ -14,14 +14,14 @@ const { title, contentCollection } = Astro.props.data
 //const links = Astro.props.links
 const links = await resolveLinks(contentCollection.items)
 
-const entries: Entry[] = contentCollection.items || []
+const contentModules: Array<ContentModule> = contentCollection.items || []
 ---
 
 <section class="wrap">
   <h2>{title}</h2>
   <div class="cws-grid">
     {
-      entries.map((entry) => {
+      contentModules.map((entry) => {
         if (components[entry.type]) {
           if ("link" in entry) entry.link = links[entry.sys.id]
           //const Component = components[entry.type]

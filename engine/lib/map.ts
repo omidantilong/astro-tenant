@@ -12,8 +12,15 @@
 import dotenv from "dotenv"
 import fs from "fs-extra"
 
-import { getFullPath, parentLookup } from "./contentfulLegacy"
-import { pageData } from "./fragments"
+import { getFullPath } from "engine/lib/contentfulLegacy"
+
+import type { EngineContentTypeConfig } from "engine/types/engine"
+
+import { engineDefaults } from "engine/config/defaults.ts"
+import { engineConfig } from "tenant.config"
+
+import * as fragments from "./fragments"
+import { parentLookup } from "engine/lib/contentfulLegacy"
 
 dotenv.config({ path: `.env.development` })
 
@@ -40,34 +47,29 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
-export async function createPageMap() {
-  const query = `
-  ${pageData}
-  query PageQuery {
-    pageCollection(limit: 1000) { 
-      items { 
-        ...pageData
-        parentPage {
-          ${parentLookup(3)}
-        }
-      }
-    }
-  }`
+export async function createContentMap() {
+  const contentTypes: EngineContentTypeConfig = {
+    ...engineConfig.contentTypes,
+    ...engineDefaults.contentTypes,
+  }
 
-  const data = await fetchData({ query })
-  const pages = data.data.pageCollection.items
+  const contentMap: ContentMap = {}
 
-  const pageMap: ContentMap = {}
+  for (const contentType in contentTypes) {
+    const { collectionQuery, root } = contentTypes[contentType as keyof EngineContentTypeConfig]
+    const query = collectionQuery({ fragments, parentLookup })
+    const { data } = await fetchData({ query })
 
-  pages.forEach((page: ContentfulLegacyPage) => {
-    const url = getFullPath(page)
+    data.collection.items.forEach((entry: EngineContentEntry) => {
+      const resolvedPath = getFullPath(entry, root)
 
-    pageMap[url] = { id: page.sys.id }
-  })
+      contentMap[resolvedPath] = { id: entry.sys.id, type: entry.type }
+    })
+  }
 
-  await fs.writeFile("map.json", JSON.stringify(pageMap))
+  await fs.writeFile("map.json", JSON.stringify(contentMap))
 }
 
-createPageMap().then(() => {
+createContentMap().then(() => {
   console.log("Wrote map")
 })

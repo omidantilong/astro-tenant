@@ -1,0 +1,17 @@
+---
+// import Layout from "@/layouts/Layout.astro"
+// import Hero from "@/components/Hero/Hero.astro"
+
+// import * as components from "@/components"
+// import { resolveLinks } from "engine/lib/contentfulLegacy"
+import { getEntry } from "engine/lib/contentfulLegacy"
+
+const { ref } = Astro.locals.engine
+
+const data = await getEntry(ref)
+
+console.log(data)
+---
+
+<div>{JSON.stringify(ref)}</div>
+<div>{JSON.stringify(data)}</div>

@@ -1,4 +1,5 @@
 import type { AstroIntegration } from "astro"
+import type { EngineDefaultRoutes } from "engine/types/engine"
 import fs from "fs-extra"
 
 /*
@@ -32,6 +33,7 @@ correctly outputs just one entry point when creating a build.
 
 */
 
+const defaultRoutes: EngineDefaultRoutes = {
   "./src/pages/[...slug].astro": () => ({
     pattern: "[...slug]",
     entrypoint: "./engine/pages/[...slug].astro",
@@ -61,7 +63,7 @@ export function engine({ ...opts }): AstroIntegration {
         }
 
         addMiddleware({
-          entrypoint: "./engine/middleware/request.ts",
+          entrypoint: "./engine/middleware/middleware.ts",
           order: "pre",
         })
       },

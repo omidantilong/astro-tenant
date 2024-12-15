@@ -7,7 +7,7 @@ export const pageData = `
       publishedAt
     }
     title
-    url
+    slug: url
   }`
 
 export const sys = `

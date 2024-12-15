@@ -24,13 +24,13 @@ import Hero from "@/components/Hero/Hero.astro"
 import { pageNotFound } from "engine/util/responses"
 import { sanitizePath } from "engine/util/common"
 
-import { getPage, getFullPath, resolveLinks } from "engine/lib/contentfulLegacy"
+import { getEntry, getFullPath, getPageData, resolveLinks } from "engine/lib/contentfulLegacy"
 
 import * as components from "@/components"
 
 const pathname = sanitizePath(Astro.url.pathname)
-
-const { data } = await getPage(pathname)
+const { entry } = await getPageData(pathname)
+const { data } = await getEntry(entry.id)
 
 if (data.error) return pageNotFound()
 

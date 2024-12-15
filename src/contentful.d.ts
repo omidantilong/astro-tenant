@@ -12,14 +12,18 @@ declare interface Sys {
 }
 
 declare interface ContentfulLegacyPage extends Sys {
-  url: string
+  type: "Page"
+  slug: string
   title: string
   metaTitle: string
-  parentPage: ContentfulLegacyPage
+  parent: ContentfulLegacyPage
+  modulesCollection: { items: Array<any> }
+  heroCollection: { items: Array<Hero> }
 }
 declare interface ContentMap {
   [key: string]: {
     id: string
+    type: string
   }
 }
 declare interface Hero extends Sys {
@@ -97,5 +101,5 @@ declare type ImageProps = {
 
 declare type Link = InternalLink | ExternalLink
 
-declare type Entry = Section | EditorialCard | Text | Video | Image
+declare type ContentModule = Section | EditorialCard | Text | Video | Image
 //declare type Entry = Section | EditorialCard | Text | Video | Image | Dummy

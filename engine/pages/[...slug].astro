@@ -3,15 +3,24 @@ import Layout from "@/layouts/Layout.astro"
 import Hero from "@/components/Hero/Hero.astro"
 
 import * as components from "@/components"
+import { resolveLinks, getEntry } from "engine/lib/contentfulLegacy"
 
-const { page, heroes, entries, links } = Astro.locals.engine
+const { content } = await getEntry(Astro.locals.engine.ref)
+
+if (content.type !== "Page") {
+  return Astro.redirect("/")
+}
+
+const heroes: Hero[] = content.heroCollection.items || []
+const contentModules: Array<ContentModule> = content.modulesCollection.items || []
+const links = await resolveLinks(contentModules)
 ---
 
-<Layout title={page.metaTitle || page.title}>
+<Layout title={content.metaTitle || content.title}>
   <main>
     <div class="wrap">
-      <h1>{page.title}</h1>
-      <time>{page.sys.publishedAt}</time>
+      <h1>{content.title}</h1>
+      <time>{content.sys.publishedAt}</time>
     </div>
     <!-- <TestCard data={{ title: "plop" }} /> -->
     {
@@ -20,7 +29,7 @@ const { page, heroes, entries, links } = Astro.locals.engine
       })
     }
     {
-      entries.map(async (entry) => {
+      contentModules.map(async (entry) => {
         if (entry && components[entry.type]) {
           if ("link" in entry) entry.link = links[entry.sys.id]
           const Component = components[entry.type] as any
