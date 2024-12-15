@@ -3,21 +3,22 @@ import { defineMiddleware } from "astro:middleware"
 import { getEntryRef, getRedirect } from "engine/contentful"
 import { sanitizePath } from "engine/util/path"
 
-import type { MiddlewareHandler } from "astro"
+//import type { MiddlewareHandler } from "astro"
 
 // https://github.com/getsentry/sentry-javascript/blob/develop/packages/astro/src/server/middleware.ts
-function checkIsDynamicPageRequest(context: Parameters<MiddlewareHandler>[0]): boolean {
-  try {
-    return context.clientAddress != null
-  } catch {
-    return false
-  }
-}
+// function checkIsDynamicPageRequest(context: Parameters<MiddlewareHandler>[0]): boolean {
+//   try {
+//     return context.clientAddress != null
+//   } catch {
+//     return false
+//   }
+// }
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const isDynamic = checkIsDynamicPageRequest(context)
+  //console.log(context.routePattern)
+  //const isDynamic = checkIsDynamicPageRequest(context)
 
-  if (isDynamic) {
+  if (!context.isPrerendered) {
     const pathname = sanitizePath(context.url.pathname)
     //const { data } = await getPage(pathname)
     //console.log(data)
