@@ -1,5 +1,5 @@
 import { it, expect, describe } from "vitest"
-import { reduceRatio } from "./reduceRatio"
+import { reduceRatio } from "../reduceRatio"
 
 describe("reduce ratio to lowest form", () => {
   it("handles common cases", () => {
