@@ -1,6 +1,7 @@
 ---
 interface Props {
   data: Section
+  //links: Record<string, Link>
 }
 
 import { resolveLinks } from "engine/lib/contentfulLegacy"
@@ -9,6 +10,8 @@ import { resolveLinks } from "engine/lib/contentfulLegacy"
 import * as components from "@/components"
 
 const { title, contentCollection } = Astro.props.data
+// If links are passed in after being collection from nested sections
+//const links = Astro.props.links
 const links = await resolveLinks(contentCollection.items)
 
 const entries: Entry[] = contentCollection.items || []

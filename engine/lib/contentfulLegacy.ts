@@ -256,9 +256,20 @@ export async function resolveLinks(entries: Entry[]) {
       if (entry && "link" in entry && entry?.link?.type === "InternalLink") {
         linkMap[entry.link.sys.id] = entry.sys.id
       }
-    })
 
+      // Lines below can collect links from content nested inside sections
+      // See other comments in [...slug] and Section.astro for usage
+
+      // if ("contentCollection" in entry) {
+      //   entry.contentCollection.items.forEach((entry) => {
+      //     if (entry && "link" in entry && entry?.link?.type === "InternalLink") {
+      //       linkMap[entry.link.sys.id] = entry.sys.id
+      //     }
+      //   })
+      // }
+    })
     const linkIds = Object.keys(linkMap)
+    console.log(linkIds)
 
     if (linkIds.length) {
       const { data } = await getInternalLinkCollection(linkIds)

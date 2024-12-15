@@ -25,6 +25,7 @@ const { page, heroes, entries, links } = Astro.locals.engine
           if ("link" in entry) entry.link = links[entry.sys.id]
           const Component = components[entry.type] as any
           return <Component data={entry} />
+          //return <Component links={links} data={entry} />
         }
 
         // entries.map((entry) => {
