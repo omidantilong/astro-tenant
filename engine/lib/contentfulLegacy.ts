@@ -35,22 +35,6 @@ export function parentLookup(depth: number) {
   return query
 }
 
-// export async function getPagePath(id: string) {
-//   const query = `
-//     ${fragments.pageData}
-//     query PagePathQuery {
-//       page(id: "${id}") {
-//         ...pageData
-//         parent: parentPage {
-//           ${parentLookup(3)}
-//         }
-//       }
-//     }
-//   `
-
-//   return await fetchData({ query })
-// }
-
 export async function getInternalLink(id: string) {
   const query = `
     ${fragments.pageData} 
