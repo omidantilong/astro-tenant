@@ -83,16 +83,18 @@ export async function getInternalLinkCollection(links: string[]) {
 }
 
 export async function getPage(pathname: string) {
-  const redirect = await getRedirect(pathname)
-
-  if (redirect) return { data: { redirect: true, ...redirect } }
-
   // const slug = getSlugFromPath(pathname)
   // pageCollection(where: {url: "${slug}"}, limit: 1) {
 
   const page = await getPageData(pathname)
 
-  if (!page) return { data: { error: { code: 404 } } }
+  if (!page) {
+    const redirect = await getRedirect(pathname)
+
+    if (redirect) return { data: { redirect: true, ...redirect } }
+
+    return { data: { error: { code: 404 } } }
+  }
 
   //console.log(id)
 
