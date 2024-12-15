@@ -96,7 +96,7 @@ export async function getAsset(id: string) {
 export async function getRedirect(pathname: string) {
   const query = `
     query RedirectQuery {
-      redirectCollection(limit: 3000) {
+      collection: redirectCollection(limit: 3000) {
         items {
           from,
           to
@@ -107,7 +107,7 @@ export async function getRedirect(pathname: string) {
 
   const { data } = await fetchData({ query })
 
-  for (let redirect of data.redirectCollection.items) {
+  for (let redirect of data.collection.items) {
     const exp = `^${redirect.from}`
     if (pathname.match(exp)) {
       console.log("Redirect match")
