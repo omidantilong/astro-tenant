@@ -57,12 +57,12 @@ export async function createPageMap() {
   const data = await fetchData({ query })
   const pages = data.data.pageCollection.items
 
-  const pageMap: { [key: string]: ContentfulLegacyPage } = {}
+  const pageMap: ContentMap = {}
 
   pages.forEach((page: ContentfulLegacyPage) => {
     const url = getFullPath(page)
 
-    pageMap[url] = page
+    pageMap[url] = { id: page.sys.id }
   })
 
   await fs.writeFile("map.json", JSON.stringify(pageMap))

@@ -107,7 +107,7 @@ export async function getPage(pathname: string) {
     ${fragments.editorialCard}
     ${fragments.externalLink}
     query PageQuery {
-      pageCollection(where: {sys: { id: "${page.sys.id}"} } , limit: 1) { 
+      pageCollection(where: {sys: { id: "${page.id}"} } , limit: 1) { 
         items { 
           ...pageData
           metaTitle

@@ -17,7 +17,11 @@ declare interface ContentfulLegacyPage extends Sys {
   metaTitle: string
   parentPage: ContentfulLegacyPage
 }
-
+declare interface ContentMap {
+  [key: string]: {
+    id: string
+  }
+}
 declare interface Hero extends Sys {
   type: "Hero"
   title: string
