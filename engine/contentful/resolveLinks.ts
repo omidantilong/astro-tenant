@@ -41,7 +41,7 @@ export async function resolveLinks(entries: Array<ContentModule>) {
     if (linkIds.length) {
       const { data } = await getInternalLinkCollection(linkIds)
 
-      data.internalLinkCollection.items.forEach((link: InternalLink) => {
+      data.collection.items.forEach((link: InternalLink) => {
         links[linkMap[link.sys.id]] = link
       })
     }

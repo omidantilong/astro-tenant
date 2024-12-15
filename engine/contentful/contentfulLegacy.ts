@@ -47,7 +47,7 @@ export async function getInternalLinkCollection(links: string[]) {
   const query = `
   ${fragments.pageData}
   query LinkCollectionQuery {
-    internalLinkCollection(where: { ${condition} } ) {
+    collection: internalLinkCollection(where: { ${condition} } ) {
       items {
         type: __typename
         ...on InternalLink {
