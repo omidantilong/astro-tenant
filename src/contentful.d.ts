@@ -14,6 +14,7 @@ declare interface Sys {
 declare interface ContentfulLegacyPage extends Sys {
   url: string
   title: string
+  metaTitle: string
   parentPage: ContentfulLegacyPage
 }
 
