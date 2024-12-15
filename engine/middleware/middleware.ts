@@ -1,15 +1,7 @@
 import { defineMiddleware } from "astro:middleware"
 
-import { sanitizePath } from "engine/util/common"
-//import { pageNotFound } from "engine/util/responses"
-
-import {
-  getContent,
-  getFullPath,
-  resolveLinks,
-  getEntryRef,
-  getRedirect,
-} from "engine/lib/contentfulLegacy"
+import { getEntryRef, getRedirect } from "engine/contentful/contentfulLegacy"
+import { sanitizePath } from "engine/util/path"
 
 import type { MiddlewareHandler } from "astro"
 
@@ -26,7 +18,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const isDynamic = checkIsDynamicPageRequest(context)
 
   if (isDynamic) {
-    ;``
     const pathname = sanitizePath(context.url.pathname)
     //const { data } = await getPage(pathname)
     //console.log(data)

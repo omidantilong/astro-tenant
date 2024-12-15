@@ -203,27 +203,6 @@ export async function resolveLinks(entries: Array<ContentModule>) {
   return links
 }
 
-export function getSlugFromPath(pathname: string) {
-  // If the pathname is a slash, return it
-  // Otherwise extract the last segment
-
-  return pathname === "/" ? pathname : pathname.split("/").at(-1)
-}
-
-export function getPathSegments(entry: EngineContentEntry) {
-  const path = [entry.slug]
-
-  if ("parent" in entry && entry.parent) {
-    path.push(getPathSegments(entry.parent))
-  }
-
-  return path.reverse().join("/")
-}
-
-export function getFullPath(entry: EngineContentEntry, root: string = "") {
-  return entry.slug === "/" ? entry.slug : `${root}/${getPathSegments(entry)}`
-}
-
 export async function getEntryRef(pathname: string) {
   const pages = (await import("../../map.json")).default as any
   return pages[pathname] ? pages[pathname] : false

@@ -3,7 +3,7 @@ import Layout from "@/layouts/Layout.astro"
 import Hero from "@/components/Hero/Hero.astro"
 
 import * as components from "@/components"
-import { resolveLinks, getContent } from "engine/lib/contentfulLegacy"
+import { resolveLinks, getContent } from "engine/contentful/contentfulLegacy"
 
 const { content } = await getContent(Astro.locals.engine.ref)
 
