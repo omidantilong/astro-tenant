@@ -1,6 +1,3 @@
 export function pageNotFound() {
-  return new Response("404", {
-    status: 404,
-    statusText: "Not Found",
-  })
+  return new Response(new Blob(), { status: 404 })
 }
