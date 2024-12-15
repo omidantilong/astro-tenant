@@ -12,15 +12,14 @@
 import dotenv from "dotenv"
 import fs from "fs-extra"
 
-import { getFullPath } from "engine/util/path"
-
 import type { EngineContentTypeConfig } from "engine/types/engine"
 
-import { engineDefaults } from "engine/config/defaults.ts"
-import { engineConfig } from "tenant.config"
+import { parentLookup } from "engine/contentful"
+import * as fragments from "engine/contentful/fragments"
 
-import * as fragments from "./fragments"
-import { parentLookup } from "engine/contentful/contentfulLegacy"
+import { engineDefaults } from "engine/config/defaults"
+import { getFullPath } from "engine/util/path"
+import { engineConfig } from "tenant.config"
 
 dotenv.config({ path: `.env.development` })
 
