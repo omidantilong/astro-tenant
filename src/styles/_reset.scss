@@ -13,7 +13,12 @@ html {
 }
 
 html,
-body {
+body,
+h1,
+h2,
+h3,
+h4,
+p {
   margin: 0;
   padding: 0;
   border: 0;
@@ -33,6 +38,13 @@ dd {
   margin-block-end: 0;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+}
+
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
 ul[role="list"],
 ol[role="list"] {
@@ -45,11 +57,7 @@ body {
   line-height: 1.5;
 }
 
-/* Set shorter line heights on headings and interactive elements */
-h1,
-h2,
-h3,
-h4,
+/* Set shorter line heights on interactive elements */
 button,
 input,
 label {
@@ -67,7 +75,7 @@ h4 {
 /* A elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
-  color: currentColor;
+  //color: currentColor;
 }
 
 /* Make images easier to work with */
@@ -94,4 +102,12 @@ textarea:not([rows]) {
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
   scroll-margin-block: 5ex;
+}
+
+:root {
+  --flow-space: 1rem;
+}
+
+.flow > * + * {
+  margin-block-start: var(--flow-space, 1rem);
 }
