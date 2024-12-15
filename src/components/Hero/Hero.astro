@@ -3,13 +3,18 @@ interface Props {
   data: Hero
 }
 
-const { heroHeading, heroBody, link } = Astro.props.data
+const { heroHeading, heroBody, link, image } = Astro.props.data
 
 //console.log(Astro.props.data)
 ---
 
-<div class="wrap">
-  <h1>{heroHeading}</h1>
-  <p set:html={heroBody} />
-  {link && "url" in link && <a href={link.url}>{link.title}</a>}
+<div class="cws-hero-container">
+  <div class="wrap flex">
+    <div class="pr-8">
+      <h1>{heroHeading}</h1>
+      <p set:html={heroBody} />
+      {link && "url" in link && <a href={link.url}>{link.title}</a>}
+    </div>
+    <img class="max-w-2xl" src=`${image.url}?q=60&fm=webp` />
+  </div>
 </div>
