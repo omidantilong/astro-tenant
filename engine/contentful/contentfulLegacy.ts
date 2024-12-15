@@ -12,6 +12,7 @@ import { parentLookup } from "engine/contentful/parentLookup"
 import { resolveLinks } from "engine/contentful/resolveLinks"
 
 import { engineConfig } from "tenant.config"
+import { log } from "engine/logger"
 
 const contentTypes: EngineContentTypeConfig = {
   ...engineConfig.contentTypes,
@@ -135,7 +136,7 @@ export async function fetchData({ query, preview = false }: { query: string; pre
     }
   ).then((res) => {
     //console.log(res)
-    console.log(`Query complexity: ${res.headers.get("X-Contentful-Graphql-Query-Cost")} / 11000`)
+    log(`Query complexity: ${res.headers.get("X-Contentful-Graphql-Query-Cost")} / 11000`)
     return res.json()
   })
 }
