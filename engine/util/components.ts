@@ -2,7 +2,11 @@ type ComponentMap = { [key: string]: { default: Function } }
 
 const defaultComponents = ["Dummy"]
 
-export async function collectComponents({ entries }: { entries: Entry[] }): Promise<ComponentMap> {
+export async function collectComponents({
+  entries,
+}: {
+  entries: Array<ContentModule>
+}): Promise<ComponentMap> {
   console.log("Collecting components")
   const components: ComponentMap = {}
 
