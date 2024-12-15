@@ -3,9 +3,9 @@ import Layout from "@/layouts/Layout.astro"
 import Hero from "@/components/Hero/Hero.astro"
 
 import * as components from "@/components"
-import { resolveLinks, getEntry } from "engine/lib/contentfulLegacy"
+import { resolveLinks, getContent } from "engine/lib/contentfulLegacy"
 
-const { content } = await getEntry(Astro.locals.engine.ref)
+const { content } = await getContent(Astro.locals.engine.ref)
 
 if (content.type !== "Page") {
   return Astro.redirect("/")

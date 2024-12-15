@@ -78,7 +78,7 @@ export async function getInternalLinkCollection(links: string[]) {
   return await fetchData({ query })
 }
 
-export async function getEntry(ref: EngineContentReference): Promise<EngineContentResponse> {
+export async function getContent(ref: EngineContentReference): Promise<EngineContentResponse> {
   const query = contentTypes[ref.type as keyof EngineContentTypeConfig].contentQuery({
     ref,
     fragments,
@@ -224,7 +224,7 @@ export function getFullPath(entry: EngineContentEntry, root: string = "") {
   return entry.slug === "/" ? entry.slug : `${root}/${getPathSegments(entry)}`
 }
 
-export async function getPageData(pathname: string) {
+export async function getEntryRef(pathname: string) {
   const pages = (await import("../../map.json")).default as any
   return pages[pathname] ? pages[pathname] : false
 }

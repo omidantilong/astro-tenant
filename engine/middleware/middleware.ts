@@ -4,10 +4,10 @@ import { sanitizePath } from "engine/util/common"
 //import { pageNotFound } from "engine/util/responses"
 
 import {
-  getEntry,
+  getContent,
   getFullPath,
   resolveLinks,
-  getPageData,
+  getEntryRef,
   getRedirect,
 } from "engine/lib/contentfulLegacy"
 
@@ -26,6 +26,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const isDynamic = checkIsDynamicPageRequest(context)
 
   if (isDynamic) {
+    ;``
     const pathname = sanitizePath(context.url.pathname)
     //const { data } = await getPage(pathname)
     //console.log(data)
@@ -42,7 +43,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     // Return 404 if there is no page with that slug
     //if (!data?.pageCollection?.items) return next("/404")
 
-    const ref = await getPageData(pathname)
+    const ref = await getEntryRef(pathname)
 
     if (!ref) {
       const redirect = await getRedirect(pathname)
