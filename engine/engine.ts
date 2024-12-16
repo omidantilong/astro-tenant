@@ -48,6 +48,11 @@ export function engine({ ...opts }): AstroIntegration {
   return {
     name: "engine",
     hooks: {
+      "astro:route:setup": async ({ route }) => {
+        if (route.component.endsWith(".md") || route.component.endsWith(".html")) {
+          route.prerender = true
+        }
+      },
       "astro:config:setup": async ({ injectRoute, addMiddleware }) => {
         // if (!opts.customIndex) {
         //   injectRoute(defaultRoute())
