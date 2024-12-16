@@ -11,6 +11,12 @@ PUBLIC_CONTENTFUL_SPACE_ID=
 PUBLIC_CONTENTFUL_ENV=
 ```
 
+The repo contains an `engine` Astro integration which will eventually be extracted into a standalone package. The engine module reads a `tenant.config.ts` from the root, which can be used to register new content types for top level pages and provide other tenant-level config.
+
+The engine works by injecting middleware into Astro. A `map` function is exposed which generates a flat map of all publicly-accessible URLs, using the path as a key for an object containing the contentful entry id and content type. The middleware checks incoming request paths against this map and returns an entry reference. At this point Astro's file routing takes over, using either the default route templates provided by the engine or custom templates defined locally.
+
+These templates can access the entry reference using `Astro.locals.engine` and then decide how to render the content.
+
 #### Editor setup
 
 - If you have prettier installed globally, make sure you're running the latest version (or just remove it)
