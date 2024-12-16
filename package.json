@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest",
-    "map": "tsx engine/lib/map.ts"
+    "map": "tsx engine/contentful/map.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
