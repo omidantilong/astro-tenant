@@ -10,9 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest",
-    "map": "tsx engine/contentful/map.ts",
-    "deps:prune": "tsx engine/util/deps-prune.ts",
-    "deps:copy": "tsx engine/util/deps-copy.ts",
+    "engine:deps:copy": "sh engine/bin/copy-externals.sh",
     "knip": "knip --reporter json > deps.json"
   },
   "dependencies": {
