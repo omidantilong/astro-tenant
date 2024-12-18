@@ -4,7 +4,17 @@ import react from "@astrojs/react"
 import UnoCSS from "unocss/astro"
 
 import { engine } from "./engine/engine"
+import type { SSROptions } from "vite"
+
 //import { engineConfig } from "./tenant.config.ts"
+
+const ssr: SSROptions =
+  process.env.NODE_ENV === "production"
+    ? {
+        noExternal: true,
+        external: ["node:fs", "fs", "node:path", "react", "react-dom"],
+      }
+    : {}
 
 export default defineConfig({
   output: "server",
@@ -18,10 +28,7 @@ export default defineConfig({
     port: 8020,
   },
   vite: {
-    ssr: {
-      noExternal: true,
-      external: ["node:fs", "fs", "node:path"],
-    },
+    ssr,
     resolve: {
       alias: {
         "@/": "./src",
