@@ -13,7 +13,7 @@ const ssr: SSROptions =
   process.env.NODE_ENV === "production"
     ? {
         noExternal: true,
-        external: ["node:fs", "fs", "node:path", "react", "react-dom"],
+        external: ["node:fs", "fs", "node:path", "react", "react-dom", "scheduler"],
       }
     : {}
 
