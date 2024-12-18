@@ -10,16 +10,19 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest",
-    "map": "tsx engine/contentful/map.ts"
+    "map": "tsx engine/contentful/map.ts",
+    "config": "tsx engine/config/load-config.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "^12.1.0",
     "@astrojs/node": "^9.0.0",
     "@astrojs/react": "^4.1.1",
     "@omidantilong/astro": "^0.1.1",
     "@omidantilong/react": "^0.1.0",
     "astro": "^5.0.8",
     "astro-vtbot": "^1.10.7",
+    "c12": "^2.0.1",
     "dotenv": "^16.4.7",
     "fs-extra": "^11.2.0",
     "react": "^19.0.0",
@@ -31,6 +34,7 @@
     "remark-rehype": "^11.1.1",
     "remark-unwrap-tags": "^0.1.1",
     "typescript": "^5.7.2",
+    "unconfig": "^0.6.0",
     "unified": "^11.0.5"
   },
   "devDependencies": {

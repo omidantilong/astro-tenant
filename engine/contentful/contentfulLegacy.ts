@@ -6,22 +6,19 @@ import type {
   EngineContentResponse,
   EngineContentTypeConfig,
 } from "engine/types/engine"
+
+import { loadEngineConfig } from "engine/config"
+
 import * as fragments from "engine/contentful/fragments"
-import { engineDefaults } from "engine/config/defaults"
 import { parentLookup } from "engine/contentful/parentLookup"
 import { resolveLinks } from "engine/contentful/resolveLinks"
 
-import { engineConfig } from "tenant.config"
 import { log } from "engine/logger"
 
-const contentTypes: EngineContentTypeConfig = {
-  ...engineConfig.contentTypes,
-  ...engineDefaults.contentTypes,
-}
-
 export { resolveLinks, parentLookup }
-
 export { parse } from "./markdown"
+
+const engineConfig = await loadEngineConfig()
 
 export async function getInternalLink(id: string) {
   const query = `
@@ -67,7 +64,7 @@ export async function getInternalLinkCollection(links: string[]) {
 }
 
 export async function getContent(ref: EngineContentReference): Promise<EngineContentResponse> {
-  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].contentQuery({
+  const query = engineConfig.contentTypes[ref.type as keyof EngineContentTypeConfig].contentQuery({
     ref,
     fragments,
     parentLookup,

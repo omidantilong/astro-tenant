@@ -1,6 +1,6 @@
-import type { EngineConfig } from "engine/types/engine"
+import { defineEngineConfig } from "./engine/config"
 
-export const engineConfig: EngineConfig = {
+export default defineEngineConfig({
   contentTypes: {
     PressRelease: {
       root: "/media/news-releases",
@@ -35,4 +35,4 @@ export const engineConfig: EngineConfig = {
         }`,
     },
   },
-}
+})

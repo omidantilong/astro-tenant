@@ -1,6 +1,6 @@
 import type { EngineConfig } from "engine/types/engine"
-
-export const engineDefaults: EngineConfig = {
+import { defineEngineConfig } from "./"
+export default defineEngineConfig({
   contentTypes: {
     Page: {
       contentQuery: ({ ref, fragments, parentLookup }) => `
@@ -80,4 +80,4 @@ export const engineDefaults: EngineConfig = {
         }`,
     },
   },
-}
+})

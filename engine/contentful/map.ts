@@ -17,9 +17,10 @@ import type { EngineContentTypeConfig } from "engine/types/engine"
 import { parentLookup } from "engine/contentful"
 import * as fragments from "engine/contentful/fragments"
 
-import { engineDefaults } from "engine/config/defaults"
+import { loadEngineConfig } from "engine/config"
 import { getFullPath } from "engine/util/path"
-import { engineConfig } from "tenant.config"
+
+const engineConfig = await loadEngineConfig()
 
 dotenv.config({ path: `.env.development` })
 
@@ -49,7 +50,7 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 export async function createContentMap() {
   const contentTypes: EngineContentTypeConfig = {
     ...engineConfig.contentTypes,
-    ...engineDefaults.contentTypes,
+    //...engineDefaults.contentTypes,
   }
 
   const contentMap: ContentMap = {}
