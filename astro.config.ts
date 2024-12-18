@@ -19,7 +19,8 @@ export default defineConfig({
   },
   vite: {
     ssr: {
-      // noExternal: [],
+      noExternal: true,
+      external: ["node:fs", "fs", "node:path"],
     },
     resolve: {
       alias: {
