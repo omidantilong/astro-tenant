@@ -18,6 +18,9 @@ export default defineConfig({
     port: 8020,
   },
   vite: {
+    ssr: {
+      // noExternal: [],
+    },
     resolve: {
       alias: {
         "@/": "./src",
