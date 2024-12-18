@@ -11,7 +11,8 @@
     "astro": "astro",
     "test": "vitest",
     "map": "tsx engine/contentful/map.ts",
-    "prune": "tsx engine/util/prune.ts",
+    "deps:prune": "tsx engine/util/deps-prune.ts",
+    "deps:copy": "tsx engine/util/deps-copy.ts",
     "knip": "knip --reporter json > deps.json"
   },
   "dependencies": {
