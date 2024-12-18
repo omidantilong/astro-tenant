@@ -6,6 +6,7 @@ import UnoCSS from "unocss/astro"
 import { engine } from "./engine/engine"
 import type { SSROptions } from "vite"
 
+//import { visualizer } from "rollup-plugin-visualizer"
 //import { engineConfig } from "./tenant.config.ts"
 
 const ssr: SSROptions =
@@ -28,6 +29,12 @@ export default defineConfig({
     port: 8020,
   },
   vite: {
+    plugins: [
+      // visualizer({
+      //   emitFile: true,
+      //   filename: "stats.html",
+      // }),
+    ],
     ssr,
     resolve: {
       alias: {
