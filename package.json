@@ -37,6 +37,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
+    "knip": "^5.41.0",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.83.0",
