@@ -10,7 +10,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest",
-    "map": "tsx engine/contentful/map.ts"
+    "map": "tsx engine/contentful/map.ts",
+    "prune": "tsx engine/util/prune.ts",
+    "knip": "knip --reporter json > deps.json"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
