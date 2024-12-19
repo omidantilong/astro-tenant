@@ -1,4 +1,4 @@
-import type { AstroIntegration } from "astro"
+import type { AstroIntegration, ViteUserConfig } from "astro"
 import type { EngineDefaultRoutes } from "engine/types/engine"
 import fs from "fs-extra"
 
@@ -10,9 +10,9 @@ Setting it to false will use the integration slug route.
 
 Setting it to true will use the local slug route.
 
-NOTE: IRL this engine integration would live inside node_modules. This has no
-bearing on its functionality (in fact this is the exact same approach
-that Starlight uses).
+NOTE: IRL this engine integration would live inside node_modules. This
+has no bearing on its functionality (in fact this is the exact same
+approach that Starlight uses).
 
 NOTE: Prior to Astro 5, Astro's routing logic would silently give
 priority to injected routes, but would spit out multiple entry points
@@ -44,7 +44,18 @@ const defaultRoutes: EngineDefaultRoutes = {
   }),
 }
 
-export function engine({ ...opts }): AstroIntegration {
+//export function engine({ ...opts }: { output: "server" | "static" }): AstroIntegration {
+export function engine(): AstroIntegration {
+  //const astroConfig: AstroUserConfig = {}
+  const viteConfig: ViteUserConfig = {}
+
+  if (process.env.NODE_ENV === "production") {
+    viteConfig.ssr = {
+      noExternal: true,
+      external: ["node:fs", "fs", "node:path", "react", "react-dom", "scheduler"],
+    }
+  }
+
   return {
     name: "engine",
     hooks: {
@@ -53,7 +64,7 @@ export function engine({ ...opts }): AstroIntegration {
           route.prerender = true
         }
       },
-      "astro:config:setup": async ({ injectRoute, addMiddleware }) => {
+      "astro:config:setup": async ({ injectRoute, updateConfig, addMiddleware }) => {
         // if (!opts.customIndex) {
         //   injectRoute(defaultRoute())
         // }
@@ -66,6 +77,13 @@ export function engine({ ...opts }): AstroIntegration {
         for (const route in defaultRoutes) {
           if (!fs.existsSync(route)) injectRoute(defaultRoutes[route]())
         }
+
+        updateConfig({
+          trailingSlash: "ignore",
+          vite: {
+            ssr: viteConfig.ssr || {},
+          },
+        })
 
         addMiddleware({
           entrypoint: "./engine/middleware/middleware.ts",
