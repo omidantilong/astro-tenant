@@ -12,12 +12,13 @@ const link = Astro.props.data
 
 if (link) {
   Wrapper = "a"
-  if (link.type === "InternalLink") {
+  if (link.sys.contentType.sys.id === "internalLink") {
     // Uncomment these lines to fetch individual link data with separate api call
     // const { data: linkData } = await getInternalLink({ id: link.sys.id })
     // wrapperProps.href = getFullPath(linkData.internalLink.page)
+    console.log(link.fields.page.fields)
 
-    wrapperProps.href = getFullPath(link.page)
+    wrapperProps.href = getFullPath(link.fields.page.fields)
   }
 }
 ---

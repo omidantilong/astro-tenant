@@ -9,12 +9,16 @@ import { resolveLinks } from "engine/contentful"
 
 import * as components from "@/components"
 
-const { title, contentCollection } = Astro.props.data
+const { title, content } = Astro.props.data
+//console.log(Astro.props)
 // If links are passed in after being collection from nested sections
 //const links = Astro.props.links
-const links = await resolveLinks(contentCollection.items)
+//const links = await resolveLinks(contentCollection.items)
 
-const contentModules: Array<ContentModule> = contentCollection.items || []
+const contentModules: Array<ContentModule> = content || []
+function ucfirst(v: string) {
+  return String(v).charAt(0).toUpperCase() + String(v).slice(1)
+}
 ---
 
 <section class="wrap flow">
@@ -22,11 +26,13 @@ const contentModules: Array<ContentModule> = contentCollection.items || []
   <div class="cws-grid">
     {
       contentModules.map((entry) => {
+        entry.type = ucfirst(entry.sys.contentType.sys.id)
+
         if (components[entry.type]) {
-          if ("link" in entry) entry.link = links[entry.sys.id]
+          //if ("link" in entry) entry.link = links[entry.sys.id]
           //const Component = components[entry.type]
           const Component = components[entry.type] as any
-          return <Component data={entry} />
+          return <Component data={entry.fields} />
         }
       })
     }

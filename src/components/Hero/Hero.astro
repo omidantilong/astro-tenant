@@ -1,10 +1,9 @@
 ---
 interface Props {
-  data: Hero
+  data: { fields: Hero }
 }
 
-const { heroHeading, heroBody, link, image } = Astro.props.data
-
+const { heroHeading, heroBody, link, image } = Astro.props.data.fields
 //console.log(Astro.props.data)
 ---
 
@@ -15,6 +14,7 @@ const { heroHeading, heroBody, link, image } = Astro.props.data
       <p set:html={heroBody} />
       {link && "url" in link && <a href={link.url}>{link.title}</a>}
     </div>
-    <img class="max-w-2xl" src=`${image.url}?q=60&fm=webp` />
+    <!--@ts-expect-error -->
+    <img class="max-w-2xl" src=`${image.fields.file.url}?q=60&fm=webp` />
   </div>
 </div>

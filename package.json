@@ -25,6 +25,8 @@
     "@omidantilong/react": "^0.1.0",
     "astro": "^5.0.8",
     "astro-vtbot": "^1.10.7",
+    "contentful": "^11.3.3",
+    "contentful-resolve-response": "^1.9.2",
     "dotenv": "^16.4.7",
     "fs-extra": "^11.2.0",
     "glob": "^11.0.0",
@@ -39,6 +41,7 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
+    "@types/contentful-resolve-response": "^0.1.33",
     "@types/fs-extra": "^11.0.4",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
