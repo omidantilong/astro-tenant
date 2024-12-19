@@ -1,10 +1,21 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 
-# Hoist everything up one level so we're not still in dist 
-# All Astro dependencies are bundled, except react, react-dom and scheduler
-# These are contained in a node_modules folder present in the dist directory
-COPY dist ./
+FROM base AS build
+
+RUN apk add --no-cache bash
+
+COPY . .
+
+RUN npm install
+RUN npm run astro:build
+
+RUN chmod +x engine/bin/copy-externals.sh
+RUN engine/bin/copy-externals.sh
+
+FROM base AS runtime
+
+COPY --from=build /app/dist ./
 
 ENV HOST=0.0.0.0
 
