@@ -4,13 +4,17 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build && npm run deps:copy",
-    "check": "astro check",
-    "preview": "astro preview",
     "astro": "astro",
+    "astro:dev": "astro dev",
+    "astro:build": "astro check && astro build",
+    "astro:check": "astro check",
+    "astro:preview": "astro preview",
+    "engine:build": "astro check && astro build && npm run engine:deps:copy",
+    "engine:build-image": "bash ./engine/bin/build.sh",
+    "engine:serve": "bash ./engine/bin/run.sh",
+    "engine:map": "tsx engine/contentful/map.ts",
+    "engine:deps:copy": "bash ./engine/bin/copy-externals.sh",
     "test": "vitest",
-    "engine:deps:copy": "sh engine/bin/copy-externals.sh",
     "knip": "knip --reporter json > deps.json"
   },
   "dependencies": {
