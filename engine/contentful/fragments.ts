@@ -1,4 +1,5 @@
 //import { parentLookup } from "engine/contentful/parentLookup"
+import { parentLookup } from "engine/contentful/parentLookup"
 
 //export const fragments = {
 export const pageData = `
@@ -51,6 +52,21 @@ export const externalLink = `
     title
   }`
 
+export const internalLink = `
+  fragment internalLinkFields on InternalLink {
+    type: __typename,
+    sys {
+      id
+    }
+    page { 
+      ...on Page {
+        slug: url
+        parent: parentPage {
+          ${parentLookup(3)}
+        }
+      }
+    }
+  }`
 export const editorialCard = `
   fragment editorialCardFields on EditorialCard {
     cardHeading,
@@ -64,13 +80,8 @@ export const editorialCard = `
       width
     }
     link {
-      type: __typename
-      ...on Entry {
-        sys { 
-          id
-        }
-      }
-
+      ...externalLinkFields
+      ...internalLinkFields
     }
   }`
 

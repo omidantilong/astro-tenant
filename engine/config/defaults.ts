@@ -11,6 +11,8 @@ export const engineDefaults: EngineConfig = {
       ${fragments.text}
       ${fragments.editorialCard}
       ${fragments.externalLink}
+      ${fragments.internalLink}
+      ${fragments.signpost}
       query PageQuery {
         content: page(id:"${ref.id}") { 
           ...pageData
@@ -39,6 +41,7 @@ export const engineDefaults: EngineConfig = {
               link: heroLink {
                 type: __typename
                 ...externalLinkFields
+                ...internalLinkFields
               }
             }
           }
