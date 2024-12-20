@@ -5,7 +5,7 @@ interface Props {
 
 const { heroHeading, heroBody, link, image } = Astro.props.data
 import { reduceRatio } from "engine/util/reduceRatio"
-console.log(image)
+
 const ratio = reduceRatio(image.width, image.height)
 //console.log(Astro.props.data)
 ---

@@ -161,7 +161,9 @@ async function buildCache() {
   }
 }
 
-export async function getEntryRef(pathname: string): Promise<EngineContentReference | false> {
+export async function getEntryRefFromPath(
+  pathname: string
+): Promise<EngineContentReference | false> {
   let ref: EngineContentReference | null = await cache.get(pathname)
   if (!ref) {
     await buildCache()
@@ -171,7 +173,7 @@ export async function getEntryRef(pathname: string): Promise<EngineContentRefere
   return ref ?? false
 }
 
-export async function getEntryPath(id: string) {
+export async function getEntryPathFromRef(id: string) {
   //const d = await cache.get("foo")
 
   //console.log(d)

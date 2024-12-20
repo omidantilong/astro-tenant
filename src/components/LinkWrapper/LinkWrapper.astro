@@ -4,7 +4,7 @@ interface Props {
 }
 
 import { getFullPath } from "engine/util/path"
-import { getEntryPath } from "engine/contentful"
+import { getEntryPathFromRef } from "engine/contentful"
 let Wrapper = "div"
 let wrapperProps: LinkWrapperProps = {}
 
@@ -20,7 +20,7 @@ if (link) {
     // use getEntryPath if we are using precomputed links
     // use getFullPath if we are using graphql link fragments
 
-    //wrapperProps.href = await getEntryPath(link.sys.id)
+    //wrapperProps.href = await getEntyPathFromRef(link.sys.id)
     wrapperProps.href = getFullPath(link.page)
   }
 }

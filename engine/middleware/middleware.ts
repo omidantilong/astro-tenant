@@ -1,6 +1,6 @@
 import { defineMiddleware } from "astro:middleware"
 
-import { getEntryRef, getRedirect } from "engine/contentful"
+import { getEntryRefFromPath, getRedirect } from "engine/contentful"
 import { sanitizePath } from "engine/util/path"
 
 //import type { MiddlewareHandler } from "astro"
@@ -35,7 +35,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     // Return 404 if there is no page with that slug
     //if (!data?.pageCollection?.items) return next("/404")
 
-    const ref = await getEntryRef(pathname)
+    const ref = await getEntryRefFromPath(pathname)
 
     if (!ref) {
       const redirect = await getRedirect(pathname)
