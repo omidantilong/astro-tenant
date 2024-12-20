@@ -61,7 +61,9 @@ export const engineDefaults: EngineConfig = {
                     ...videoFields
                     ...imageFields
                     ...textFields
+                    ...signpostFields
                     ...editorialCardFields
+
                   }
                 }
               }
