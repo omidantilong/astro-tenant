@@ -12,7 +12,7 @@ import * as fragments from "engine/contentful/fragments"
 import { engineDefaults } from "engine/config/defaults"
 import { parentLookup } from "engine/contentful/parentLookup"
 import { resolveLinks } from "engine/contentful/resolveLinks"
-
+import fs from "node:fs/promises"
 import { engineConfig } from "tenant.config"
 
 const contentTypes: EngineContentTypeConfig = {
@@ -74,6 +74,7 @@ export async function getContent(ref: EngineContentReference): Promise<EngineCon
     parentLookup,
   })
   const { data, errors } = await fetchData({ query })
+
   const { content } = data
   return { content, errors }
 }
@@ -143,11 +144,12 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 }
 
 export async function getEntryRef(pathname: string) {
-  const paths = (await import("../../paths.json")).default as EnginePathMap
+  //const paths = (await import("../../public/paths.json")).default as EnginePathMap
+  const paths = await fs.readFile("public/paths.json").then((res) => JSON.parse(res.toString()))
   return paths[pathname] ?? false
 }
 
-export async function getEntryPath(ref: EngineContentReference) {
-  const refs = (await import("../../refs.json")).default as EngineReferenceMap
-  return refs[ref.id] ?? false
+export async function getEntryPath(id: string) {
+  const refs = await fs.readFile("public/refs.json").then((res) => JSON.parse(res.toString()))
+  return refs[id] ?? false
 }
