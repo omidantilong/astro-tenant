@@ -5,6 +5,8 @@ import type {
   EngineContentReference,
   EngineContentResponse,
   EngineContentTypeConfig,
+  EnginePathMap,
+  EngineReferenceMap,
 } from "engine/types/engine"
 import * as fragments from "engine/contentful/fragments"
 import { engineDefaults } from "engine/config/defaults"
@@ -141,6 +143,11 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 }
 
 export async function getEntryRef(pathname: string) {
-  const pages = (await import("../../map.json")).default as any
-  return pages[pathname] ? pages[pathname] : false
+  const paths = (await import("../../paths.json")).default as EnginePathMap
+  return paths[pathname] ?? false
+}
+
+export async function getEntryPath(ref: EngineContentReference) {
+  const refs = (await import("../../refs.json")).default as EngineReferenceMap
+  return refs[ref.id] ?? false
 }

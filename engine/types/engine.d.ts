@@ -28,3 +28,14 @@ export interface EngineContentResponse {
   content: EngineContentEntry
   errors: any
 }
+
+export interface EnginePathMap {
+  [key: string]: {
+    id: string
+    type: string
+  }
+}
+
+export interface EngineReferenceMap {
+  [key: string]: string
+}

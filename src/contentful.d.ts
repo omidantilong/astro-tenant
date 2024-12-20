@@ -20,12 +20,7 @@ declare interface ContentfulLegacyPage extends Sys {
   modulesCollection: { items: Array<any> }
   heroCollection: { items: Array<Hero> }
 }
-declare interface ContentMap {
-  [key: string]: {
-    id: string
-    type: string
-  }
-}
+
 declare interface Hero extends Sys {
   type: "Hero"
   title: string

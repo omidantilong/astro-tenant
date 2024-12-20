@@ -23,3 +23,5 @@ pnpm-debug.log*
 
 scratch/*
 map.json
+paths.json
+refs.json

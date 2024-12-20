@@ -12,7 +12,11 @@
 import dotenv from "dotenv"
 import fs from "fs-extra"
 
-import type { EngineContentTypeConfig } from "engine/types/engine"
+import type {
+  EngineContentTypeConfig,
+  EnginePathMap,
+  EngineReferenceMap,
+} from "engine/types/engine"
 
 import { parentLookup } from "engine/contentful"
 import * as fragments from "engine/contentful/fragments"
@@ -52,7 +56,8 @@ export async function createContentMap() {
     ...engineDefaults.contentTypes,
   }
 
-  const contentMap: ContentMap = {}
+  const pathMap: EnginePathMap = {}
+  const refMap: EngineReferenceMap = {}
 
   for (const contentType in contentTypes) {
     const { collectionQuery, root } = contentTypes[contentType as keyof EngineContentTypeConfig]
@@ -62,11 +67,13 @@ export async function createContentMap() {
     data.collection.items.forEach((entry: EngineContentEntry) => {
       const resolvedPath = getFullPath(entry, root)
 
-      contentMap[resolvedPath] = { id: entry.sys.id, type: entry.type }
+      pathMap[resolvedPath] = { id: entry.sys.id, type: entry.type }
+      refMap[entry.sys.id] = resolvedPath
     })
   }
 
-  await fs.writeFile("map.json", JSON.stringify(contentMap))
+  await fs.writeFile("paths.json", JSON.stringify(pathMap))
+  await fs.writeFile("refs.json", JSON.stringify(refMap))
 }
 
 createContentMap().then(() => {
