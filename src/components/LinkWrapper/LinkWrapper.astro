@@ -4,7 +4,7 @@ interface Props {
 }
 
 import { getFullPath } from "engine/util/path"
-
+import { getEntryPath } from "engine/contentful"
 let Wrapper = "div"
 let wrapperProps: LinkWrapperProps = {}
 
@@ -17,7 +17,8 @@ if (link) {
     // const { data: linkData } = await getInternalLink({ id: link.sys.id })
     // wrapperProps.href = getFullPath(linkData.internalLink.page)
 
-    wrapperProps.href = getFullPath(link.page)
+    wrapperProps.href = await getEntryPath(link.sys.id)
+    //wrapperProps.href = getFullPath(link.page)
   }
 }
 ---

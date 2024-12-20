@@ -12,7 +12,7 @@ import * as components from "@/components"
 const { title, contentCollection } = Astro.props.data
 // If links are passed in after being collection from nested sections
 //const links = Astro.props.links
-const links = await resolveLinks(contentCollection.items)
+//const links = await resolveLinks(contentCollection.items)
 
 const contentModules: Array<ContentModule> = contentCollection.items || []
 ---
@@ -23,7 +23,7 @@ const contentModules: Array<ContentModule> = contentCollection.items || []
     {
       contentModules.map((entry) => {
         if (components[entry.type]) {
-          if ("link" in entry) entry.link = links[entry.sys.id]
+          //if ("link" in entry) entry.link = links[entry.sys.id]
           //const Component = components[entry.type]
           const Component = components[entry.type] as any
           return <Component data={entry} />
