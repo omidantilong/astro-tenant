@@ -14,6 +14,7 @@ import { parentLookup } from "engine/contentful/parentLookup"
 import { resolveLinks } from "engine/contentful/resolveLinks"
 import fs from "node:fs/promises"
 import { engineConfig } from "tenant.config"
+import gqlmin from "gqlmin"
 
 const contentTypes: EngineContentTypeConfig = {
   ...engineConfig.contentTypes,
@@ -125,7 +126,6 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 
   const spaceId = import.meta.env.PUBLIC_CONTENTFUL_SPACE_ID
   const spaceEnv = import.meta.env.PUBLIC_CONTENTFUL_ENV
-
   return await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${spaceId}/environments/${spaceEnv}`,
     {
@@ -134,10 +134,10 @@ export async function fetchData({ query, preview = false }: { query: string; pre
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: gqlmin(query) }),
     }
   ).then((res) => {
-    //console.log(res)
+    //console.log(gqlmin(query))
     console.log(`Query complexity: ${res.headers.get("X-Contentful-Graphql-Query-Cost")} / 11000`)
     return res.json()
   })
