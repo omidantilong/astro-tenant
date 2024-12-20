@@ -14,6 +14,7 @@ import fs from "fs-extra"
 
 import type {
   EngineContentTypeConfig,
+  EngineLinkReference,
   EnginePathMap,
   EngineReferenceMap,
 } from "engine/types/engine"
@@ -50,6 +51,34 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
+export async function getInternalLinkCollection() {
+  //const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
+  //collection: internalLinkCollection(where: { ${condition} } ) {
+
+  const query = `
+  ${fragments.pageData}
+  query LinkCollectionQuery {
+    collection: internalLinkCollection {
+      items {
+        type: __typename
+        ...on InternalLink {
+          sys {
+            id
+          }
+          page {
+            ...on Page {
+              ${parentLookup(3)}
+            }
+          }
+        }
+      }
+    }
+  }
+  `
+
+  return await fetchData({ query })
+}
+
 export async function createContentMap() {
   const contentTypes: EngineContentTypeConfig = {
     ...engineConfig.contentTypes,
@@ -72,8 +101,20 @@ export async function createContentMap() {
     })
   }
 
-  await fs.writeFile("paths.json", JSON.stringify(pathMap))
-  await fs.writeFile("refs.json", JSON.stringify(refMap))
+  const { data } = await getInternalLinkCollection()
+
+  data.collection.items.forEach((entry: EngineLinkReference) => {
+    if (entry.page) {
+      const resolvedPath = getFullPath(entry.page, "")
+
+      refMap[entry.sys.id] = resolvedPath
+    }
+  })
+
+  //await fs.writeFile("public/links.json", JSON.stringify(linkMap))
+  //console.log(links)
+  await fs.writeFile("public/paths.json", JSON.stringify(pathMap))
+  await fs.writeFile("public/refs.json", JSON.stringify(refMap))
 }
 
 createContentMap().then(() => {

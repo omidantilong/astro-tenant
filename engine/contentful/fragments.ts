@@ -1,3 +1,5 @@
+//import { parentLookup } from "engine/contentful/parentLookup"
+
 //export const fragments = {
 export const pageData = `
   fragment pageData on Page {
@@ -68,5 +70,23 @@ export const editorialCard = `
           id
         }
       }
+
     }
   }`
+
+// It is possible to retrieve linked page data using the fragment below, for example on an editorialcard
+// However it adds complexity to query, and probably doesn't scale super well
+// The alternative is to compute this as part of the map function, so retrieve every InternalLink and construct its path ahead of time
+// Although that sounds more expensive, it should actually be less complex
+
+/*
+        ...on InternalLink {
+        page { 
+          ...on Page {
+            slug: url
+            parent: parentPage {
+                ${parentLookup(3)}
+              }
+          }
+        }
+      }*/

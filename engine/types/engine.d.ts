@@ -39,3 +39,10 @@ export interface EnginePathMap {
 export interface EngineReferenceMap {
   [key: string]: string
 }
+
+export interface EngineLinkReference {
+  sys: {
+    id: string
+  }
+  page: ContentfulLegacyPage
+}
