@@ -16,6 +16,14 @@ import fs from "node:fs/promises"
 import { engineConfig } from "tenant.config"
 import gqlmin from "gqlmin"
 
+import { Keyv } from "keyv"
+import { createCache } from "cache-manager"
+
+const cache = createCache({
+  ttl: 60000,
+  stores: [new Keyv()],
+})
+
 const contentTypes: EngineContentTypeConfig = {
   ...engineConfig.contentTypes,
   ...engineDefaults.contentTypes,
@@ -24,6 +32,8 @@ const contentTypes: EngineContentTypeConfig = {
 export { resolveLinks, parentLookup }
 
 export { parse } from "./markdown"
+
+await buildCache()
 
 export async function getInternalLink(id: string) {
   const query = `
@@ -143,13 +153,28 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
-export async function getEntryRef(pathname: string) {
-  //const paths = (await import("../../public/paths.json")).default as EnginePathMap
+async function buildCache() {
+  console.log("Rebuilding path cache")
   const paths = await fs.readFile("public/paths.json").then((res) => JSON.parse(res.toString()))
-  return paths[pathname] ?? false
+  for (const path in paths) {
+    await cache.set(path, paths[path])
+  }
+}
+
+export async function getEntryRef(pathname: string): Promise<EngineContentReference | false> {
+  let ref: EngineContentReference | null = await cache.get(pathname)
+  if (!ref) {
+    await buildCache()
+    ref = await cache.get(pathname)
+  }
+
+  return ref ?? false
 }
 
 export async function getEntryPath(id: string) {
+  //const d = await cache.get("foo")
+
+  //console.log(d)
   const refs = await fs.readFile("public/refs.json").then((res) => JSON.parse(res.toString()))
   return refs[id] ?? false
 }

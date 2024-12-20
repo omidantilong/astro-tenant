@@ -25,6 +25,7 @@
     "@omidantilong/react": "^0.1.0",
     "astro": "^5.0.8",
     "astro-vtbot": "^1.10.7",
+    "cache-manager": "^6.3.1",
     "dotenv": "^16.4.7",
     "fs-extra": "^11.2.0",
     "glob": "^11.0.0",
