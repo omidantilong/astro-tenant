@@ -4,7 +4,9 @@ interface Props {
 }
 
 const { heroHeading, heroBody, link, image } = Astro.props.data
-
+import { reduceRatio } from "engine/util/reduceRatio"
+console.log(image)
+const ratio = reduceRatio(image.width, image.height)
 //console.log(Astro.props.data)
 ---
 
@@ -15,6 +17,10 @@ const { heroHeading, heroBody, link, image } = Astro.props.data
       <p set:html={heroBody} />
       {link && "url" in link && <a href={link.url}>{link.title}</a>}
     </div>
-    <img class="max-w-2xl" src=`${image.url}?q=60&fm=webp` />
+    {
+      image && image.url && (
+        <img style={{ aspectRatio: ratio[0] + "/" + ratio[1] }} src={image.url + "?q=60&fm=webp"} />
+      )
+    }
   </div>
 </div>
