@@ -17,8 +17,11 @@ if (link) {
     // const { data: linkData } = await getInternalLink({ id: link.sys.id })
     // wrapperProps.href = getFullPath(linkData.internalLink.page)
 
-    wrapperProps.href = await getEntryPath(link.sys.id)
-    //wrapperProps.href = getFullPath(link.page)
+    // use getEntryPath if we are using precomputed links
+    // use getFullPath if we are using graphql link fragments
+
+    //wrapperProps.href = await getEntryPath(link.sys.id)
+    wrapperProps.href = getFullPath(link.page)
   }
 }
 ---
