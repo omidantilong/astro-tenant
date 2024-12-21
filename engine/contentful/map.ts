@@ -1,13 +1,11 @@
-// Starting to scratch out an idea for how to build an internal sitemap
-// that can be used to resolve links and/or look up pages. First,
-// collect a list of all pages and index by slug.
+// These functions create maps of content that can be used to quickly
+// look up a pathname to get its page (or other content type) id. They
+// are just written to the file system as plain json files for now.
 
-// Then our getPage function can lookup the full pathname from this map,
-// and retrieve the ID of the page it needs to fetch. This removes the
-// need to manually check the full path after the page has been
-// retrieved from the CMS, by doing the check ahead of time.
-
-// This could be extended to links too, if we had a page map indexed by ID.
+// Part of the refMap contains entries for every InternalLink content
+// type, meaning links can be resolved quickly without additional api
+// calls. But the alternative approach of extending the graphql query
+// seems to be performing ok so far
 
 import dotenv from "dotenv"
 import fs from "fs-extra"
