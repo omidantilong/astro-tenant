@@ -172,7 +172,7 @@ export async function getEntryRefFromPath(pathname: string): Promise<EngineEntry
   return ref ?? false
 }
 
-export async function getEntryPathFromRef(id: string) {
+export async function getEntryPathFromRef(id: string): Promise<string> {
   //const d = await cache.get("foo")
 
   //console.log(d)
