@@ -16,13 +16,10 @@ import fs from "node:fs/promises"
 import { engineConfig } from "tenant.config"
 import gqlmin from "gqlmin"
 
-import { Keyv } from "keyv"
-import { createCache } from "cache-manager"
+// import { Keyv } from "keyv"
+// import { createCache, type Cache } from "cache-manager"
 
-const cache = createCache({
-  ttl: 60000,
-  stores: [new Keyv()],
-})
+// let cache: Cache
 
 const contentTypes: EngineContentTypeConfig = {
   ...engineConfig.contentTypes,
@@ -151,25 +148,34 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
-async function buildCache() {
-  console.log("Rebuilding path cache")
-  const paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
-  for (const path in paths) {
-    await cache.set(path, paths[path])
-  }
-}
+// async function buildCache() {
+//   console.log("Rebuilding path cache")
+//   const paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
+//   for (const path in paths) {
+//     await cache.set(path, paths[path])
+//   }
+// }
+
+// export async function getEntryRefFromPath(pathname: string): Promise<EngineEntryReference | false> {
+//   if (!cache) {
+//     cache = createCache({
+//       ttl: 60000,
+//       stores: [new Keyv()],
+//     })
+//     await buildCache()
+//   }
+//   let ref: EngineEntryReference | null = await cache.get(pathname)
+//   if (!ref) {
+//     await buildCache()
+//     ref = await cache.get(pathname)
+//   }
+
+//   return ref ?? false
+// }
 
 export async function getEntryRefFromPath(pathname: string): Promise<EngineEntryReference | false> {
-  if (!cache) {
-    await buildCache()
-  }
-  let ref: EngineEntryReference | null = await cache.get(pathname)
-  if (!ref) {
-    await buildCache()
-    ref = await cache.get(pathname)
-  }
-
-  return ref ?? false
+  const paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
+  return paths[pathname] || false
 }
 
 export async function getEntryPathFromRef(id: string): Promise<string> {
