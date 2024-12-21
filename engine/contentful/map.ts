@@ -12,7 +12,7 @@ import { outputFile } from "fs-extra"
 
 import type {
   EngineContentTypeConfig,
-  EngineLinkReference,
+  //EngineLinkReference,
   EnginePathMap,
   EngineReferenceMap,
 } from "engine/types/engine"
@@ -49,33 +49,33 @@ export async function fetchData({ query, preview = false }: { query: string; pre
   })
 }
 
-export async function getInternalLinkCollection() {
-  //const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
-  //collection: internalLinkCollection(where: { ${condition} } ) {
+// export async function getInternalLinkCollection() {
+//   //const condition = `sys: { id_in: [${links.map((link) => `"${link}"`)} ] }`
+//   //collection: internalLinkCollection(where: { ${condition} } ) {
 
-  const query = `
-  ${fragments.pageData}
-  query LinkCollectionQuery {
-    collection: internalLinkCollection {
-      items {
-        type: __typename
-        ...on InternalLink {
-          sys {
-            id
-          }
-          page {
-            ...on Page {
-              ${parentLookup(3)}
-            }
-          }
-        }
-      }
-    }
-  }
-  `
+//   const query = `
+//   ${fragments.pageData}
+//   query LinkCollectionQuery {
+//     collection: internalLinkCollection {
+//       items {
+//         type: __typename
+//         ...on InternalLink {
+//           sys {
+//             id
+//           }
+//           page {
+//             ...on Page {
+//               ${parentLookup(3)}
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   `
 
-  return await fetchData({ query })
-}
+//   return await fetchData({ query })
+// }
 
 export async function createContentMap() {
   const contentTypes: EngineContentTypeConfig = {
@@ -99,15 +99,15 @@ export async function createContentMap() {
     })
   }
 
-  const { data } = await getInternalLinkCollection()
+  // const { data } = await getInternalLinkCollection()
 
-  data.collection.items.forEach((entry: EngineLinkReference) => {
-    if (entry.page) {
-      const resolvedPath = getFullPath(entry.page, "")
+  // data.collection.items.forEach((entry: EngineLinkReference) => {
+  //   if (entry.page) {
+  //     const resolvedPath = getFullPath(entry.page, "")
 
-      refMap[entry.sys.id] = resolvedPath
-    }
-  })
+  //     refMap[entry.sys.id] = resolvedPath
+  //   }
+  // })
 
   //await fs.writeFile("public/links.json", JSON.stringify(linkMap))
   //console.log(links)
