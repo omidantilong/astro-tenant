@@ -8,7 +8,7 @@
 // seems to be performing ok so far
 
 import dotenv from "dotenv"
-import fs from "fs-extra"
+import { outputFile } from "fs-extra"
 
 import type {
   EngineContentTypeConfig,
@@ -17,7 +17,7 @@ import type {
   EngineReferenceMap,
 } from "engine/types/engine"
 
-import { parentLookup } from "engine/contentful"
+import { parentLookup } from "engine/contentful/parentLookup"
 import * as fragments from "engine/contentful/fragments"
 
 import { engineDefaults } from "engine/config/defaults"
@@ -111,8 +111,8 @@ export async function createContentMap() {
 
   //await fs.writeFile("public/links.json", JSON.stringify(linkMap))
   //console.log(links)
-  await fs.writeFile("public/paths.json", JSON.stringify(pathMap))
-  await fs.writeFile("public/refs.json", JSON.stringify(refMap))
+  await outputFile("engine/paths.json", JSON.stringify(pathMap))
+  await outputFile("engine/refs.json", JSON.stringify(refMap))
 }
 
 createContentMap().then(() => {

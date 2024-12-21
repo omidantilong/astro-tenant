@@ -153,7 +153,7 @@ export async function fetchData({ query, preview = false }: { query: string; pre
 
 async function buildCache() {
   console.log("Rebuilding path cache")
-  const paths = await fs.readFile("public/paths.json").then((res) => JSON.parse(res.toString()))
+  const paths = await fs.readFile("engine/paths.json").then((res) => JSON.parse(res.toString()))
   for (const path in paths) {
     await cache.set(path, paths[path])
   }
