@@ -5,8 +5,6 @@ import type {
   EngineEntryReference,
   EngineEntryResponse,
   EngineContentTypeConfig,
-  EnginePathMap,
-  EngineReferenceMap,
 } from "engine/types/engine"
 import * as fragments from "engine/contentful/fragments"
 import { engineDefaults } from "engine/config/defaults"
