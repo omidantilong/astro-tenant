@@ -2,8 +2,8 @@
 // https://github.com/graphql/graphql-spec/issues/929
 
 import type {
-  EngineContentReference,
-  EngineContentResponse,
+  EngineEntryReference,
+  EngineEntryResponse,
   EngineContentTypeConfig,
   EnginePathMap,
   EngineReferenceMap,
@@ -76,16 +76,16 @@ export async function getInternalLinkCollection(links: string[]) {
   return await fetchData({ query })
 }
 
-export async function getContent(ref: EngineContentReference): Promise<EngineContentResponse> {
-  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].contentQuery({
+export async function getEntry(ref: EngineEntryReference): Promise<EngineEntryResponse> {
+  const query = contentTypes[ref.type as keyof EngineContentTypeConfig].entryQuery({
     ref,
     fragments,
     parentLookup,
   })
   const { data, errors } = await fetchData({ query })
 
-  const { content } = data
-  return { content, errors }
+  const { entry } = data
+  return { entry, errors }
 }
 
 export async function getAsset(id: string) {
@@ -159,13 +159,11 @@ async function buildCache() {
   }
 }
 
-export async function getEntryRefFromPath(
-  pathname: string
-): Promise<EngineContentReference | false> {
+export async function getEntryRefFromPath(pathname: string): Promise<EngineEntryReference | false> {
   if (!cache) {
     await buildCache()
   }
-  let ref: EngineContentReference | null = await cache.get(pathname)
+  let ref: EngineEntryReference | null = await cache.get(pathname)
   if (!ref) {
     await buildCache()
     ref = await cache.get(pathname)

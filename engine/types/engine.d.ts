@@ -1,17 +1,18 @@
 export interface EngineContentTypeConfig {
   [key: Capitalize<string>]: {
     root?: string
-    contentQuery: ({ ref: EngineContentReference, fragments, parentLookup }) => string
+    entryQuery: ({ ref: EngineEntryReference, fragments, parentLookup }) => string
     collectionQuery: ({ fragments, parentLookup }) => string
   }
 }
 
-export interface EngineContentQueryFunction {
-  fragments: Array<string>
-  parentLookup: Function
+export interface EngineEntryQueryCallback {
+  ref: EngineEntryReference
+  fragements: any
+  parentLookup: any
 }
 
-export interface EngineContentReference {
+export interface EngineEntryReference {
   id: string
   type: string
 }
@@ -24,8 +25,8 @@ export interface EngineDefaultRoutes {
   [key: string]: () => { pattern: string; entrypoint: string }
 }
 
-export interface EngineContentResponse {
-  content: EngineContentEntry
+export interface EngineEntryResponse {
+  entry: EngineEntry
   errors: any
 }
 

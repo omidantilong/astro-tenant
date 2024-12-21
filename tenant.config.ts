@@ -4,9 +4,9 @@ export const engineConfig: EngineConfig = {
   contentTypes: {
     PressRelease: {
       root: "/media/news-releases",
-      contentQuery: ({ ref }) => `
+      entryQuery: ({ ref }) => `
         query PressReleaseQuery {
-          content: pressRelease(id: "${ref.id}") {
+          entry: pressRelease(id: "${ref.id}") {
             sys {
               id
               publishedAt

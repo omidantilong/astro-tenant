@@ -3,24 +3,24 @@ import Layout from "@/layouts/Layout.astro"
 import Hero from "@/components/Hero/Hero.astro"
 
 import * as components from "@/components"
-import { resolveLinks, getContent } from "engine/contentful"
+import { getEntry } from "engine/contentful"
 
-const { content } = await getContent(Astro.locals.engine.ref)
+const { entry } = await getEntry(Astro.locals.engine.ref)
 
-if (content.type !== "Page") {
+if (entry.type !== "Page") {
   return Astro.redirect("/")
 }
 
-const heroes: Hero[] = content.heroCollection.items || []
-const contentModules: Array<ContentModule> = content.modulesCollection.items || []
+const heroes: Hero[] = entry.heroCollection.items || []
+const contentModules: Array<ContentModule> = entry.modulesCollection.items || []
 //const links = await resolveLinks(contentModules)
 ---
 
-<Layout title={content.metaTitle || content.title}>
+<Layout title={entry.metaTitle || entry.title}>
   <main>
     <div class="wrap">
-      <h1>{content.title}</h1>
-      <time>{content.sys.publishedAt}</time>
+      <h1>{entry.title}</h1>
+      <time>{entry.sys.publishedAt}</time>
     </div>
     <!-- <TestCard data={{ title: "plop" }} /> -->
     {

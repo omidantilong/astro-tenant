@@ -3,7 +3,7 @@ import type { EngineConfig } from "engine/types/engine"
 export const engineDefaults: EngineConfig = {
   contentTypes: {
     Page: {
-      contentQuery: ({ ref, fragments, parentLookup }) => `
+      entryQuery: ({ ref, fragments, parentLookup }) => `
       ${fragments.pageData}
       ${fragments.sys}
       ${fragments.video}
@@ -14,7 +14,7 @@ export const engineDefaults: EngineConfig = {
       ${fragments.internalLink}
       ${fragments.signpost}
       query PageQuery {
-        content: page(id:"${ref.id}") { 
+        entry: page(id:"${ref.id}") { 
           ...pageData
           metaTitle
           metaDescription

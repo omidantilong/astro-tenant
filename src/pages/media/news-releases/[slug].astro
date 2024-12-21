@@ -4,11 +4,11 @@
 
 // import * as components from "@/components"
 // import { resolveLinks } from "engine/lib/contentfulLegacy"
-import { getContent } from "engine/contentful"
+import { getEntry } from "engine/contentful"
 
 const { ref } = Astro.locals.engine
 
-const data = await getContent(ref)
+const data = await getEntry(ref)
 
 //console.log(data)
 ---
