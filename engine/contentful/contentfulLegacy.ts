@@ -33,8 +33,6 @@ export { resolveLinks, parentLookup }
 
 export { parse } from "./markdown"
 
-await buildCache()
-
 export async function getInternalLink(id: string) {
   const query = `
     ${fragments.pageData} 
@@ -164,6 +162,9 @@ async function buildCache() {
 export async function getEntryRefFromPath(
   pathname: string
 ): Promise<EngineContentReference | false> {
+  if (!cache) {
+    await buildCache()
+  }
   let ref: EngineContentReference | null = await cache.get(pathname)
   if (!ref) {
     await buildCache()
