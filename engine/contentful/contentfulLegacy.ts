@@ -5,7 +5,7 @@ import type {
   EngineEntryReference,
   EngineEntryResponse,
   EngineContentTypeConfig,
-} from "engine/types/engine"
+} from "engine/types"
 import * as fragments from "engine/contentful/fragments"
 import { engineDefaults } from "engine/config/defaults"
 import { parentLookup } from "engine/contentful/parentLookup"

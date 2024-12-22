@@ -15,7 +15,7 @@ import type {
   //EngineLinkReference,
   EnginePathMap,
   EngineReferenceMap,
-} from "engine/types/engine"
+} from "engine/types"
 
 import { parentLookup } from "engine/contentful/parentLookup"
 import * as fragments from "engine/contentful/fragments"

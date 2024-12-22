@@ -1,5 +1,5 @@
 import type { AstroIntegration, ViteUserConfig } from "astro"
-import type { EngineDefaultRoutes } from "engine/types/engine"
+import type { EngineDefaultRoutes } from "engine/types"
 import fs from "fs-extra"
 
 /*

@@ -1,4 +1,4 @@
-import type { EngineConfig } from "engine/types/engine"
+import type { EngineConfig } from "engine/types"
 
 export const engineDefaults: EngineConfig = {
   contentTypes: {
