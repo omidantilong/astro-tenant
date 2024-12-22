@@ -1,0 +1,25 @@
+---
+/*
+ * This is a very simple component wrapper
+ * It imports everything from @/components, then loops over a ContentModule array
+ * If the component exists, it passes all the cms data in via `data`
+ * TODO: The structure of the components folder needs work
+ */
+
+interface Props {
+  data: Array<ContentModule>
+}
+
+import * as components from "@/components"
+
+const { data } = Astro.props
+---
+
+{
+  data.map(async (entry) => {
+    if (entry && components[entry.type]) {
+      const Component = components[entry.type] as any
+      return <Component data={entry} />
+    }
+  })
+}

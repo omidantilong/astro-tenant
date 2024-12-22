@@ -4,6 +4,7 @@ import { getEntry } from "engine/contentful"
 
 import Hero from "@/components/Hero/Hero.astro"
 import * as components from "@/components"
+import ContentModules from "engine/components/ContentModules.astro"
 
 const { entry } = await getEntry(Astro.locals.engine.ref)
 
@@ -11,9 +12,8 @@ if (entry.type !== "Page") {
   return Astro.redirect("/")
 }
 
-const heroes: Hero[] = entry.heroCollection.items || []
+const [hero]: Hero[] = entry.heroCollection.items || []
 const contentModules: Array<ContentModule> = entry.modulesCollection.items || []
-//const links = await resolveLinks(contentModules)
 ---
 
 <Layout title={entry.metaTitle || entry.title}>
@@ -23,30 +23,8 @@ const contentModules: Array<ContentModule> = entry.modulesCollection.items || []
       <time>{entry.sys.publishedAt}</time>
     </div>
     <!-- <TestCard data={{ title: "plop" }} /> -->
-    {
-      heroes.map(async (hero) => {
-        return <Hero data={hero} />
-      })
-    }
-    {
-      contentModules.map(async (entry) => {
-        if (entry && components[entry.type]) {
-          //if ("link" in entry) entry.link = links[entry.sys.id]
-          const Component = components[entry.type] as any
-          return <Component data={entry} />
-          //return <Component links={links} data={entry} />
-        }
-
-        // entries.map((entry) => {
-        //   if ("link" in entry) entry.link = links[entry.sys.id]
-        //   //if (entry.type === "Section") return <Section data={entry} />
-        //   //if (entry.type === "EditorialCard") return <Components.EditorialCard data={entry} />
-        // })
-
-        //if (entry.type === "Section") return <Components.Section data={entry} />
-        //if (entry.type === "Text") return <Components.Text data={entry} />
-      })
-    }
+    {hero && <Hero data={hero} />}
+    {contentModules && <ContentModules data={contentModules} />}
     <components.Foo data={{ title: "simple astro component test" }} />
     <components.Alert text="react component rendered on the server" />
     <components.Dummy data={{ title: "another simple astro component bringing its own styles" }} />
