@@ -21,7 +21,7 @@ export const engineDefaults: EngineConfig = {
           parent: parentPage {
             ${parentLookup(3)}
           }
-          heroCollection(limit: 5) {
+          heroCollection(limit: 1) {
             items {
               sys {
                 id
