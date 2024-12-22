@@ -4,9 +4,9 @@ interface Props {
 }
 
 import { getFullPath } from "engine/util/path"
-import { getEntryPathFromRef } from "engine/contentful"
+//import { getEntryPathFromRef } from "engine/contentful"
 let Wrapper = "div"
-let wrapperProps: LinkWrapperProps = {}
+let wrapperProps: { href?: string } = {}
 
 const link = Astro.props.data
 
