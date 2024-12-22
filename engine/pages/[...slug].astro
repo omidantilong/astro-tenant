@@ -1,9 +1,9 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import Hero from "@/components/Hero/Hero.astro"
-
-import * as components from "@/components"
+import Layout from "engine/layouts/Layout.astro"
 import { getEntry } from "engine/contentful"
+
+import Hero from "@/components/Hero/Hero.astro"
+import * as components from "@/components"
 
 const { entry } = await getEntry(Astro.locals.engine.ref)
 
