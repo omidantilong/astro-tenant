@@ -35,7 +35,7 @@ export interface EngineEntryReference {
 }
 
 export interface EngineEntryResponse {
-  entry: EngineEntry
+  entry: EngineContentEntry
   errors: any
 }
 
