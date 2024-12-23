@@ -12,7 +12,7 @@
     "engine:build:local": "astro check && astro build && npm run engine:deps:copy",
     "engine:build": "bash ./node_modules/@omidantilong/engine/bin/build.sh",
     "engine:serve": "bash ./node_modules/@omidantilong/engine/bin/run.sh",
-    "engine:map": "tsx engine/contentful/map.ts",
+    "engine:map": "tsx ./node_modules/@omidantilong/engine/contentful/map.ts",
     "engine:deps:copy": "bash ./node_modules/@omidantilong/engine/bin/copy-externals.sh",
     "test": "vitest",
     "knip": "knip --reporter json > deps.json"
