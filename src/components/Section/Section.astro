@@ -1,34 +1,17 @@
 ---
 interface Props {
   data: Section
-  //links: Record<string, Link>
 }
 
-//import { resolveLinks } from "engine/contentful"
-//import EditorialCard from "@/components/EditorialCard/EditorialCard.astro"
-
-import * as components from "@/components"
-
 const { title, contentCollection } = Astro.props.data
-// If links are passed in after being collection from nested sections
-//const links = Astro.props.links
-//const links = await resolveLinks(contentCollection.items)
-
 const contentModules: Array<ContentModule> = contentCollection.items || []
+
+import ContentModules from "@omidantilong/engine/components/ContentModules.astro"
 ---
 
 <section class="wrap flow">
   <h2>{title}</h2>
   <div class="cws-grid">
-    {
-      contentModules.map((entry) => {
-        if (components[entry.type]) {
-          //if ("link" in entry) entry.link = links[entry.sys.id]
-          //const Component = components[entry.type]
-          const Component = components[entry.type] as any
-          return <Component data={entry} />
-        }
-      })
-    }
+    <ContentModules data={contentModules} />
   </div>
 </section>
