@@ -114,7 +114,7 @@ declare type ImageProps = {
 
 declare type Link = InternalLink | ExternalLink
 
-declare type ContentModule = Section | EditorialCard | Text | Video | Image
+declare type TenantModule = Section | EditorialCard | Text | Video | Image
 
 declare interface ContentfulPressReleasePage extends Sys {
   type: "PressRelease"
