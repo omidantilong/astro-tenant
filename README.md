@@ -1,8 +1,8 @@
 # Astro x Contentful Test
 
-A very (very) dumb Astro site with Contentful integration.
+A proof of concept for an Astro site running on an [external tenant engine](https://github.com/omidantilong/engine).
 
-Currently wired up to a free tier Contentful site. You'll need a `.env.development` file with the following:
+You'll need a `.env.development` file with the following:
 
 ```
 PUBLIC_CONTENTFUL_DELIVERY_API=
@@ -10,12 +10,6 @@ PUBLIC_CONTENTFUL_PREVIEW_API=
 PUBLIC_CONTENTFUL_SPACE_ID=
 PUBLIC_CONTENTFUL_ENV=
 ```
-
-The repo contains an `engine` Astro integration which will eventually be extracted into a standalone package. The engine module reads a `tenant.config.ts` from the root, which can be used to register new content types for top level pages and provide other tenant-level config.
-
-The engine works by injecting middleware into Astro. A `map` function is exposed which generates a flat map of all publicly-accessible URLs, using the path as a key for an object containing the contentful entry id and content type. The middleware checks incoming request paths against this map and returns an entry reference. At this point Astro's file routing takes over, using either the default route templates provided by the engine or custom templates defined locally.
-
-These templates can access the entry reference using `Astro.locals.engine` and then decide how to render the content.
 
 #### Editor setup
 
@@ -33,10 +27,16 @@ npm run dev
 
 #### Build it
 
-This demo is currently set up to use the [Astro Node adapter](https://docs.astro.build/en/guides/integrations-guide/node/) with very little extra config. It just needs a `.env.production` with the same values as above. Eventually this should be turned into a Docker container, probably following [this guide](https://docs.astro.build/en/recipes/docker/).
+Clone your `.env.development` as `.env.production`, then you can run:
 
 ```
-npm run build
+npm run astro:build
+```
+
+To build a docker image for production:
+
+```
+npm run engine:build
 ```
 
 #### Issues
