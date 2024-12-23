@@ -1,5 +1,5 @@
 //import { micromark } from "micromark"
-import { parse } from "engine/contentful"
+import { parse } from "@omidantilong/engine/contentful"
 
 export default function ({ data }: { data: Text }) {
   const { title, text } = data

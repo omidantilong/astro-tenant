@@ -10,7 +10,7 @@
     "astro:check": "astro check",
     "astro:preview": "astro preview",
     "engine:build:local": "astro check && astro build && npm run engine:deps:copy",
-    "engine:build": "bash ./engine/bin/build.sh",
+    "engine:build": "bash ./node_modules/@omidantilong/engine/bin/build.sh",
     "engine:serve": "bash ./engine/bin/run.sh",
     "engine:map": "tsx engine/contentful/map.ts",
     "engine:deps:copy": "bash ./engine/bin/copy-externals.sh",

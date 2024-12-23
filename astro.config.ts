@@ -3,7 +3,7 @@ import node from "@astrojs/node"
 import react from "@astrojs/react"
 import UnoCSS from "unocss/astro"
 
-import { engine } from "./engine/engine"
+import { engine } from "@omidantilong/engine/engine"
 
 export default defineConfig({
   output: "server",
