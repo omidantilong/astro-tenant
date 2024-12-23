@@ -12,8 +12,8 @@ if (entry.type !== "Page") {
   return Astro.redirect("/")
 }
 
-const [hero]: Hero[] = entry.heroCollection.items || []
-const contentModules: Array<ContentModule> = entry.modulesCollection.items || []
+const [hero] = entry.heroCollection.items || []
+const contentModules = entry.modulesCollection.items || []
 ---
 
 <Layout title={entry.metaTitle || entry.title}>

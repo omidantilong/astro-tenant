@@ -17,7 +17,7 @@ declare interface ContentfulLegacyPage extends Sys {
   title: string
   metaTitle: string
   parent: ContentfulLegacyPage
-  modulesCollection: { items: Array<any> }
+  modulesCollection: { items: Array<ContentModule> }
   heroCollection: { items: Array<Hero> }
 }
 
