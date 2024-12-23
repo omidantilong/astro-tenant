@@ -16,12 +16,6 @@ Suggestions:
 - Store a default fragment inside each component (in dummy-components etc)?
 */
 
-declare interface ContentfulPage {
-  slug: string
-  title: string
-  parent: ContentfulPage
-}
-
 declare interface Sys {
   sys: {
     id: string
