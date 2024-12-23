@@ -1,3 +1,21 @@
+/* 
+All this needs cleaning up
+Currently types are stored local in tenant
+But graphql fragments are in fragments.ts in engine
+
+In all likelihood, tenant are going to have to redefine graphql fragments and types
+And may not be able to use defaults if their models are too different
+
+Eventually we want to force people use standard models, but until then...?
+
+Suggestions:
+
+- Define fragments in tenant.config.ts
+- Ship default set of fragments like we do currently
+- Combine both sets of fragments like we do with contentTypes
+- Store a default fragment inside each component (in dummy-components etc)?
+*/
+
 declare interface ContentfulPage {
   slug: string
   title: string
