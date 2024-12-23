@@ -22,6 +22,7 @@
     "@astrojs/node": "^9.0.0",
     "@astrojs/react": "^4.1.2",
     "@omidantilong/astro": "^0.1.1",
+    "@omidantilong/engine": "github:omidantilong/engine",
     "@omidantilong/react": "^0.1.0",
     "astro": "^5.1.1",
     "astro-vtbot": "^1.10.7",
