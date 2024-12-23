@@ -4,7 +4,7 @@ interface Props {
 }
 
 const { title, contentCollection } = Astro.props.data
-const contentModules: Array<ContentModule> = contentCollection.items || []
+const contentModules = contentCollection.items || []
 
 import ContentModules from "@omidantilong/engine/components/ContentModules.astro"
 ---
