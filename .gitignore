@@ -21,9 +21,10 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-scratch/*
-map.json
-paths.json
-refs.json
-
 *.code-workspace
+
+scratch/
+
+# Engine files
+engine/paths.json
+engine/refs.json
