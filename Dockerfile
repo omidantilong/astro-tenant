@@ -9,9 +9,7 @@ COPY . .
 
 RUN npm install
 RUN npm run astro:build
-
-RUN chmod +x engine/bin/copy-externals.sh
-RUN engine/bin/copy-externals.sh
+RUN npm run engine:prepare
 
 FROM base AS runtime
 
