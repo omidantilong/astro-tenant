@@ -25,3 +25,5 @@ scratch/*
 map.json
 paths.json
 refs.json
+
+*.code-workspace
