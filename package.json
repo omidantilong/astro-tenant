@@ -25,7 +25,6 @@
     "@omidantilong/engine": "github:omidantilong/engine",
     "@omidantilong/react": "^0.1.1",
     "@omidantilong/styles": "^0.2.0",
-    "@rollup/plugin-replace": "^6.0.2",
     "astro": "^5.1.1",
     "astro-vtbot": "^1.10.7",
     "cache-manager": "^6.3.1",
