@@ -9,7 +9,7 @@
   a {
     display: block;
   }
-  @media (min-width: map.get($breakpoints, "md")) {
+  @media (min-width: $bp-md) {
     grid-column: span 6;
   }
 }

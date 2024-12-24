@@ -10,10 +10,10 @@ body {
   max-width: 79rem;
   margin: 0 1rem;
 
-  @media (min-width: map.get($breakpoints, "ml")) {
+  @media (min-width: $bp-ml) {
     margin: 0 1.5rem;
   }
-  @media (min-width: map.get($breakpoints, "xl")) {
+  @media (min-width: $bp-xl) {
     margin: 0 auto;
   }
 }
