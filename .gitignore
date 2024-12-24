@@ -26,5 +26,4 @@ pnpm-debug.log*
 scratch/
 
 # Engine files
-engine/paths.json
-engine/refs.json
+engine/
