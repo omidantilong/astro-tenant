@@ -14,8 +14,7 @@
     "engine:serve": "engine serve",
     "engine:map": "tsx ./node_modules/@omidantilong/engine/contentful/map.ts",
     "engine:prepare": "engine prepare",
-    "test": "vitest",
-    "knip": "knip --reporter json > deps.json"
+    "test": "vitest"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
