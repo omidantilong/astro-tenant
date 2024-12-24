@@ -9,7 +9,7 @@ COPY . .
 
 RUN npm install
 RUN npm run astro:build
-RUN npm run engine:prepare
+RUN npm run engine:postbuild
 
 FROM base AS runtime
 
