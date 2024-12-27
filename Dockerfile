@@ -11,6 +11,7 @@ RUN npm install
 RUN npx engine prebuild
 RUN npx engine build-astro
 RUN npx engine postbuild
+RUN npm run engine:map
 
 FROM base AS runtime
 
