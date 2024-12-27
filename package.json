@@ -10,11 +10,10 @@
     "astro:check": "astro check",
     "astro:preview": "astro preview",
     "engine:build-local": "engine build-local",
+    "engine:build-astro": "engine build-astro",
     "engine:build": "engine build",
     "engine:serve": "engine serve",
     "engine:map": "tsx ./node_modules/@omidantilong/engine/contentful/map.ts",
-    "engine:postbuild": "engine postbuild",
-    "engine:prebuild": "engine prebuild",
     "test": "vitest"
   },
   "dependencies": {
