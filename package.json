@@ -12,6 +12,7 @@
     "engine:build-local": "engine build-local",
     "engine:build-astro": "engine build-astro",
     "engine:build": "engine build",
+    "engine:build-plain": "docker buildx build --tag tenant-image . --progress=plain --no-cache",
     "engine:serve": "engine serve",
     "engine:map": "tsx ./node_modules/@omidantilong/engine/contentful/map.ts",
     "test": "vitest"
