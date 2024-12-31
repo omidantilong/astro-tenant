@@ -29,7 +29,7 @@ declare namespace CMS {
     title: string
     metaTitle: string
     parent: LegacyPage
-    modulesCollection: { items: Array<TenantModule> }
+    modulesCollection: { items: Array<TenantContentModule> }
     heroCollection: { items: Array<Hero> }
   }
   interface Hero extends Sys {
@@ -46,7 +46,7 @@ declare namespace CMS {
     type: "Section"
     title: string
     contentCollection: {
-      items: CMS.TenantModule[]
+      items: CMS.TenantContentModule[]
     }
   }
 
@@ -101,7 +101,7 @@ declare namespace CMS {
 
   type Link = InternalLink | ExternalLink
   type TenantPage = LegacyPage | PressReleasePage
-  type TenantModule = Section | EditorialCard | Text | Video | Image
+  type TenantContentModule = Section | EditorialCard | Text | Video | Image
 }
 
 // declare namespace Engine {
