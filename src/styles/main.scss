@@ -1,7 +1,7 @@
-@use "@/styles/vars";
-@use "@/styles/reset";
-@use "@/styles/global";
-@use "@/styles/grid";
+@use "vars";
+@use "reset";
+@use "global";
+@use "grid";
 
 @use "@/components/EditorialCard/EditorialCard.scss";
 @use "@/components/Hero/Hero.scss";
