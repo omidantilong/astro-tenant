@@ -1,14 +1,10 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": [
+    "@omidantilong/engine/presets/tsconfig.tenant"
+  ],
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "baseUrl": ".",
-    "skipLibCheck": false,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
   }
 }
