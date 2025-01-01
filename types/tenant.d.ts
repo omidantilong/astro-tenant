@@ -46,7 +46,7 @@ declare namespace CMS {
     type: "Section"
     title: string
     contentCollection: {
-      items: CMS.TenantContentModule[]
+      items: Array<TenantContentModule>
     }
   }
 
