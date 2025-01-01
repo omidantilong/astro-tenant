@@ -6,5 +6,12 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "baseUrl": ".",
-  }
+  },
+  // "include": [
+  //   "node_modules/@omidantilong/engine/types/cms.d.ts",
+  //   "node_modules/@omidantilong/engine/types/env.d.ts",
+  //   "**/*.ts",
+  //   "**/*.d.ts",
+  //   "**/*.astro"
+  // ]
 }
