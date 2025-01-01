@@ -1,6 +1,8 @@
 ---
+import type { Image } from "engine:types/cms"
+
 interface Props {
-  data: CMS.Image
+  data: Image
 }
 
 const { image, title } = Astro.props.data

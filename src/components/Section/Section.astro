@@ -1,6 +1,8 @@
 ---
+import type { Section } from "engine:types/cms"
+
 interface Props {
-  data: CMS.Section
+  data: Section
 }
 
 const { title, contentCollection } = Astro.props.data

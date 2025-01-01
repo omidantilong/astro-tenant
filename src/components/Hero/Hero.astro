@@ -1,6 +1,8 @@
 ---
+import type { Hero } from "engine:types/cms"
+
 interface Props {
-  data: CMS.Hero
+  data: Hero
 }
 
 const { heroHeading, heroBody, link, image } = Astro.props.data
