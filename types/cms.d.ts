@@ -100,13 +100,11 @@ declare namespace CMS {
   }
 
   type Link = InternalLink | ExternalLink
+
+  //interface TenantPage extends DefaultPage {}
+
   type TenantPage = LegacyPage | PressReleasePage
+
+  // type Page = DefaultPage | LegacyPage | PressReleasePage
   type TenantContentModule = Section | EditorialCard | Text | Video | Image
 }
-
-// declare namespace Engine {
-//   type TenantPageTypes = CMS.PressReleasePage
-//   type TenantModule = CMS.Section | CMS.EditorialCard | CMS.Text | CMS.Video | CMS.Image
-// }
-
-//declare type Entry = Section | EditorialCard | Text | Video | Image | Dummy
