@@ -8,10 +8,12 @@ import { getEntry } from "@omidantilong/engine/contentful"
 
 const { ref } = Astro.locals.engine
 
-const data = await getEntry(ref)
+const { entry } = await getEntry(ref)
 
-//console.log(data)
+if (entry.type !== "PressRelease") {
+  return Astro.redirect("/")
+}
 ---
 
 <div>{JSON.stringify(ref)}</div>
-<div>{JSON.stringify(data)}</div>
+<div>{JSON.stringify(entry)}</div>
