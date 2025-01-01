@@ -16,7 +16,7 @@ Suggestions:
 - Store a default fragment inside each component (in dummy-components etc)?
 */
 
-declare namespace CMS {
+declare module "engine:types/cms" {
   interface PressReleasePage extends Sys {
     type: "PressRelease"
     slug: string
