@@ -15,7 +15,7 @@ Suggestions:
 - Combine both sets of fragments like we do with contentTypes
 - Store a default fragment inside each component (in dummy-components etc)?
 */
-import { Sys } from "@omidantilong/engine/types/cms"
+import type { Sys } from "@omidantilong/engine/types/cms"
 
 export interface PressReleasePage extends Sys {
   type: "PressRelease"

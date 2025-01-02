@@ -1,6 +1,6 @@
 ---
 import { getEntry } from "@omidantilong/engine/contentful"
-import type { PressReleasePage } from "../../../../types/tenant"
+import type { PressReleasePage } from "types/cms"
 const { ref } = Astro.locals.engine
 
 const { entry } = await getEntry<PressReleasePage>(ref)
