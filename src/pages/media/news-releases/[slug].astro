@@ -1,9 +1,11 @@
 ---
 import { getEntry } from "@omidantilong/engine/contentful"
-
+import type { PressReleasePage } from "../../../../types/tenant"
 const { ref } = Astro.locals.engine
 
-const { entry } = await getEntry(ref)
+const { entry } = await getEntry<PressReleasePage>(ref)
+
+//const entry = data.entry
 
 if (entry.type !== "PressRelease") {
   return Astro.redirect("/")
