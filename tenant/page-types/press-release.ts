@@ -7,6 +7,7 @@ export const PressRelease = definePageType({
   entryQuery: ({ ref }) => `
       query PressReleaseQuery {
         entry: pressRelease(id: "${ref.id}") {
+          type: __typename
           sys {
             id
             publishedAt
