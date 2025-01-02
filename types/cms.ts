@@ -102,8 +102,7 @@ export interface ImageProps {
 export type Link = InternalLink | ExternalLink
 
 //export interface TenantPage extends DefaultPage {}
+//export type TenantPage = LegacyPage | PressReleasePage
+//export type Page = DefaultPage | LegacyPage | PressReleasePage
 
-export type TenantPage = LegacyPage | PressReleasePage
-
-// type Page = DefaultPage | LegacyPage | PressReleasePage
 export type TenantContentModule = Section | EditorialCard | Text | Video | Image
