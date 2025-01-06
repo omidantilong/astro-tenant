@@ -14,11 +14,7 @@ export const prerender = true
     <h1>Static page</h1>
     <time>date</time>
     <article set:html={"this is some static content"} />
-    <EditorialCard
-      data={{
-        link: { url: "https://google.com" },
-      }}
-    >
+    <EditorialCard link={{ url: "https://google.com" }}>
       <h1 slot="card-header">card headings</h1>
       <p slot="card-body">Some text for the body</p>
     </EditorialCard>

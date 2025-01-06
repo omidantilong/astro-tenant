@@ -1,11 +1,9 @@
 ---
 import type { Hero } from "types/cms"
 
-interface Props {
-  data: Hero
-}
+interface Props extends Hero {}
 
-const { heroHeading, heroBody, link, image } = Astro.props.data
+const { heroHeading, heroBody, link, image } = Astro.props
 import { reduceRatio } from "@omidantilong/engine/util/reduceRatio"
 
 const ratio = reduceRatio(image.width, image.height)

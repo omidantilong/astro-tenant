@@ -1,11 +1,9 @@
 ---
 import type { Image } from "types/cms"
 
-interface Props {
-  data: Image
-}
+interface Props extends Image {}
 
-const { image, title } = Astro.props.data
+const { image } = Astro.props
 
 const imageWidthLarge = 720
 const imageWidthSmall = 390

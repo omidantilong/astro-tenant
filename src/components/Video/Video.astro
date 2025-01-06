@@ -1,13 +1,11 @@
 ---
 import type { Video } from "types/cms"
 
-interface Props {
-  data: Video
-}
+interface Props extends Video {}
 
 import { parse } from "@omidantilong/engine/contentful"
 
-const { videoUrl, transcript, title } = Astro.props.data
+const { videoUrl, transcript } = Astro.props
 
 const videoId = videoUrl.split("v=")[1]
 

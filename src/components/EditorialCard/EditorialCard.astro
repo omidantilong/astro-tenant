@@ -1,15 +1,13 @@
 ---
 import type { EditorialCard } from "types/cms"
 
-interface Props extends Partial<EditorialCard> {
-  data?: Partial<EditorialCard>
-}
+interface Props extends Partial<EditorialCard> {}
 
 import LinkWrapper from "../LinkWrapper/LinkWrapper.astro"
 
 import { parse } from "@omidantilong/engine/contentful"
 
-const { data } = Astro.props
+const data = Astro.props
 
 const cardBody = Astro.slots["card-body"]
   ? await Astro.slots.render("card-body")

@@ -1,11 +1,9 @@
 ---
 import type { Section } from "types/cms"
 
-interface Props {
-  data: Section
-}
+interface Props extends Section {}
 
-const { title, contentCollection } = Astro.props.data
+const { title, contentCollection } = Astro.props
 const contentModules = contentCollection.items || []
 
 import ContentModules from "@omidantilong/engine/components/ContentModules.astro"
