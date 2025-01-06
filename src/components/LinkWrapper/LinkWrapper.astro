@@ -1,8 +1,8 @@
 ---
-import type { Link } from "types/cms"
+import type { InternalLink, ExternalLink } from "types/cms"
 
 interface Props {
-  data: Link
+  data: Partial<InternalLink> | Partial<ExternalLink> | false
 }
 
 import { getFullPath } from "@omidantilong/engine/util/path"
@@ -15,15 +15,9 @@ const link = Astro.props.data
 if (link) {
   Wrapper = "a"
   if (link.type === "InternalLink") {
-    // Uncomment these lines to fetch individual link data with separate api call
-    // const { data: linkData } = await getInternalLink({ id: link.sys.id })
-    // wrapperProps.href = getFullPath(linkData.internalLink.page)
-
-    // use getEntryPath if we are using precomputed links
-    // use getFullPath if we are using graphql link fragments
-
-    //wrapperProps.href = await getEntyPathFromRef(link.sys.id)
     wrapperProps.href = getFullPath(link.page)
+  } else if ("url" in link) {
+    wrapperProps.href = link.url
   }
 }
 ---

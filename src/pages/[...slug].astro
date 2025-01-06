@@ -1,0 +1,22 @@
+---
+import Layout from "@omidantilong/engine/layouts/Layout.astro"
+import { getEntry } from "@omidantilong/engine/contentful"
+import ContentModules from "@omidantilong/engine/components/ContentModules.astro"
+import type { LegacyPage } from "types/cms"
+
+const { entry } = await getEntry<LegacyPage>(Astro.locals.engine.ref)
+
+if (entry.type !== "Page") {
+  return Astro.redirect("/")
+}
+---
+
+<Layout title={entry.metaTitle || entry.title}>
+  <main>
+    <div class="wrap">
+      <h1>{entry.title}</h1>
+      <time>{entry.sys.publishedAt}</time>
+    </div>
+    <ContentModules data={entry.modulesCollection.items} />
+  </main>
+</Layout>

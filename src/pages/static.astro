@@ -2,6 +2,9 @@
 import Layout from "@omidantilong/engine/layouts/Layout.astro"
 
 import { Card } from "@omidantilong/react"
+import { ReactCard } from "@/components/ReactCard"
+
+import { EditorialCard } from "@/components"
 
 export const prerender = true
 ---
@@ -11,7 +14,15 @@ export const prerender = true
     <h1>Static page</h1>
     <time>date</time>
     <article set:html={"this is some static content"} />
-
+    <EditorialCard
+      data={{
+        link: { url: "https://google.com" },
+      }}
+    >
+      <h1 slot="card-header">card headings</h1>
+      <p slot="card-body">Some text for the body</p>
+    </EditorialCard>
     <Card client:only text="react card component" />
+    <ReactCard text="another react card component" />
   </div>
 </Layout>

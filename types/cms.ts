@@ -55,7 +55,7 @@ export interface EditorialCard extends Sys {
   cardHeading: string
   cardLabel: string
   cardBody: string
-  link: Link
+  link: Partial<InternalLink> | Partial<ExternalLink>
   image: ImageProps
 }
 
@@ -99,10 +99,12 @@ export interface ImageProps {
   width: number
 }
 
-export type Link = InternalLink | ExternalLink
+export type Link = Omit<InternalLink, "sys"> | Omit<ExternalLink, "sys">
 
 //export interface TenantPage extends DefaultPage {}
 //export type TenantPage = LegacyPage | PressReleasePage
 //export type Page = DefaultPage | LegacyPage | PressReleasePage
 
 export type TenantContentModule = Section | EditorialCard | Text | Video | Image
+
+//export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
