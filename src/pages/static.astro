@@ -1,10 +1,17 @@
 ---
 import Layout from "@omidantilong/engine/layouts/Layout.astro"
+
+import { Card } from "@omidantilong/react"
+
 export const prerender = true
 ---
 
-<Layout title="Welcome to Astro.">
-  <h1>Static page</h1>
-  <time>date</time>
-  <article set:html={"this is some static content"} />
+<Layout title="Static test page">
+  <div class="wrap">
+    <h1>Static page</h1>
+    <time>date</time>
+    <article set:html={"this is some static content"} />
+
+    <Card client:only text="react card component" />
+  </div>
 </Layout>
