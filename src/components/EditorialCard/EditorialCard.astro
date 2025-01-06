@@ -6,7 +6,6 @@ interface Props extends Partial<EditorialCard> {}
 import LinkWrapper from "../LinkWrapper/LinkWrapper.astro"
 
 import { parse } from "@omidantilong/engine/contentful"
-import type { HTMLAttributes } from "astro/types"
 
 const data = Astro.props
 
@@ -41,6 +40,7 @@ const cardHeading = Astro.slots.cardHeading
 ---
 
 <article class="cws-editorial-card">
+  <!-- <slot /> -->
   <LinkWrapper data={(data && data.link) || false}>
     <Fragment set:html={cardHeading} />
     <Fragment set:html={cardBody} />

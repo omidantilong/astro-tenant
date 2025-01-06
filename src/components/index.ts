@@ -9,7 +9,7 @@ export { Dummy, Foo } from "@omidantilong/astro"
 export { Alert } from "@omidantilong/react"
 //import { Button } from "@carbon/react"
 
-export { default as EditorialCard } from "@/components/EditorialCard/EditorialCard.astro"
+export * from "@/components/EditorialCard"
 export { default as Section } from "@/components/Section/Section.astro"
 export { default as Text } from "@/components/Text/Text.astro"
 export { default as Image } from "@/components/Image/Image.astro"
