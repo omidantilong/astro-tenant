@@ -14,9 +14,12 @@ export const prerender = true
     <h1>Static page</h1>
     <time>date</time>
     <article set:html={"this is some static content"} />
-    <EditorialCard link={{ url: "https://google.com" }}>
-      <h1 slot="card-header">card headings</h1>
-      <p slot="card-body">Some text for the body</p>
+    <EditorialCard cardBody="plop" link={{ url: "https://google.com" }}>
+      <h1 slot="cardHeading">card headings</h1>
+    </EditorialCard>
+    <EditorialCard cardBody="plop" link={{ url: "https://google.com" }}>
+      <h1 slot="cardHeading">card heading again</h1>
+      <p slot="cardBody">i'm a little p tag</p>
     </EditorialCard>
     <Card client:only text="react card component" />
     <ReactCard text="another react card component" />
