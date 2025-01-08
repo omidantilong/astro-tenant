@@ -6,6 +6,8 @@ import type { LegacyPage } from "types/cms"
 
 const { entry } = await getEntry<LegacyPage>(Astro.locals.engine.ref)
 
+//const { entry } = await Astro.locals.engine.entry<LegacyPage>()
+
 if (entry.type !== "Page") {
   return Astro.redirect("/")
 }
